@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、线性回归介绍线性回归是利用数理统计中回归分析来确定两种或两种以上变量间相互依赖的定量关系的一种统计分析方法。其表达形式为$y&#x3D;w^{\prime} x+e$，e为误差（服从均值为0的正态分布），数学上e叫截距。  当回归分析中只包括一个自变量和一个因变量，且二者的关系可用一条直线近似表示，称为一元线性回归分析。 当回归分析中包括两个或两个以上的自变量，且因变量和自变量之间是线性关系，则称为多元">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性回归介绍和Python实现">
+<meta property="og:url" content="https://tding.top/archives/fae43975.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="一、线性回归介绍线性回归是利用数理统计中回归分析来确定两种或两种以上变量间相互依赖的定量关系的一种统计分析方法。其表达形式为$y&#x3D;w^{\prime} x+e$，e为误差（服从均值为0的正态分布），数学上e叫截距。  当回归分析中只包括一个自变量和一个因变量，且二者的关系可用一条直线近似表示，称为一元线性回归分析。 当回归分析中包括两个或两个以上的自变量，且因变量和自变量之间是线性关系，则称为多元">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tding.top/archives/fae43975/output_9_0.png">
+<meta property="og:image" content="https://tding.top/archives/fae43975/output_15_0.png">
+<meta property="og:image" content="https://tding.top/archives/fae43975/%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0.png">
+<meta property="og:image" content="https://tding.top/archives/fae43975/output_21_0.png">
+<meta property="og:image" content="https://tding.top/archives/fae43975/output_31_0.png">
+<meta property="og:image" content="https://tding.top/archives/fae43975/output_35_0.png">
+<meta property="og:image" content="https://tding.top/archives/fae43975/output_43_0.png">
+<meta property="article:published_time" content="2019-10-10T07:20:00.000Z">
+<meta property="article:modified_time" content="2019-10-10T15:06:51.000Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="回归">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tding.top/archives/fae43975/output_9_0.png">
+
+<link rel="canonical" href="https://tding.top/archives/fae43975.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>线性回归介绍和Python实现 | 小丁的个人博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">100</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">58</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">166</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tding.top/archives/fae43975.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="小丁">
+      <meta itemprop="description" content="酒，越喝越暖，水会越喝越寒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小丁的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          线性回归介绍和Python实现
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-10 15:20:00" itemprop="dateCreated datePublished" datetime="2019-10-10T15:20:00+08:00">2019-10-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%9B%9E%E5%BD%92/" itemprop="url" rel="index"><span itemprop="name">回归</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/fae43975.html" class="post-meta-item leancloud_visitors" data-flag-title="线性回归介绍和Python实现" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/archives/fae43975.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="archives/fae43975.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/fae43975.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/fae43975.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="一、线性回归介绍"><a href="#一、线性回归介绍" class="headerlink" title="一、线性回归介绍"></a>一、线性回归介绍</h2><p>线性回归是利用数理统计中回归分析来确定两种或两种以上变量间相互依赖的定量关系的一种统计分析方法。其表达形式为$y=w^{\prime} x+e$，e为误差（服从均值为0的正态分布），数学上e叫截距。</p>
+<ul>
+<li>当回归分析中只包括一个自变量和一个因变量，且二者的关系可用一条直线近似表示，称为<strong>一元线性回归分析</strong>。</li>
+<li>当回归分析中包括两个或两个以上的自变量，且因变量和自变量之间是线性关系，则称为<strong>多元线性回归分析</strong>。</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="1、回归分析流程"><a href="#1、回归分析流程" class="headerlink" title="1、回归分析流程"></a>1、回归分析流程</h3><p>线性回归属于回归问题。回归问题的流程如下：</p>
+<ol>
+<li>给定数据集中每个样本及其正确答案。</li>
+<li>选择一个模型函数h，这里的h代表hypothesis（假设）。</li>
+<li>为h找到此数据集的（未必是全局）最优解，即找出最优解下的h的参数。</li>
+</ol>
+<p>这里给定的数据集是训练集（Training Set）。不能所有数据都拿来训练，要留一部分验证模型的准确率，这部分叫测试集。</p>
+<h3 id="2、典型的线性回归模型"><a href="#2、典型的线性回归模型" class="headerlink" title="2、典型的线性回归模型"></a>2、典型的线性回归模型</h3><p>下面是几个典型的线性回归模型：</p>
+<ul>
+<li>最基本的单变量线性回归：   <ul>
+<li>$y=b x + e$</li>
+</ul>
+</li>
+<li>多变量线性回归：   <ul>
+<li>$\hat{h}=\theta_{0}+\theta_{1} x_{1}+\theta_{2} x_{2}+\cdots+\theta_{n} x_{n}+e$</li>
+</ul>
+</li>
+<li>多项式回归（Polynomial Regression）：   <ul>
+<li>$\hat{h}=\theta_{0}+\theta_{1} x^{1}+\ldots+\theta_{n-1} x^{n-1}+\theta_{n} x^{n}$  </li>
+<li>我们可以令$x_{2}=x^{2}$，$x_{3}=x^{3}$将其转化为了线性回归模型。</li>
+</ul>
+</li>
+</ul>
+<p>最终通用表达式就是：$\hat{h}=\theta^{T}X=\theta_{0}+\theta_{1} x_{1}+\theta_{2} x_{2}+\cdots+\theta_{n} x_{n}+e$ </p>
+<h2 id="二、sklearn实现简单线性回归"><a href="#二、sklearn实现简单线性回归" class="headerlink" title="二、sklearn实现简单线性回归"></a>二、sklearn实现简单线性回归</h2><p>在进行多元线性回归之间通过简单线性回归来展现线性回归的特性和结果，后面再延伸至多元线性回归。</p>
+<h3 id="1、包导入"><a href="#1、包导入" class="headerlink" title="1、包导入"></a>1、包导入</h3><p>这里导入进行线性回归的包，我们利用pandas和numpy对数据进行操作，使用matplotlib进行图像化，使用sklearn进行数据集训练与模型导入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、数据集创建"><a href="#2、数据集创建" class="headerlink" title="2、数据集创建"></a>2、数据集创建</h3><p>这里我们创建一个数据集来描述学生学习时间与成绩的关系并且做简单的线性回归。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建数据集</span></span><br><span class="line">examDict  = &#123;<span class="string">'学习时间'</span>:[<span class="number">0.50</span>,<span class="number">0.75</span>,<span class="number">1.00</span>,<span class="number">1.25</span>,<span class="number">1.50</span>,<span class="number">1.75</span>,<span class="number">1.75</span>,<span class="number">2.00</span>,<span class="number">2.25</span>,<span class="number">2.50</span>,<span class="number">2.75</span>,<span class="number">3.00</span>,<span class="number">3.25</span>,<span class="number">3.50</span>,<span class="number">4.00</span>,<span class="number">4.25</span>,<span class="number">4.50</span>,<span class="number">4.75</span>,<span class="number">5.00</span>,<span class="number">5.50</span>],</span><br><span class="line">             <span class="string">'分数'</span>:[<span class="number">10</span>,<span class="number">22</span>,<span class="number">13</span>,<span class="number">43</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">50</span>,<span class="number">62</span>,<span class="number">48</span>,<span class="number">55</span>,<span class="number">75</span>,<span class="number">62</span>,<span class="number">73</span>,<span class="number">81</span>,<span class="number">76</span>,<span class="number">64</span>,<span class="number">82</span>,<span class="number">90</span>,<span class="number">93</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#转换为DataFrame的数据格式</span></span><br><span class="line">examDf = pd.DataFrame(examDict)</span><br><span class="line">examDf.head()</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">分数</th>
+<th align="center">学习时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">10</td>
+<td align="center">0.50</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">22</td>
+<td align="center">0.75</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">13</td>
+<td align="center">1.00</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">43</td>
+<td align="center">1.25</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">20</td>
+<td align="center">1.50</td>
+</tr>
+</tbody></table>
+<p>从上面的数据可以看到数据的<strong>特征值</strong>与<strong>标签</strong>，学生的<strong>学习时间</strong>就是所需要的特征值，而<strong>分数</strong>就是通过特征值所反应的标签。</p>
+<h3 id="3、数据集散点图"><a href="#3、数据集散点图" class="headerlink" title="3、数据集散点图"></a>3、数据集散点图</h3><p>这里我们利用散点图来简单看下学习时间与成绩的情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#绘制散点图</span></span><br><span class="line">plt.scatter(examDf[<span class="string">'分数'</span>],examDf[<span class="string">'学习时间'</span>],color = <span class="string">'b'</span>,label = <span class="string">"Exam Data"</span>)</span><br><span class="line"><span class="comment">#添加图的标签（x轴、y轴）</span></span><br><span class="line">plt.xlabel(<span class="string">"Hours"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Score"</span>)</span><br><span class="line"><span class="comment">#显示图像</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/fae43975/output_9_0.png" class="" title="图1">
+
+<p>从上图可以看到，分数和时间存在一定的相关性。下面我们看下两个变量因素的相关密切程度。</p>
+<h3 id="4、相关系数"><a href="#4、相关系数" class="headerlink" title="4、相关系数"></a>4、相关系数</h3><p>相关系数的公式如下：</p>
+<p>$$<br>P_{x y}=\frac{\operatorname{cov}(X, Y)}{\sigma_{x} \sigma_{y}}<br>$$</p>
+<p>我们可以简单的认为：</p>
+<ul>
+<li>0~0.3 弱相关</li>
+<li>0.3~0.6  中等程度相关</li>
+<li>0.6~1  强相关</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rDf = examDf.corr()</span><br><span class="line">print(rDf)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">分数</th>
+<th align="center">学习时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">分数</td>
+<td align="center">1.000000</td>
+<td align="center">0.923985</td>
+</tr>
+<tr>
+<td align="center">学习时间</td>
+<td align="center">0.923985</td>
+<td align="center">1.000000</td>
+</tr>
+</tbody></table>
+<p>pandas中的数学统计函数<code>DataFrame.corr()</code>可以反应数据间的相关性关系，可从表值中反应出学习时间与分数之间的相关性为强相关（0.6~1）。</p>
+<h3 id="5、最小二乘法"><a href="#5、最小二乘法" class="headerlink" title="5、最小二乘法"></a>5、最小二乘法</h3><p>简单回归方程为：<code>y = a + b*x</code>，而这个最佳拟合线是通过最小二乘法来得到。</p>
+<p>最小二乘法的几个概念：</p>
+<ul>
+<li><strong>点误差</strong>：<code>点误差 = 实际值 - 预测值</code></li>
+<li><strong>误差平方和(Sum of square error)</strong>：<code>SSE = Σ（实际值-预测值）^2</code></li>
+</ul>
+<p>最小二乘法就是使得<strong>误差平方和</strong>最小来得到最佳拟合。</p>
+<h3 id="6、训练集、测试集划分"><a href="#6、训练集、测试集划分" class="headerlink" title="6、训练集、测试集划分"></a>6、训练集、测试集划分</h3><p>这里使用sklearn中的<code>train_test_split</code>函数来划分训练、测试集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">exam_X = examDf[<span class="string">'学习时间'</span>]</span><br><span class="line">exam_Y = examDf[<span class="string">'分数'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 原数据集拆分训练集和测试集</span></span><br><span class="line">X_train,X_test,Y_train,Y_test = train_test_split(exam_X,exam_Y,train_size = <span class="number">0.8</span>,test_size = <span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"原始数据特征:"</span>,exam_X.shape,<span class="string">",训练数据特征:"</span>,X_train.shape,<span class="string">",测试数据特征:"</span>,X_test.shape)</span><br><span class="line">print(<span class="string">"原始数据标签:"</span>,exam_Y.shape,<span class="string">",训练数据标签:"</span>,Y_train.shape,<span class="string">",测试数据标签:"</span>,Y_test.shape)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">原始数据特征: (20,) ,训练数据特征: (16,) ,测试数据特征: (4,)</span><br><span class="line">原始数据标签: (20,) ,训练数据标签: (16,) ,测试数据标签: (4,)</span><br></pre></td></tr></table></figure>
+
+<p>下面是可视化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#散点图</span></span><br><span class="line">plt.scatter(X_train, Y_train, color=<span class="string">"blue"</span>, label=<span class="string">"train data"</span>)</span><br><span class="line">plt.scatter(X_test, Y_test, color=<span class="string">"red"</span>, label=<span class="string">"test data"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#添加图标标签</span></span><br><span class="line">plt.legend(loc=<span class="number">2</span>)</span><br><span class="line">plt.xlabel(<span class="string">"Hours"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Pass"</span>)</span><br><span class="line"><span class="comment">#显示图像</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/fae43975/output_15_0.png" class="" title="图2">
+
+<p><strong>注意：由于训练集随机分配，每一次运行的结果（点的分布情况，训练集内的情况，测试集内的情况）不都相同。</strong></p>
+<h3 id="7、模型训练"><a href="#7、模型训练" class="headerlink" title="7、模型训练"></a>7、模型训练</h3><p>在创建数据集之后我们需要将训练集放入skleran中的线性回归模型<code>LinearRegression()</code>进行训练，使用函数中的<code>.fit</code>方法进行模型的训练。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">model = LinearRegression()</span><br><span class="line"></span><br><span class="line">X_train = X_train.values.reshape(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line">X_test = X_test.values.reshape(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">model.fit(X_train,Y_train)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LinearRegression(copy_X&#x3D;True, fit_intercept&#x3D;True, n_jobs&#x3D;1, normalize&#x3D;False)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：因为model需要二维的数组来进行拟合但是这里只有一个特征所以需要reshape来转换为二维数组。</strong></p>
+<p>在模型训练完成之后会得到所对应的方程式（线性回归方程式）需要利用函数中的<code>intercept_</code>与<code>coef_</code>来得到。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = model.intercept_  <span class="comment">#截距</span></span><br><span class="line">b = model.coef_       <span class="comment">#回归系数</span></span><br><span class="line">print(<span class="string">"最佳拟合线：截距"</span>,a,<span class="string">",回归系数："</span>,b)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最佳拟合线：截距 6.837689362410515 ,回归系数： [17.11669719]</span><br></pre></td></tr></table></figure>
+
+<p>由上述的最佳拟合线的截距和回归系数可以算出其线性回归线方程：<code>y = 7.56 + 16.28*x</code>。</p>
+<h3 id="8、模型评价"><a href="#8、模型评价" class="headerlink" title="8、模型评价"></a>8、模型评价</h3><p>接下来需要对模型进行预测并评价。<strong>决定系数是反映模型拟合优度的重要的统计量</strong>。下面是决定系数的简单介绍。</p>
+<blockquote>
+<p>假设一数据集包括<code>y1,...,yn</code>共n个观察值，相对应的模型预测值分别为<code>f1,...,fn</code>。定义残差<code>ei = yi − fi</code>，然后可以推得：</p>
+<ul>
+<li>平均观察值：$\overline{y}=\frac{1}{n} \sum_{i=1}^{n} y_{i}$</li>
+<li>总平方和（总波动）：$S S_{\mathrm{tot}}=\sum_{i}\left(y_{i}-\overline{y}\right)^{2}$</li>
+<li>回归平方和：$S S_{\mathrm{reg}}=\sum_{i}\left(f_{i}-\overline{y}\right)^{2}$</li>
+<li>残差平方和：$S S_{\mathrm{res}}=\sum_{i}\left(y_{i}-f_{i}\right)^{2}=\sum_{i} e_{i}^{2}$</li>
+</ul>
+<p>由此，决定系数可定义为</p>
+<p>$$<br>R^{2} \equiv 1-\frac{S S_{\mathrm{res}}}{S S_{\mathrm{tot}}}<br>$$</p>
+<img src="/archives/fae43975/%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0.png" class="" title="图3">
+
+<p><strong>线性回归（右侧）的效果比起平均值（左侧）越好，决定系数的值就越接近于1。 蓝色正方形表示线性回归的残差的平方，红色正方形数据表示对于平均值的残差的平方</strong>。</p>
+<p>从上述定义可以看出，R2取值在0到1之间，且无单位，其数值大小反映了回归贡献的相对程度，即在因变量Y的总变异中回归关系所能解释的百分比。R2是最常用于评价回归模型优劣程度的指标，R2越大（接近于1），所拟合的回归方程越优。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#训练数据的预测值</span></span><br><span class="line">y_train_pred = model.predict(X_train)</span><br><span class="line"><span class="comment">#绘制最佳拟合线：标签用的是训练数据的预测值y_train_pred</span></span><br><span class="line">plt.plot(X_train, y_train_pred, color=<span class="string">'black'</span>, linewidth=<span class="number">3</span>, label=<span class="string">"best line"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#测试数据散点图</span></span><br><span class="line">plt.scatter(X_train, Y_train, color=<span class="string">"blue"</span>, label=<span class="string">"train data"</span>)</span><br><span class="line">plt.scatter(X_test, Y_test, color=<span class="string">'red'</span>, label=<span class="string">"test data"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#添加图标标签</span></span><br><span class="line">plt.legend(loc=<span class="number">2</span>)</span><br><span class="line">plt.xlabel(<span class="string">"Hours"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Score"</span>)</span><br><span class="line"><span class="comment">#显示图像</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/fae43975/output_21_0.png" class="" title="图4">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">score = model.score(X_test,Y_test)</span><br><span class="line">print(score)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.8161998892697531</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、sklearn实现多元线性回归"><a href="#三、sklearn实现多元线性回归" class="headerlink" title="三、sklearn实现多元线性回归"></a>三、sklearn实现多元线性回归</h2><p>上面我们了解了线性回归相关的分析流程，接下来对多元线性回归进行分析。</p>
+<h3 id="1、数据导入"><a href="#1、数据导入" class="headerlink" title="1、数据导入"></a>1、数据导入</h3><p>下面我们从<a href="http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv" target="_blank" rel="noopener external nofollow noreferrer">http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv</a> 来下载数据集<code>Advertising.csv</code>，其数据描述了一个产品的销量与广告媒体的投入之间影响。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"></span><br><span class="line">adv_data = pd.read_csv(<span class="string">"../Advertising.csv"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#清洗不需要的数据</span></span><br><span class="line">new_adv_data = adv_data.iloc[:,<span class="number">1</span>:]</span><br><span class="line"></span><br><span class="line">print(new_adv_data.head())</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">      TV  radio  newspaper  sales</span><br><span class="line">0  230.1   37.8       69.2   22.1</span><br><span class="line">1   44.5   39.3       45.1   10.4</span><br><span class="line">2   17.2   45.9       69.3    9.3</span><br><span class="line">3  151.5   41.3       58.5   18.5</span><br><span class="line">4  180.8   10.8       58.4   12.9</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'\nShape:'</span>,new_adv_data.shape)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Shape: (200, 4)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>标签值（sales）：</p>
+<ul>
+<li>Sales：对应产品的销量</li>
+</ul>
+</li>
+<li><p>特征值（TV，Radio，Newspaper）：</p>
+<ul>
+<li>TV：对于一个给定市场中单一产品，用于电视上的广告费用（以千为单位）</li>
+<li>Radio：在广播媒体上投资的广告费用</li>
+<li>Newspaper：用于报纸媒体的广告费用</li>
+</ul>
+</li>
+</ul>
+<p>在这个案例中，通过不同的广告投入，预测产品销量。因为响应变量是一个连续的值，所以这个问题是一个回归问题。数据集一共有200个观测值，每一组观测对应一个市场的情况。</p>
+<p><strong>接下来我们对数据进行描述性统计，以及寻找缺失值（缺失值对模型的影响较大，如发现缺失值应替换或删除）,且利用箱图来可视化查看数据集，在描述统计之后对数据进行相关性分析，以此来查找数据中特征值与标签值之间的关系。</strong></p>
+<h3 id="2、数据描述"><a href="#2、数据描述" class="headerlink" title="2、数据描述"></a>2、数据描述</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#数据描述</span></span><br><span class="line">new_adv_data.describe()</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">TV</th>
+<th align="center">radio</th>
+<th align="center">newspaper</th>
+<th align="center">sales</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">count</td>
+<td align="center">200.000000</td>
+<td align="center">200.000000</td>
+<td align="center">200.000000</td>
+<td align="center">200.000000</td>
+</tr>
+<tr>
+<td align="center">mean</td>
+<td align="center">147.042500</td>
+<td align="center">23.264000</td>
+<td align="center">30.554000</td>
+<td align="center">14.022500</td>
+</tr>
+<tr>
+<td align="center">std</td>
+<td align="center">85.854236</td>
+<td align="center">14.846809</td>
+<td align="center">21.778621</td>
+<td align="center">5.217457</td>
+</tr>
+<tr>
+<td align="center">min</td>
+<td align="center">0.700000</td>
+<td align="center">0.000000</td>
+<td align="center">0.300000</td>
+<td align="center">1.600000</td>
+</tr>
+<tr>
+<td align="center">25%</td>
+<td align="center">74.375000</td>
+<td align="center">9.975000</td>
+<td align="center">12.750000</td>
+<td align="center">10.375000</td>
+</tr>
+<tr>
+<td align="center">50%</td>
+<td align="center">149.750000</td>
+<td align="center">22.900000</td>
+<td align="center">25.750000</td>
+<td align="center">12.900000</td>
+</tr>
+<tr>
+<td align="center">75%</td>
+<td align="center">218.825000</td>
+<td align="center">36.525000</td>
+<td align="center">45.100000</td>
+<td align="center">17.400000</td>
+</tr>
+<tr>
+<td align="center">max</td>
+<td align="center">296.400000</td>
+<td align="center">49.600000</td>
+<td align="center">114.000000</td>
+<td align="center">27.000000</td>
+</tr>
+</tbody></table>
+<h3 id="3、缺失值检验"><a href="#3、缺失值检验" class="headerlink" title="3、缺失值检验"></a>3、缺失值检验</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#缺失值检验</span></span><br><span class="line">new_adv_data[new_adv_data.isnull()==<span class="literal">True</span>].count()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TV           0</span><br><span class="line">radio        0</span><br><span class="line">newspaper    0</span><br><span class="line">sales        0</span><br><span class="line">dtype: int64</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、箱形图"><a href="#4、箱形图" class="headerlink" title="4、箱形图"></a>4、箱形图</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">new_adv_data.boxplot()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/fae43975/output_31_0.png" class="" title="图5">
+
+<h3 id="5、相关系数"><a href="#5、相关系数" class="headerlink" title="5、相关系数"></a>5、相关系数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new_adv_data.corr()</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">TV</th>
+<th align="center">radio</th>
+<th align="center">newspaper</th>
+<th align="center">sales</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">TV</td>
+<td align="center">1.000000</td>
+<td align="center">0.054809</td>
+<td align="center">0.056648</td>
+<td align="center">0.782224</td>
+</tr>
+<tr>
+<td align="center">radio</td>
+<td align="center">0.054809</td>
+<td align="center">1.000000</td>
+<td align="center">0.354104</td>
+<td align="center">0.576223</td>
+</tr>
+<tr>
+<td align="center">newspaper</td>
+<td align="center">0.056648</td>
+<td align="center">0.354104</td>
+<td align="center">1.000000</td>
+<td align="center">0.228299</td>
+</tr>
+<tr>
+<td align="center">sales</td>
+<td align="center">0.782224</td>
+<td align="center">0.576223</td>
+<td align="center">0.228299</td>
+<td align="center">1.000000</td>
+</tr>
+</tbody></table>
+<p>从corr表中看出，TV特征和销量是有比较强的线性关系的，而Radio和Sales线性关系弱一些但是也是属于强相关的，Newspaper和Sales线性关系更弱。</p>
+<p>接下来建立散点图来查看数据间的关系，这里使用seaborn的pairplot来绘画3种不同的因素对标签值的影响。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过加入一个参数kind='reg'，seaborn可以添加一条最佳拟合直线和95%的置信带。</span></span><br><span class="line">sns.pairplot(new_adv_data, x_vars=[<span class="string">'TV'</span>,<span class="string">'radio'</span>,<span class="string">'newspaper'</span>], y_vars=<span class="string">'sales'</span>, size=<span class="number">7</span>, aspect=<span class="number">0.8</span>,kind = <span class="string">'reg'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/fae43975/output_35_0.png" class="" title="图6">
+
+<p>如上图所示，可以了解到不同的因素对销量的预测线（置信度= 95 %），也可以大致看出不同特征对于标签值的影响。</p>
+<h3 id="6、建立模型"><a href="#6、建立模型" class="headerlink" title="6、建立模型"></a>6、建立模型</h3><p>在了解了数据的各种情况后需要对数据集建立模型，建立模型的第一步就是建立训练集与测试集，同样的我们将会使用sklearn中的<code>train_test_split</code>函数来创建。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X_train,X_test,Y_train,Y_test = train_test_split(new_adv_data.iloc[:,:<span class="number">3</span>],new_adv_data.sales,train_size = <span class="number">0.8</span>,test_size = <span class="number">0.2</span>)</span><br><span class="line"> </span><br><span class="line">print(<span class="string">"原始数据特征:"</span>,new_adv_data.iloc[:,:<span class="number">3</span>].shape,<span class="string">",训练数据特征:"</span>,X_train.shape,<span class="string">",测试数据特征:"</span>,X_test.shape)</span><br><span class="line">print(<span class="string">"原始数据标签:"</span>,new_adv_data.sales.shape,<span class="string">",训练数据标签:"</span>,Y_train.shape,<span class="string">",测试数据标签:"</span>,Y_test.shape)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">原始数据特征: (200, 3) ,训练数据特征: (160, 3) ,测试数据特征: (40, 3)</span><br><span class="line">原始数据标签: (200,) ,训练数据标签: (160,) ,测试数据标签: (40,)</span><br></pre></td></tr></table></figure>
+
+<p>建立初步的数据集模型之后将训练集中的特征值与标签值放入<code>LinearRegression()</code>模型中且使用fit函数进行训练,在模型训练完成之后会得到所对应的线性回归方程式的截距<code>intercept_</code>与回归系数<code>coef_</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">model = LinearRegression()</span><br><span class="line">model.fit(X_train,Y_train)</span><br><span class="line"></span><br><span class="line">a = model.intercept_   <span class="comment">#截距 </span></span><br><span class="line">b = model.coef_        <span class="comment">#回归系数</span></span><br><span class="line">print(<span class="string">"最佳拟合线:截距"</span>,a,<span class="string">",回归系数："</span>,b)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最佳拟合线:截距 2.7283555357741935 ,回归系数： [ 0.04665892  0.19082797 -0.00099623]</span><br></pre></td></tr></table></figure>
+
+<p>这里我们得到的多元线性回归模型的函数为：<code>y = 2.79 + 0.04 * TV + 0.187 * Radio - 0.002 * Newspaper</code></p>
+<p>对于给定了Radio和Newspaper的广告投入，如果在TV广告上每多投入1个单位，对应销量将增加0.04711个单位。就是加入其它两个媒体投入固定，在TV广告上每增加1000美元，销量将增加47.11。但是大家注意这里的newspaper的系数居然是负数，所以我们可以考虑不使用newspaper这个特征。</p>
+<h3 id="7、模型评估"><a href="#7、模型评估" class="headerlink" title="7、模型评估"></a>7、模型评估</h3><p>接下来对数据集进行预测与模型测评。同样使用predict与score函数来获取所需要的预测值与得分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">score = model.score(X_test,Y_test) </span><br><span class="line">print(score)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.9028750733729708</span><br></pre></td></tr></table></figure>
+
+<p>下面简单看下这个训练好的模型的预测值，然后和实际值进行可视化对比：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Y_pred = model.predict(X_test)</span><br><span class="line">print(Y_pred)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[ 5.88658387 19.04199354 19.52640033 17.70822778 10.71716318  5.2030417</span><br><span class="line"> 24.26646035 12.76256323  9.82255698 18.52225153 21.3759422   7.45340113</span><br><span class="line">  4.28180262 19.73124396 20.7434211  20.46565901  8.02140753 21.32827151</span><br><span class="line"> 15.59515058  8.76729192 18.44116227 10.52302626 13.16705012 15.18864077</span><br><span class="line">  9.9417295  15.2734619  12.1230943  10.46509366 11.64698928 13.9265036</span><br><span class="line"> 15.06236293  6.66457005 12.6079046  18.00988685 17.10350626  9.24127309</span><br><span class="line"> 11.36598772 18.937225    6.43101507  6.89520345]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(range(len(Y_pred)),Y_pred,<span class="string">'b'</span>,label=<span class="string">"predict"</span>)</span><br><span class="line">plt.plot(range(len(Y_test)),Y_test,<span class="string">'r'</span>,label=<span class="string">"test"</span>)</span><br><span class="line"><span class="comment">#显示图像</span></span><br><span class="line"><span class="comment">#添加图标标签</span></span><br><span class="line">plt.legend(loc=<span class="number">2</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/fae43975/output_43_0.png" class="" title="图7">
+
+<h2 id="四、参考"><a href="#四、参考" class="headerlink" title="四、参考"></a>四、参考</h2><ul>
+<li><a href="https://blog.csdn.net/weixin_40014576/article/details/79918819" target="_blank" rel="noopener external nofollow noreferrer">Python实现多元线性回归</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0" target="_blank" rel="noopener external nofollow noreferrer">决定系数</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\97bf4f4.html" rel="bookmark">机器学习笔记汇总</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\1059015.html" rel="bookmark">决策树介绍</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\7b6c662f.html" rel="bookmark">GBDT梯度提升树介绍</a></div>
+    </li>
+  </ul>
+<div>
+    
+        <div class="end-slogan" style="text-align:center;font-size:22px;letter-spacing:10px;user-select:none;color:#bbb;"><br/>----------- 本文结束啦<i class="fa fa-star"></i>感谢您阅读 -----------<br/><br/></div>
+    
+</div> 
+        <div class="reward-container">
+  <div>赞赏一杯咖啡</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="小丁 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="小丁 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小丁
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tding.top/archives/fae43975.html" title="线性回归介绍和Python实现">https://tding.top/archives/fae43975.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/atom.xml">
+                <span class="icon">
+                  <i class="fa fa-rss"></i>
+                </span>
+
+                <span class="label">RSS</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+              <a href="/tags/%E5%9B%9E%E5%BD%92/" rel="tag"><i class="fa fa-tag"></i> 回归</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/31ee8a52.html" rel="prev" title="层次聚类介绍">
+      <i class="fa fa-chevron-left"></i> 层次聚类介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/2a97a967.html" rel="next" title="逻辑回归介绍">
+      逻辑回归介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、线性回归介绍"><span class="nav-number">1.</span> <span class="nav-text">一、线性回归介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、回归分析流程"><span class="nav-number">1.1.</span> <span class="nav-text">1、回归分析流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、典型的线性回归模型"><span class="nav-number">1.2.</span> <span class="nav-text">2、典型的线性回归模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、sklearn实现简单线性回归"><span class="nav-number">2.</span> <span class="nav-text">二、sklearn实现简单线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、包导入"><span class="nav-number">2.1.</span> <span class="nav-text">1、包导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、数据集创建"><span class="nav-number">2.2.</span> <span class="nav-text">2、数据集创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、数据集散点图"><span class="nav-number">2.3.</span> <span class="nav-text">3、数据集散点图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、相关系数"><span class="nav-number">2.4.</span> <span class="nav-text">4、相关系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、最小二乘法"><span class="nav-number">2.5.</span> <span class="nav-text">5、最小二乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、训练集、测试集划分"><span class="nav-number">2.6.</span> <span class="nav-text">6、训练集、测试集划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、模型训练"><span class="nav-number">2.7.</span> <span class="nav-text">7、模型训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、模型评价"><span class="nav-number">2.8.</span> <span class="nav-text">8、模型评价</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、sklearn实现多元线性回归"><span class="nav-number">3.</span> <span class="nav-text">三、sklearn实现多元线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、数据导入"><span class="nav-number">3.1.</span> <span class="nav-text">1、数据导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、数据描述"><span class="nav-number">3.2.</span> <span class="nav-text">2、数据描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、缺失值检验"><span class="nav-number">3.3.</span> <span class="nav-text">3、缺失值检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、箱形图"><span class="nav-number">3.4.</span> <span class="nav-text">4、箱形图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、相关系数"><span class="nav-number">3.5.</span> <span class="nav-text">5、相关系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、建立模型"><span class="nav-number">3.6.</span> <span class="nav-text">6、建立模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、模型评估"><span class="nav-number">3.7.</span> <span class="nav-text">7、模型评估</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、参考"><span class="nav-number">4.</span> <span class="nav-text">四、参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">166</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/290f3ac4.html" title="梅花品种-3系5类18型" target="_blank">梅花品种-3系5类18型</a>
+          </li>
+        
+          <li>
+            <a href="/archives/d179c86b.html" title="LeanCloud云引擎因流控无法唤醒解决方案" target="_blank">LeanCloud云引擎因流控无法唤醒解决方案</a>
+          </li>
+        
+          <li>
+            <a href="/archives/192fb032.html" title="Word公式如何多行对齐" target="_blank">Word公式如何多行对齐</a>
+          </li>
+        
+          <li>
+            <a href="/archives/ee1790c8.html" title="Word题注对图表进行自动化标号" target="_blank">Word题注对图表进行自动化标号</a>
+          </li>
+        
+          <li>
+            <a href="/archives/e1eb25a0.html" title="新冠肺炎疫情数据可视化" target="_blank">新冠肺炎疫情数据可视化</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">877k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:17</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 19729,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/archives/fae43975.html',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/archives/fae43975.html";
+    this.page.identifier = "archives/fae43975.html";
+    this.page.title = "线性回归介绍和Python实现";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>
