@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="MySQL从8.0开始支持窗口函数，这个功能在大多商业数据库和部分开源数据库中早已支持，有的也叫分析函数。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL窗口函数">
+<meta property="og:url" content="https://tding.top/archives/c6e31643.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="MySQL从8.0开始支持窗口函数，这个功能在大多商业数据库和部分开源数据库中早已支持，有的也叫分析函数。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-29T04:50:03.000Z">
+<meta property="article:modified_time" content="2019-08-03T06:23:35.000Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tding.top/archives/c6e31643.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>MySQL窗口函数 | 小丁的个人博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">100</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">58</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">166</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tding.top/archives/c6e31643.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="小丁">
+      <meta itemprop="description" content="酒，越喝越暖，水会越喝越寒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小丁的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          MySQL窗口函数
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-29 12:50:03" itemprop="dateCreated datePublished" datetime="2019-07-29T12:50:03+08:00">2019-07-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/c6e31643.html" class="post-meta-item leancloud_visitors" data-flag-title="MySQL窗口函数" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/archives/c6e31643.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="archives/c6e31643.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/c6e31643.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/c6e31643.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>MySQL从8.0开始支持窗口函数，这个功能在大多商业数据库和部分开源数据库中早已支持，有的也叫分析函数。</p>
+<a id="more"></a>
+
+<h2 id="窗口函数简介"><a href="#窗口函数简介" class="headerlink" title="窗口函数简介"></a>窗口函数简介</h2><h3 id="什么叫窗口"><a href="#什么叫窗口" class="headerlink" title="什么叫窗口?"></a>什么叫窗口?</h3><p>窗口的概念非常重要，它可以理解为记录集合，<strong>窗口函数也就是在满足某种条件的记录集合上执行的特殊函数</strong>。对于每条记录都要在此窗口内执行函数，有的函数随着记录不同，窗口大小都是固定的，这种属于<strong>静态窗口</strong>；有的函数则相反，不同的记录对应着不同的窗口，这种动态变化的窗口叫<strong>滑动窗口</strong>。</p>
+<h3 id="窗口函数和普通聚合函数的区别"><a href="#窗口函数和普通聚合函数的区别" class="headerlink" title="窗口函数和普通聚合函数的区别"></a>窗口函数和普通聚合函数的区别</h3><p>窗口函数和普通聚合函数也很容易混淆，二者区别如下：</p>
+<ul>
+<li><strong>聚合函数是将多条记录聚合为一条；而窗口函数是每条记录都会执行，有几条记录执行完还是几条</strong>。</li>
+<li>聚合函数也可以用于窗口函数中。</li>
+</ul>
+<h3 id="窗口函数的类别"><a href="#窗口函数的类别" class="headerlink" title="窗口函数的类别"></a>窗口函数的类别</h3><p>按照功能划分，可以把MySQL支持的窗口函数分为如下几类：</p>
+<ul>
+<li>序号函数：row_number() / rank() / dense_rank()</li>
+<li>分布函数：percent_rank() / cume_dist()</li>
+<li>前后函数：lag() / lead()</li>
+<li>头尾函数：first_val() / last_val()</li>
+<li>其他函数：nth_value() / nfile()</li>
+</ul>
+<h3 id="窗口函数基本用法"><a href="#窗口函数基本用法" class="headerlink" title="窗口函数基本用法"></a>窗口函数基本用法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">函数名([expr]) over子句</span><br></pre></td></tr></table></figure>
+
+<p>其中，over是关键字，用来指定函数执行的窗口范围，如果后面括号中什么都不写，则意味着窗口包含满足where条件的所有行，窗口函数基于所有行进行计算；如果不为空，则支持以下四种语法来设置窗口：</p>
+<ul>
+<li><p>window_name：给窗口指定一个别名，如果SQL中涉及的窗口较多，采用别名可以看起来更清晰易读。如果指定一个别名w，则改写如下：</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * </span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(</span><br><span class="line">    <span class="keyword">select</span> row_number()<span class="keyword">over</span> w <span class="keyword">as</span> row_num,</span><br><span class="line">    order_id,user_no,amount,create_date</span><br><span class="line">    <span class="keyword">from</span> order_info</span><br><span class="line">    <span class="keyword">WINDOW</span> w <span class="keyword">AS</span> (<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> amount <span class="keyword">desc</span>)</span><br><span class="line">) <span class="keyword">as</span> t;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>partition子句：<strong>窗口按照那些字段进行分组，窗口函数在不同的分组上分别执行</strong>。上面的例子就按照用户id进行了分组。在每个用户id上，按照order by的顺序分别生成从1开始的顺序编号。</p>
+</li>
+<li><p>order by子句：<strong>按照哪些字段进行排序，窗口函数将按照排序后的记录顺序进行编号</strong>。可以和partition子句配合使用，也可以单独使用。上例中二者同时使用，如果没有partition子句，则会按照所有用户的订单金额排序来生成序号。</p>
+</li>
+<li><p>frame子句：frame是当前分区的一个子集，子句用来定义子集的规则，通常用来作为<strong>滑动窗口</strong>使用。比如要根据每个订单动态计算包括本订单和按时间顺序前后两个订单的平均订单金额，则可以设置如下frame子句来创建滑动窗口：</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * </span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(</span><br><span class="line">    <span class="keyword">select</span> </span><br><span class="line">    order_id,user_no,amount,</span><br><span class="line">    <span class="keyword">avg</span>(amount)<span class="keyword">over</span> w <span class="keyword">as</span> avg_num,</span><br><span class="line">    create_date</span><br><span class="line">    <span class="keyword">from</span> order_info</span><br><span class="line">    <span class="keyword">WINDOW</span> w <span class="keyword">AS</span> (<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> create_date <span class="keyword">desc</span> <span class="keyword">ROWS</span> <span class="keyword">BETWEEN</span> <span class="number">1</span> <span class="keyword">PRECEDING</span> <span class="keyword">AND</span> <span class="number">1</span> <span class="keyword">FOLLOWING</span>)</span><br><span class="line">) <span class="keyword">as</span> t;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+----------+---------+--------+----------+---------------------+</span><br><span class="line">| order_id | user_no | amount | avg_num  | create_date         |</span><br><span class="line">+----------+---------+--------+----------+---------------------+</span><br><span class="line">|        5 | u0001   |    900 | 850.0000 | 2018-01-20 00:00:00 |</span><br><span class="line">|        4 | u0001   |    800 | 666.6667 | 2018-01-10 00:00:00 |</span><br><span class="line">|        2 | u0001   |    300 | 466.6667 | 2018-01-02 00:00:00 |</span><br><span class="line">|        3 | u0001   |    300 | 233.3333 | 2018-01-02 00:00:00 |</span><br><span class="line">|        1 | u0001   |    100 | 200.0000 | 2018-01-01 00:00:00 |</span><br><span class="line">|       10 | u0002   |    800 | 800.0000 | 2018-01-22 00:00:00 |</span><br><span class="line">|        9 | u0002   |    800 | 633.3333 | 2018-01-16 00:00:00 |</span><br><span class="line">|        8 | u0002   |    300 | 566.6667 | 2018-01-10 00:00:00 |</span><br><span class="line">|        7 | u0002   |    600 | 466.6667 | 2018-01-06 00:00:00 |</span><br><span class="line">|        6 | u0002   |    500 | 550.0000 | 2018-01-05 00:00:00 |</span><br><span class="line">+----------+---------+--------+----------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<p>从结果可以看出，order_id为5订单属于边界值，没有前一行，因此平均订单金额为(900+800)/2=850；order_id为4的订单前后都有订单，所以平均订单金额为（900+800+300）/3=666.6667，以此类推可以得到一个基于滑动窗口的动态平均订单值。此例中，窗口函数用到了传统的聚合函数avg()，用来计算动态的平均值。</p>
+<p>对于滑动窗口的范围指定，有两种方式，基于行和基于范围，具体区别如下：</p>
+<ul>
+<li><p><strong>基于行：通常使用BETWEEN frame_start AND frame_end语法来表示行范围</strong>，frame_start和frame_end可以支持如下关键字，来确定不同的动态行记录：</p>
+<ul>
+<li><code>CURRENT ROW</code> 边界是当前行，一般和其他范围关键字一起使用</li>
+<li><code>UNBOUNDED PRECEDING</code> 边界是分区中的第一行</li>
+<li><code>UNBOUNDED FOLLOWING</code> 边界是分区中的最后一行</li>
+<li><code>expr PRECEDING</code>  边界是当前行减去expr的值</li>
+<li><code>expr FOLLOWING</code>  边界是当前行加上expr的值</li>
+</ul>
+<p>比如，下面都是合法的范围：</p>
+<ul>
+<li><code>rows BETWEEN 1 PRECEDING AND 1 FOLLOWING</code> 窗口范围是当前行、前一行、后一行一共三行记录。</li>
+<li><code>rows  UNBOUNDED FOLLOWING</code> 窗口范围是当前行到分区中的最后一行。</li>
+<li><code>rows BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</code> 窗口范围是当前分区中所有行，等同于不写。</li>
+</ul>
+</li>
+<li><p>基于范围：和基于行类似，但<strong>有些范围不是直接可以用行数来表示的，比如希望窗口范围是一周前的订单开始，截止到当前行，则无法使用rows来直接表示，此时就可以使用范围来表示窗口：INTERVAL 7 DAY PRECEDING。</strong>Linux中常见的最近1分钟、5分钟负载是一个典型的应用场景。</p>
+</li>
+</ul>
+<h2 id="测试数据"><a href="#测试数据" class="headerlink" title="测试数据"></a>测试数据</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> order_info</span><br><span class="line">(</span><br><span class="line">    order_id <span class="built_in">int</span> primary <span class="keyword">key</span>,</span><br><span class="line">    user_no <span class="built_in">varchar</span>(<span class="number">10</span>),</span><br><span class="line">    amount <span class="built_in">int</span>,</span><br><span class="line">    create_date datetime</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> order_info <span class="keyword">values</span> (<span class="number">1</span>,<span class="string">'u0001'</span>,<span class="number">100</span>,<span class="string">'2018-1-1'</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> order_info <span class="keyword">values</span> (<span class="number">2</span>,<span class="string">'u0001'</span>,<span class="number">300</span>,<span class="string">'2018-1-2'</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> order_info <span class="keyword">values</span> (<span class="number">3</span>,<span class="string">'u0001'</span>,<span class="number">300</span>,<span class="string">'2018-1-2'</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> order_info <span class="keyword">values</span> (<span class="number">4</span>,<span class="string">'u0001'</span>,<span class="number">800</span>,<span class="string">'2018-1-10'</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> order_info <span class="keyword">values</span> (<span class="number">5</span>,<span class="string">'u0001'</span>,<span class="number">900</span>,<span class="string">'2018-1-20'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> order_info <span class="keyword">values</span> (<span class="number">6</span>,<span class="string">'u0002'</span>,<span class="number">500</span>,<span class="string">'2018-1-5'</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> order_info <span class="keyword">values</span> (<span class="number">7</span>,<span class="string">'u0002'</span>,<span class="number">600</span>,<span class="string">'2018-1-6'</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> order_info <span class="keyword">values</span> (<span class="number">8</span>,<span class="string">'u0002'</span>,<span class="number">300</span>,<span class="string">'2018-1-10'</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> order_info <span class="keyword">values</span> (<span class="number">9</span>,<span class="string">'u0002'</span>,<span class="number">800</span>,<span class="string">'2018-1-16'</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> order_info <span class="keyword">values</span> (<span class="number">10</span>,<span class="string">'u0002'</span>,<span class="number">800</span>,<span class="string">'2018-1-22'</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="窗口函数使用实例"><a href="#窗口函数使用实例" class="headerlink" title="窗口函数使用实例"></a>窗口函数使用实例</h2><h3 id="序号函数"><a href="#序号函数" class="headerlink" title="序号函数"></a>序号函数</h3><h4 id="row-number"><a href="#row-number" class="headerlink" title="row_number()"></a>row_number()</h4><p>应用场景：求每个用户的最新的一个订单。</p>
+<p>思路：使用<code>row_number() over(partition by user_no order by create_date desc) as row_num</code>给原始记录编一个号，然后取第一个编号的数据，自然就是“用户的最新的一条订单”。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * </span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">(</span><br><span class="line">    <span class="keyword">select</span> row_number() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> create_date <span class="keyword">desc</span>) <span class="keyword">as</span> row_num,order_id,user_no,amount,create_date</span><br><span class="line">    <span class="keyword">from</span> order_info</span><br><span class="line">) <span class="keyword">as</span> t </span><br><span class="line"><span class="keyword">where</span> row_num=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+---------+----------+---------+--------+---------------------+</span><br><span class="line">| row_num | order_id | user_no | amount | create_date         |</span><br><span class="line">+---------+----------+---------+--------+---------------------+</span><br><span class="line">|       1 |        5 | u0001   |    900 | 2018-01-20 00:00:00 |</span><br><span class="line">|       1 |       10 | u0002   |    800 | 2018-01-22 00:00:00 |</span><br><span class="line">+---------+----------+---------+--------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<p><code>row_number()</code>：(分组)排序编号。</p>
+<p>正如上面的例子， <code>row_number()over(partition by user_no order by create_date desc) as row_num</code>，按照用户分组，按照create_date排序，对已有数据生成一个编号。当然也可以不分组，对整体进行排序。任何一个窗口函数，都可以分组统计或者不分组统计（也即可以不要partition by ***都可以，看你的需求了）。</p>
+<h4 id="rank"><a href="#rank" class="headerlink" title="rank()"></a>rank()</h4><p>类似于 row_number()，也是排序功能，但是rank()有什么不一样？</p>
+<p>如果再往测试表中写入一条数据：<code>insert into order_info values (11,&#39;u0002&#39;,800,&#39;2018-1-22&#39;);</code>对于测试表中的U002用户来说，有两条create_date完全一样的数据（假设有这样的数据），那么在row_number()编号的时候，这两条数据却被编了两个不同的号。理论上讲，这两条的数据的排名是并列最新的。因此rank()就是为了解决这个问题的，也即：排序条件一样的情况下，其编号也一样。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * </span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">(</span><br><span class="line">    <span class="keyword">select</span> <span class="keyword">rank</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> create_date <span class="keyword">desc</span>) <span class="keyword">as</span> row_num,order_id,user_no,amount,create_date</span><br><span class="line">    <span class="keyword">from</span> order_info</span><br><span class="line">) <span class="keyword">as</span> t;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+---------+----------+---------+--------+---------------------+</span><br><span class="line">| row_num | order_id | user_no | amount | create_date         |</span><br><span class="line">+---------+----------+---------+--------+---------------------+</span><br><span class="line">|       1 |        5 | u0001   |    900 | 2018-01-20 00:00:00 |</span><br><span class="line">|       2 |        4 | u0001   |    800 | 2018-01-10 00:00:00 |</span><br><span class="line">|       3 |        2 | u0001   |    300 | 2018-01-02 00:00:00 |</span><br><span class="line">|       3 |        3 | u0001   |    300 | 2018-01-02 00:00:00 |</span><br><span class="line">|       5 |        1 | u0001   |    100 | 2018-01-01 00:00:00 |</span><br><span class="line">|       1 |       10 | u0002   |    800 | 2018-01-22 00:00:00 |</span><br><span class="line">|       2 |        9 | u0002   |    800 | 2018-01-16 00:00:00 |</span><br><span class="line">|       3 |        8 | u0002   |    300 | 2018-01-10 00:00:00 |</span><br><span class="line">|       4 |        7 | u0002   |    600 | 2018-01-06 00:00:00 |</span><br><span class="line">|       5 |        6 | u0002   |    500 | 2018-01-05 00:00:00 |</span><br><span class="line">+---------+----------+---------+--------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<h4 id="dense-rank"><a href="#dense-rank" class="headerlink" title="dense_rank()"></a>dense_rank()</h4><p>dense_rank()的出现是为了解决rank()编号存在的问题的，rank()编号的时候存在跳号的问题，如果有两个并列第1，那么下一个名次的编号就是3，结果就是没有编号为2的数据。如果不想跳号，可以使用dense_rank()替代。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * </span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">(</span><br><span class="line">    <span class="keyword">select</span> <span class="keyword">dense_rank</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> create_date <span class="keyword">desc</span>) <span class="keyword">as</span> row_num,order_id,user_no,amount,create_date</span><br><span class="line">    <span class="keyword">from</span> order_info</span><br><span class="line">) <span class="keyword">as</span> t;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+---------+----------+---------+--------+---------------------+</span><br><span class="line">| row_num | order_id | user_no | amount | create_date         |</span><br><span class="line">+---------+----------+---------+--------+---------------------+</span><br><span class="line">|       1 |        5 | u0001   |    900 | 2018-01-20 00:00:00 |</span><br><span class="line">|       2 |        4 | u0001   |    800 | 2018-01-10 00:00:00 |</span><br><span class="line">|       3 |        2 | u0001   |    300 | 2018-01-02 00:00:00 |</span><br><span class="line">|       3 |        3 | u0001   |    300 | 2018-01-02 00:00:00 |</span><br><span class="line">|       4 |        1 | u0001   |    100 | 2018-01-01 00:00:00 |</span><br><span class="line">|       1 |       10 | u0002   |    800 | 2018-01-22 00:00:00 |</span><br><span class="line">|       2 |        9 | u0002   |    800 | 2018-01-16 00:00:00 |</span><br><span class="line">|       3 |        8 | u0002   |    300 | 2018-01-10 00:00:00 |</span><br><span class="line">|       4 |        7 | u0002   |    600 | 2018-01-06 00:00:00 |</span><br><span class="line">|       5 |        6 | u0002   |    500 | 2018-01-05 00:00:00 |</span><br><span class="line">+---------+----------+---------+--------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="分布函数cume-dist"><a href="#分布函数cume-dist" class="headerlink" title="分布函数cume_dist()"></a>分布函数cume_dist()</h3><p>用途：分组内大于等于当前rank值的行数/分组内总行数。</p>
+<p>应用场景：大于等于当前订单金额的订单比例有多少。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line"><span class="keyword">rank</span>() <span class="keyword">over</span> w <span class="keyword">as</span> row_num,</span><br><span class="line"><span class="keyword">cume_dist</span>() <span class="keyword">over</span> w <span class="keyword">as</span> <span class="keyword">percent</span>,</span><br><span class="line">order_id,user_no,amount,create_date</span><br><span class="line"><span class="keyword">from</span> order_info</span><br><span class="line"><span class="keyword">window</span> w <span class="keyword">as</span> (<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> amount <span class="keyword">desc</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+---------+---------+----------+---------+--------+---------------------+</span><br><span class="line">| row_num | percent | order_id | user_no | amount | create_date         |</span><br><span class="line">+---------+---------+----------+---------+--------+---------------------+</span><br><span class="line">|       1 |     0.2 |        5 | u0001   |    900 | 2018-01-20 00:00:00 |</span><br><span class="line">|       2 |     0.4 |        4 | u0001   |    800 | 2018-01-10 00:00:00 |</span><br><span class="line">|       3 |     0.8 |        2 | u0001   |    300 | 2018-01-02 00:00:00 |</span><br><span class="line">|       3 |     0.8 |        3 | u0001   |    300 | 2018-01-02 00:00:00 |</span><br><span class="line">|       5 |       1 |        1 | u0001   |    100 | 2018-01-01 00:00:00 |</span><br><span class="line">|       1 |     0.4 |        9 | u0002   |    800 | 2018-01-16 00:00:00 |</span><br><span class="line">|       1 |     0.4 |       10 | u0002   |    800 | 2018-01-22 00:00:00 |</span><br><span class="line">|       3 |     0.6 |        7 | u0002   |    600 | 2018-01-06 00:00:00 |</span><br><span class="line">|       4 |     0.8 |        6 | u0002   |    500 | 2018-01-05 00:00:00 |</span><br><span class="line">|       5 |       1 |        8 | u0002   |    300 | 2018-01-10 00:00:00 |</span><br><span class="line">+---------+---------+----------+---------+--------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="聚合函数avg-、sum-、max-、min"><a href="#聚合函数avg-、sum-、max-、min" class="headerlink" title="聚合函数avg()、sum()、max()、min()"></a>聚合函数avg()、sum()、max()、min()</h3><p>我们可以在聚合函数中使用窗口功能，比如<code>sum(amount)over(partition by user_no order by create_date) as sum_amont</code>，达到一个累积计算sum的功能。这种需求在没有窗口函数的情况下，用纯sql写起来很麻烦。</p>
+<p>应用场景：每个用户按照订单id，截止到当前的累计订单金额/平均订单金额/最大订单金额/最小订单金额/订单数是多少？</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">order_id,user_no,amount,create_date,</span><br><span class="line"><span class="keyword">sum</span>(amount) <span class="keyword">over</span> w <span class="keyword">as</span> sum_amount,</span><br><span class="line"><span class="keyword">avg</span>(amount) <span class="keyword">over</span> w <span class="keyword">as</span> avg_amount,</span><br><span class="line"><span class="keyword">max</span>(amount) <span class="keyword">over</span> w <span class="keyword">as</span> max_amount,</span><br><span class="line"><span class="keyword">min</span>(amount) <span class="keyword">over</span> w <span class="keyword">as</span> min_amount</span><br><span class="line"><span class="keyword">from</span> order_info</span><br><span class="line"><span class="keyword">window</span> w <span class="keyword">as</span> (<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> create_date <span class="keyword">desc</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+----------+---------+--------+---------------------+------------+------------+------------+------------+</span><br><span class="line">| order_id | user_no | amount | create_date         | sum_amount | avg_amount | max_amount | min_amount |</span><br><span class="line">+----------+---------+--------+---------------------+------------+------------+------------+------------+</span><br><span class="line">|        5 | u0001   |    900 | 2018-01-20 00:00:00 |        900 |   900.0000 |        900 |        900 |</span><br><span class="line">|        4 | u0001   |    800 | 2018-01-10 00:00:00 |       1700 |   850.0000 |        900 |        800 |</span><br><span class="line">|        2 | u0001   |    300 | 2018-01-02 00:00:00 |       2300 |   575.0000 |        900 |        300 |</span><br><span class="line">|        3 | u0001   |    300 | 2018-01-02 00:00:00 |       2300 |   575.0000 |        900 |        300 |</span><br><span class="line">|        1 | u0001   |    100 | 2018-01-01 00:00:00 |       2400 |   480.0000 |        900 |        100 |</span><br><span class="line">|       10 | u0002   |    800 | 2018-01-22 00:00:00 |        800 |   800.0000 |        800 |        800 |</span><br><span class="line">|        9 | u0002   |    800 | 2018-01-16 00:00:00 |       1600 |   800.0000 |        800 |        800 |</span><br><span class="line">|        8 | u0002   |    300 | 2018-01-10 00:00:00 |       1900 |   633.3333 |        800 |        300 |</span><br><span class="line">|        7 | u0002   |    600 | 2018-01-06 00:00:00 |       2500 |   625.0000 |        800 |        300 |</span><br><span class="line">|        6 | u0002   |    500 | 2018-01-05 00:00:00 |       3000 |   600.0000 |        800 |        300 |</span><br><span class="line">+----------+---------+--------+---------------------+------------+------------+------------+------------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="前后函数lag-、lead"><a href="#前后函数lag-、lead" class="headerlink" title="前后函数lag()、lead()"></a>前后函数lag()、lead()</h3><ul>
+<li>lag(column,n)获取当前数据行按照某种排序规则的上n行数据的某个字段</li>
+<li>lead(column,n)获取当前数据行按照某种排序规则的下n行数据的某个字段</li>
+</ul>
+<p>应用场景：按照时间排序，获取当前订单的上一笔订单发生时间和下一笔订单发生时间，（可以计算订单的时间上的间隔度或者说买买买的频繁程度）。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">order_id,user_no,amount,create_date,</span><br><span class="line">lag(create_date,<span class="number">1</span>) <span class="keyword">over</span> w <span class="string">'last_transaction_time'</span>,</span><br><span class="line"><span class="keyword">lead</span>(create_date,<span class="number">1</span>) <span class="keyword">over</span> w <span class="string">'next_transaction_time'</span></span><br><span class="line"><span class="keyword">from</span> order_info</span><br><span class="line"><span class="keyword">window</span> w <span class="keyword">as</span> (<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> create_date <span class="keyword">asc</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+----------+---------+--------+---------------------+-----------------------+-----------------------+</span><br><span class="line">| order_id | user_no | amount | create_date         | last_transaction_time | next_transaction_time |</span><br><span class="line">+----------+---------+--------+---------------------+-----------------------+-----------------------+</span><br><span class="line">|        1 | u0001   |    100 | 2018-01-01 00:00:00 | NULL                  | 2018-01-02 00:00:00   |</span><br><span class="line">|        2 | u0001   |    300 | 2018-01-02 00:00:00 | 2018-01-01 00:00:00   | 2018-01-02 00:00:00   |</span><br><span class="line">|        3 | u0001   |    300 | 2018-01-02 00:00:00 | 2018-01-02 00:00:00   | 2018-01-10 00:00:00   |</span><br><span class="line">|        4 | u0001   |    800 | 2018-01-10 00:00:00 | 2018-01-02 00:00:00   | 2018-01-20 00:00:00   |</span><br><span class="line">|        5 | u0001   |    900 | 2018-01-20 00:00:00 | 2018-01-10 00:00:00   | NULL                  |</span><br><span class="line">|        6 | u0002   |    500 | 2018-01-05 00:00:00 | NULL                  | 2018-01-06 00:00:00   |</span><br><span class="line">|        7 | u0002   |    600 | 2018-01-06 00:00:00 | 2018-01-05 00:00:00   | 2018-01-10 00:00:00   |</span><br><span class="line">|        8 | u0002   |    300 | 2018-01-10 00:00:00 | 2018-01-06 00:00:00   | 2018-01-16 00:00:00   |</span><br><span class="line">|        9 | u0002   |    800 | 2018-01-16 00:00:00 | 2018-01-10 00:00:00   | 2018-01-22 00:00:00   |</span><br><span class="line">|       10 | u0002   |    800 | 2018-01-22 00:00:00 | 2018-01-16 00:00:00   | NULL                  |</span><br><span class="line">+----------+---------+--------+---------------------+-----------------------+-----------------------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="头尾函数first-value-、last-value"><a href="#头尾函数first-value-、last-value" class="headerlink" title="头尾函数first_value()、last_value()"></a>头尾函数first_value()、last_value()</h3><p>头尾函数可以得到分区中的第一个/最后一个指定参数的值。</p>
+<p>应用场景：查询截止到当前订单，按照日期排序第一个订单和最后一个订单的订单金额。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">order_id,user_no,amount,create_date,</span><br><span class="line"><span class="keyword">first_value</span>(create_date) <span class="keyword">over</span> w <span class="string">'first_transaction_time'</span>,</span><br><span class="line"><span class="keyword">last_value</span>(create_date) <span class="keyword">over</span> w <span class="string">'last_transaction_time'</span></span><br><span class="line"><span class="keyword">from</span> order_info</span><br><span class="line"><span class="keyword">window</span> w <span class="keyword">as</span> (<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> create_date <span class="keyword">asc</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+----------+---------+--------+---------------------+------------------------+-----------------------+</span><br><span class="line">| order_id | user_no | amount | create_date         | first_transaction_time | last_transaction_time |</span><br><span class="line">+----------+---------+--------+---------------------+------------------------+-----------------------+</span><br><span class="line">|        1 | u0001   |    100 | 2018-01-01 00:00:00 | 2018-01-01 00:00:00    | 2018-01-01 00:00:00   |</span><br><span class="line">|        2 | u0001   |    300 | 2018-01-02 00:00:00 | 2018-01-01 00:00:00    | 2018-01-02 00:00:00   |</span><br><span class="line">|        3 | u0001   |    300 | 2018-01-02 00:00:00 | 2018-01-01 00:00:00    | 2018-01-02 00:00:00   |</span><br><span class="line">|        4 | u0001   |    800 | 2018-01-10 00:00:00 | 2018-01-01 00:00:00    | 2018-01-10 00:00:00   |</span><br><span class="line">|        5 | u0001   |    900 | 2018-01-20 00:00:00 | 2018-01-01 00:00:00    | 2018-01-20 00:00:00   |</span><br><span class="line">|        6 | u0002   |    500 | 2018-01-05 00:00:00 | 2018-01-05 00:00:00    | 2018-01-05 00:00:00   |</span><br><span class="line">|        7 | u0002   |    600 | 2018-01-06 00:00:00 | 2018-01-05 00:00:00    | 2018-01-06 00:00:00   |</span><br><span class="line">|        8 | u0002   |    300 | 2018-01-10 00:00:00 | 2018-01-05 00:00:00    | 2018-01-10 00:00:00   |</span><br><span class="line">|        9 | u0002   |    800 | 2018-01-16 00:00:00 | 2018-01-05 00:00:00    | 2018-01-16 00:00:00   |</span><br><span class="line">|       10 | u0002   |    800 | 2018-01-22 00:00:00 | 2018-01-05 00:00:00    | 2018-01-22 00:00:00   |</span><br><span class="line">+----------+---------+--------+---------------------+------------------------+-----------------------+</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：如果不加<code>order by</code>, 就没有窗口，计算范围是整个分区；如果加上<code>order by</code>, 默认窗口是<code>range between unbounded preceding and  current row</code>，就是排序后从分区第一行一直到当前行为止</strong>。</p>
+<p>由于我们需要求的是每个用户的第一个和最后一个订单，所以这里要指定窗口：从第一行<code>unbounded preceding</code>到最后一行<code>unbounded following</code>。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">order_id,user_no,amount,create_date,</span><br><span class="line"><span class="keyword">first_value</span>(create_date) <span class="keyword">over</span> w <span class="string">'first_transaction_time'</span>,</span><br><span class="line"><span class="keyword">last_value</span>(create_date) <span class="keyword">over</span> w <span class="string">'last_transaction_time'</span></span><br><span class="line"><span class="keyword">from</span> order_info</span><br><span class="line"><span class="keyword">window</span> w <span class="keyword">as</span> (<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> create_date <span class="keyword">asc</span> <span class="keyword">rows</span> <span class="keyword">between</span> <span class="keyword">unbounded</span> <span class="keyword">preceding</span> <span class="keyword">and</span> <span class="keyword">unbounded</span> <span class="keyword">following</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+----------+---------+--------+---------------------+------------------------+-----------------------+</span><br><span class="line">| order_id | user_no | amount | create_date         | first_transaction_time | last_transaction_time |</span><br><span class="line">+----------+---------+--------+---------------------+------------------------+-----------------------+</span><br><span class="line">|        1 | u0001   |    100 | 2018-01-01 00:00:00 | 2018-01-01 00:00:00    | 2018-01-20 00:00:00   |</span><br><span class="line">|        2 | u0001   |    300 | 2018-01-02 00:00:00 | 2018-01-01 00:00:00    | 2018-01-20 00:00:00   |</span><br><span class="line">|        3 | u0001   |    300 | 2018-01-02 00:00:00 | 2018-01-01 00:00:00    | 2018-01-20 00:00:00   |</span><br><span class="line">|        4 | u0001   |    800 | 2018-01-10 00:00:00 | 2018-01-01 00:00:00    | 2018-01-20 00:00:00   |</span><br><span class="line">|        5 | u0001   |    900 | 2018-01-20 00:00:00 | 2018-01-01 00:00:00    | 2018-01-20 00:00:00   |</span><br><span class="line">|        6 | u0002   |    500 | 2018-01-05 00:00:00 | 2018-01-05 00:00:00    | 2018-01-22 00:00:00   |</span><br><span class="line">|        7 | u0002   |    600 | 2018-01-06 00:00:00 | 2018-01-05 00:00:00    | 2018-01-22 00:00:00   |</span><br><span class="line">|        8 | u0002   |    300 | 2018-01-10 00:00:00 | 2018-01-05 00:00:00    | 2018-01-22 00:00:00   |</span><br><span class="line">|        9 | u0002   |    800 | 2018-01-16 00:00:00 | 2018-01-05 00:00:00    | 2018-01-22 00:00:00   |</span><br><span class="line">|       10 | u0002   |    800 | 2018-01-22 00:00:00 | 2018-01-05 00:00:00    | 2018-01-22 00:00:00   |</span><br><span class="line">+----------+---------+--------+---------------------+------------------------+-----------------------+</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://dbaplus.cn/news-11-2258-1.html" target="_blank" rel="noopener external nofollow noreferrer">MySQL 8.0 窗口函数：用非常规思维简易实现SQL需求</a></li>
+<li><a href="https://www.linuxidc.com/Linux/2018-03/151389.htm" target="_blank" rel="noopener external nofollow noreferrer">MySQL 8.0 新增SQL语法对窗口函数和CTE的支持</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\53e2b511.html" rel="bookmark">MySQL求中位数、众数</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\9460c0a9.html" rel="bookmark">MySQL练习题50道</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\af2fef58.html" rel="bookmark">MySQL嵌套子查询和相关子查询执行过程的区别</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\6ab9ebc9.html" rel="bookmark">MySQL中的GROUP BY获取其他字段方法</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\50fcee2f.html" rel="bookmark">MySQL语句执行顺序</a></div>
+    </li>
+  </ul>
+<div>
+    
+        <div class="end-slogan" style="text-align:center;font-size:22px;letter-spacing:10px;user-select:none;color:#bbb;"><br/>----------- 本文结束啦<i class="fa fa-star"></i>感谢您阅读 -----------<br/><br/></div>
+    
+</div> 
+        <div class="reward-container">
+  <div>赞赏一杯咖啡</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="小丁 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="小丁 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小丁
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tding.top/archives/c6e31643.html" title="MySQL窗口函数">https://tding.top/archives/c6e31643.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/atom.xml">
+                <span class="icon">
+                  <i class="fa fa-rss"></i>
+                </span>
+
+                <span class="label">RSS</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/12a4e7e6.html" rel="prev" title="Hexo博客部署到VPS">
+      <i class="fa fa-chevron-left"></i> Hexo博客部署到VPS
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/7696c13f.html" rel="next" title="Hexo-NexT添加第三方服务">
+      Hexo-NexT添加第三方服务 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#窗口函数简介"><span class="nav-number">1.</span> <span class="nav-text">窗口函数简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么叫窗口"><span class="nav-number">1.1.</span> <span class="nav-text">什么叫窗口?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#窗口函数和普通聚合函数的区别"><span class="nav-number">1.2.</span> <span class="nav-text">窗口函数和普通聚合函数的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#窗口函数的类别"><span class="nav-number">1.3.</span> <span class="nav-text">窗口函数的类别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#窗口函数基本用法"><span class="nav-number">1.4.</span> <span class="nav-text">窗口函数基本用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试数据"><span class="nav-number">2.</span> <span class="nav-text">测试数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窗口函数使用实例"><span class="nav-number">3.</span> <span class="nav-text">窗口函数使用实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序号函数"><span class="nav-number">3.1.</span> <span class="nav-text">序号函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#row-number"><span class="nav-number">3.1.1.</span> <span class="nav-text">row_number()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rank"><span class="nav-number">3.1.2.</span> <span class="nav-text">rank()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dense-rank"><span class="nav-number">3.1.3.</span> <span class="nav-text">dense_rank()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布函数cume-dist"><span class="nav-number">3.2.</span> <span class="nav-text">分布函数cume_dist()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#聚合函数avg-、sum-、max-、min"><span class="nav-number">3.3.</span> <span class="nav-text">聚合函数avg()、sum()、max()、min()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前后函数lag-、lead"><span class="nav-number">3.4.</span> <span class="nav-text">前后函数lag()、lead()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#头尾函数first-value-、last-value"><span class="nav-number">3.5.</span> <span class="nav-text">头尾函数first_value()、last_value()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">166</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/290f3ac4.html" title="梅花品种-3系5类18型" target="_blank">梅花品种-3系5类18型</a>
+          </li>
+        
+          <li>
+            <a href="/archives/d179c86b.html" title="LeanCloud云引擎因流控无法唤醒解决方案" target="_blank">LeanCloud云引擎因流控无法唤醒解决方案</a>
+          </li>
+        
+          <li>
+            <a href="/archives/192fb032.html" title="Word公式如何多行对齐" target="_blank">Word公式如何多行对齐</a>
+          </li>
+        
+          <li>
+            <a href="/archives/ee1790c8.html" title="Word题注对图表进行自动化标号" target="_blank">Word题注对图表进行自动化标号</a>
+          </li>
+        
+          <li>
+            <a href="/archives/e1eb25a0.html" title="新冠肺炎疫情数据可视化" target="_blank">新冠肺炎疫情数据可视化</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">878k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:18</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 19729,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/archives/c6e31643.html',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/archives/c6e31643.html";
+    this.page.identifier = "archives/c6e31643.html";
+    this.page.title = "MySQL窗口函数";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>

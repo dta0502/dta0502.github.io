@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="这是我在Yilia这个主题下的参考很多前人的经验并且在个人博客上验证的功能的记录。其中实现了：  多层分类页面的构建 点击所有文章提示缺失模块问题解决 头像&#x2F;图标设置 gitalk评论系统添加 侧边栏添加音乐 页面&#x2F;文章访问量添加 网站运行时间添加 文章字数&#x2F;阅读时长添加 文章版权信息添加 SEO优化（添加sitemap、url持久化） 鼠标点击小红心设置 代码块行号错乱问题解决 相册功能添加 R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo-Yilia进阶笔记">
+<meta property="og:url" content="https://tding.top/archives/9a232bbe.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="这是我在Yilia这个主题下的参考很多前人的经验并且在个人博客上验证的功能的记录。其中实现了：  多层分类页面的构建 点击所有文章提示缺失模块问题解决 头像&#x2F;图标设置 gitalk评论系统添加 侧边栏添加音乐 页面&#x2F;文章访问量添加 网站运行时间添加 文章字数&#x2F;阅读时长添加 文章版权信息添加 SEO优化（添加sitemap、url持久化） 鼠标点击小红心设置 代码块行号错乱问题解决 相册功能添加 R">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tding.top/archives/9a232bbe/%E4%BB%A3%E7%A0%81%E8%A1%8C%E5%87%BA%E9%94%99-%E4%BF%AE%E6%94%B9%E5%89%8D.png">
+<meta property="og:image" content="https://tding.top/archives/9a232bbe/%E4%BB%A3%E7%A0%81%E8%A1%8C%E5%87%BA%E9%94%99-%E4%BF%AE%E6%94%B9%E5%90%8E.png">
+<meta property="article:published_time" content="2019-04-24T14:56:31.000Z">
+<meta property="article:modified_time" content="2020-02-09T04:44:08.000Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Yilia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tding.top/archives/9a232bbe/%E4%BB%A3%E7%A0%81%E8%A1%8C%E5%87%BA%E9%94%99-%E4%BF%AE%E6%94%B9%E5%89%8D.png">
+
+<link rel="canonical" href="https://tding.top/archives/9a232bbe.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>Hexo-Yilia进阶笔记 | 小丁的个人博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">100</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">58</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">166</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tding.top/archives/9a232bbe.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="小丁">
+      <meta itemprop="description" content="酒，越喝越暖，水会越喝越寒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小丁的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Hexo-Yilia进阶笔记
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-24 22:56:31" itemprop="dateCreated datePublished" datetime="2019-04-24T22:56:31+08:00">2019-04-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/9a232bbe.html" class="post-meta-item leancloud_visitors" data-flag-title="Hexo-Yilia进阶笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/archives/9a232bbe.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="archives/9a232bbe.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/9a232bbe.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/9a232bbe.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>17k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>16 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>这是我在Yilia这个主题下的参考很多前人的经验并且在个人博客上验证的功能的记录。其中实现了：</p>
+<ul>
+<li><strong>多层分类页面的构建</strong></li>
+<li><strong><code>点击所有文章提示缺失模块</code>问题解决</strong></li>
+<li><strong>头像/图标设置</strong></li>
+<li><strong>gitalk评论系统添加</strong></li>
+<li><strong>侧边栏添加音乐</strong></li>
+<li><strong>页面/文章访问量添加</strong></li>
+<li><strong>网站运行时间添加</strong></li>
+<li><strong>文章字数/阅读时长添加</strong></li>
+<li><strong>文章版权信息添加</strong></li>
+<li><strong>SEO优化（添加sitemap、url持久化）</strong></li>
+<li><strong>鼠标点击小红心设置</strong></li>
+<li><strong><code>代码块行号错乱</code>问题解决</strong></li>
+<li><strong>相册功能添加</strong></li>
+<li><strong>RSS功能添加</strong></li>
+<li><strong>谷歌统计添加</strong></li>
+</ul>
+<a id="more"></a>
+
+<h2 id="一、GitHub下载Yilia主题"><a href="#一、GitHub下载Yilia主题" class="headerlink" title="一、GitHub下载Yilia主题"></a>一、GitHub下载Yilia主题</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /d/document/GitHub/hexo/</span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接去GitHub上下载zip文件，然后解压放在theme文件夹下面。</p>
+<h2 id="二、分类的构建"><a href="#二、分类的构建" class="headerlink" title="二、分类的构建"></a>二、分类的构建</h2><h3 id="1、添加categories链接"><a href="#1、添加categories链接" class="headerlink" title="1、添加categories链接"></a>1、添加categories链接</h3><p>打开<code>yilia/_config.yml</code>文件，menu处做出以下修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  主页: &#x2F;</span><br><span class="line">  分类: &#x2F;categories</span><br><span class="line">  归档: &#x2F;archives</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、分类页面的构建"><a href="#2、分类页面的构建" class="headerlink" title="2、分类页面的构建"></a>2、分类页面的构建</h3><ul>
+<li>新建categories页面</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
+
+<p>该命令在source目录下生成一个categories目录，categories目录下有一个index.md文件。</p>
+<ul>
+<li>修改categories/index.md为：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章分类</span><br><span class="line">date: 2018-06-11 10:13:21</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>生成html</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>访问 <code>http://localhost:4000/categories/</code> ，即可看到categories页面，只不过现在的页面只有标题。</p>
+<h3 id="3、修改-yilia-主题"><a href="#3、修改-yilia-主题" class="headerlink" title="3、修改 yilia 主题"></a>3、修改 yilia 主题</h3><p>修改<code>yilia\source\main.0cf68a.css</code>，将下面的内容添加进去：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">category-all-page</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">30px</span> <span class="number">40px</span> <span class="number">30px</span> <span class="number">40px</span>;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">70vh</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-tag">h2</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">20px</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-all-title</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-all</span> &#123;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">20px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-item-list-item</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">15px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-item-list-count</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: $grey;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-item-list-count</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">" ("</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-item-list-count</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">") "</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-item</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">10px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-count</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: $grey;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-count</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">" ("</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-count</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">") "</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.category-all-page</span> <span class="selector-class">.category-list-child</span> &#123;</span><br><span class="line">    <span class="attribute">padding-left</span>: <span class="number">10px</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、多层分类"><a href="#4、多层分类" class="headerlink" title="4、多层分类"></a>4、多层分类</h3><p>新建<code>yilia/layout/categories.ejs</code>，输入：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">"article article-type-post show"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">header</span> <span class="attr">class</span>=<span class="string">"article-header"</span> <span class="attr">style</span>=<span class="string">"border-bottom: 1px solid #ccc"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"article-title"</span> <span class="attr">itemprop</span>=<span class="string">"name"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%=</span> <span class="attr">page.title</span> %&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (<span class="attr">site.categories.length</span>)&#123; %&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"category-all-page"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>共计<span class="symbol">&amp;nbsp;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">site.categories.length</span> %&gt;</span><span class="symbol">&amp;nbsp;</span>个分类<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%-</span> <span class="attr">list_categories</span>(<span class="attr">site.categories</span>, &#123;</span></span><br><span class="line"><span class="tag">      <span class="attr">show_count:</span> <span class="attr">true</span>,</span></span><br><span class="line"><span class="tag">      <span class="attr">class:</span> '<span class="attr">category-list-item</span>',</span></span><br><span class="line"><span class="tag">      <span class="attr">style:</span> '<span class="attr">list</span>',</span></span><br><span class="line"><span class="tag">      <span class="attr">depth:</span> <span class="attr">2</span>,</span></span><br><span class="line"><span class="tag">      <span class="attr">separator:</span> ''</span></span><br><span class="line"><span class="tag">    &#125;) %&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5、修改自己的文章"><a href="#5、修改自己的文章" class="headerlink" title="5、修改自己的文章"></a>5、修改自己的文章</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">title: HTML入门笔记</span><br><span class="line"></span><br><span class="line">copyright: true</span><br><span class="line">date: 2018-11-23 21:07:15</span><br><span class="line"></span><br><span class="line">toc: true</span><br><span class="line">tags: [HTML,前端]</span><br><span class="line">categories: [前端,HTML]</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三、yilia下的-config-yml完善"><a href="#三、yilia下的-config-yml完善" class="headerlink" title="三、yilia下的_config.yml完善"></a>三、yilia下的_config.yml完善</h2><p><code>subnav</code>中添加github、知乎、mail等链接。</p>
+<p><code>smart_menu</code>处去掉friends：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">smart_menu:</span><br><span class="line">  innerArchive: &#39;所有文章&#39;</span><br><span class="line">  friends: false</span><br><span class="line">  aboutme: &#39;关于我&#39;</span><br></pre></td></tr></table></figure>
+
+<p><code>aboutme</code>处添加自己的介绍：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aboutme: 一只菜鸡</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="四、点击所有文章提示缺失模块"><a href="#四、点击所有文章提示缺失模块" class="headerlink" title="四、点击所有文章提示缺失模块"></a>四、点击所有文章提示缺失模块</h2><h3 id="1、问题"><a href="#1、问题" class="headerlink" title="1、问题"></a>1、问题</h3><p>点击<code>所有文章</code>提示缺失模块</p>
+<h3 id="2、解决办法"><a href="#2、解决办法" class="headerlink" title="2、解决办法"></a>2、解决办法</h3><ul>
+<li>确保node版本大于6.2</li>
+<li>在博客根目录（注意不是yilia根目录）执行以下命令：<code>npm install hexo-generator-json-content --save</code></li>
+<li>在hexo的blog根目录<code>_config.yml</code>里添加配置（保持格式，不要改动任何空格缩进），关掉<code>hexo s</code>之后执行<code>hexo g</code>重新生成：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">jsonContent:</span><br><span class="line">  meta: false</span><br><span class="line">  pages: false</span><br><span class="line">  posts:</span><br><span class="line">    title: true</span><br><span class="line">    date: true</span><br><span class="line">    path: true</span><br><span class="line">    text: false</span><br><span class="line">    raw: false</span><br><span class="line">    content: false</span><br><span class="line">    slug: false</span><br><span class="line">    updated: false</span><br><span class="line">    comments: false</span><br><span class="line">    link: false</span><br><span class="line">    permalink: false</span><br><span class="line">    excerpt: false</span><br><span class="line">    categories: false</span><br><span class="line">    tags: true</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="五、头像-图标设置"><a href="#五、头像-图标设置" class="headerlink" title="五、头像/图标设置"></a>五、头像/图标设置</h2><h3 id="1、存放位置"><a href="#1、存放位置" class="headerlink" title="1、存放位置"></a>1、存放位置</h3><p>头像、图标图片的存放位置是<code>/themes/yilia/source/</code>下任意位置，可以自己新建一个文件夹存放，我存放在<code>assets</code>文件夹下。</p>
+<h3 id="2、配置设置"><a href="#2、配置设置" class="headerlink" title="2、配置设置"></a>2、配置设置</h3><p>配置文件为<code>/themes/yilia/_config.yml</code>。</p>
+<ul>
+<li>设置头像为配置文件中<code>avatar</code>一项</li>
+<li>设置图标为配置文件中<code>favicon</code>一项</li>
+</ul>
+<p>由于设置路径的根目录<code>/themes/yilia/source/</code>，因此，我的头像存放的地址是<code>/themes/yilia/source/assets/me.png</code>，设置则为<code>avatar: /assets/me.png</code>。</p>
+<p>图标同理。</p>
+<h2 id="六、添加评论"><a href="#六、添加评论" class="headerlink" title="六、添加评论"></a>六、添加评论</h2><p>Gitalk 是一个基于 Github Issue 和 Preact 开发的评论插件。</p>
+<p>主页：<a href="https://github.com/gitalk/gitalk/blob/master/readme-cn.md" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/gitalk/gitalk/blob/master/readme-cn.md</a></p>
+<p>gitalk 需要添加的部分主页有详细介绍，这里只谈针对yilia需要的改动。</p>
+<h3 id="1、创建gitalk-ejs"><a href="#1、创建gitalk-ejs" class="headerlink" title="1、创建gitalk.ejs"></a>1、创建gitalk.ejs</h3><p>在你的hexo目录<code>/theme/yilia/layout/_partial/post/</code>目录下创建<code>gitalk.ejs</code>并写入如下内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"gitalk-container"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript"><span class="keyword">var</span> gitalk = <span class="keyword">new</span> Gitalk(&#123;</span></span><br><span class="line"><span class="actionscript">  clientID: <span class="string">'&lt;%=theme.gitalk.clientID%&gt;'</span>,</span></span><br><span class="line"><span class="actionscript">  clientSecret: <span class="string">'&lt;%=theme.gitalk.clientSecret%&gt;'</span>,</span></span><br><span class="line"><span class="actionscript">  repo: <span class="string">'&lt;%=theme.gitalk.repo%&gt;'</span>,</span></span><br><span class="line"><span class="actionscript">  owner: <span class="string">'&lt;%=theme.gitalk.owner%&gt;'</span>,</span></span><br><span class="line"><span class="actionscript">  admin: [<span class="string">'&lt;%=theme.gitalk.admin%&gt;'</span>],</span></span><br><span class="line"><span class="javascript">  id: md5(<span class="built_in">window</span>.location.pathname),</span></span><br><span class="line"><span class="javascript">  distractionFreeMode: <span class="xml"><span class="tag">&lt;<span class="name">%=theme.gitalk.distractionFreeMode%</span>&gt;</span></span></span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="actionscript">gitalk.render(<span class="string">'gitalk-container'</span>)</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、修改article-ejs"><a href="#2、修改article-ejs" class="headerlink" title="2、修改article.ejs"></a>2、修改article.ejs</h3><p>在你的hexo目录<code>/theme/yilia/layout/_partial/article.ejs</code>文件中最后一行<code>“&lt;% } %&gt;”</code>之前添加如下内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span>(<span class="attr">theme.gitalk.enable</span> &amp;&amp; <span class="attr">theme.gitalk.distractionFreeMode</span>)&#123; %&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>('<span class="attr">post</span>/<span class="attr">gitalk</span>', &#123;</span></span><br><span class="line"><span class="tag">      <span class="attr">key:</span> <span class="attr">post.slug</span>,</span></span><br><span class="line"><span class="tag">      <span class="attr">title:</span> <span class="attr">post.title</span>,</span></span><br><span class="line"><span class="tag">      <span class="attr">url:</span> <span class="attr">config.url</span>+<span class="attr">url_for</span>(<span class="attr">post.path</span>)</span></span><br><span class="line"><span class="tag">    &#125;) %&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3、添加配置文件"><a href="#3、添加配置文件" class="headerlink" title="3、添加配置文件"></a>3、添加配置文件</h3><p>在yilia的配置文件<code>_config.yml</code>中gitment配置下面添加如下配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#6. Gitalk</span><br><span class="line">gitalk: </span><br><span class="line">  enable: true    #用来做启用判断可以不用</span><br><span class="line">  clientID: &#39;your clientID&#39;    #Github上生成的</span><br><span class="line">  clientSecret: &#39;your clientSecret&#39;   #同上</span><br><span class="line">  repo: git_comment    #评论所在的github project</span><br><span class="line">  owner: findtheonlyway    #github用户名</span><br><span class="line">  admin: erbiduo    #可以初始化评论issue的github账户名称</span><br><span class="line">  distractionFreeMode: true</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="七、侧边栏添加音乐"><a href="#七、侧边栏添加音乐" class="headerlink" title="七、侧边栏添加音乐"></a>七、侧边栏添加音乐</h2><h3 id="1、网易云音乐外链播放器生成"><a href="#1、网易云音乐外链播放器生成" class="headerlink" title="1、网易云音乐外链播放器生成"></a>1、网易云音乐外链播放器生成</h3><p>登录网页版网易云音乐，打开一首歌，点击 “生成外链播放器”。</p>
+<h3 id="2、侧栏添加背景音乐"><a href="#2、侧栏添加背景音乐" class="headerlink" title="2、侧栏添加背景音乐"></a>2、侧栏添加背景音乐</h3><p>打开<code>/hexo/themes/yilia/layout/_partial/left-col.ejs</code>文件，把音乐HTML代码粘贴进去，可以添加样式，改变大小，这是我的代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"header-nav"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"social"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%</span> <span class="attr">for</span> (<span class="attr">var</span> <span class="attr">i</span> <span class="attr">in</span> <span class="attr">theme.subnav</span>)&#123; %&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"&lt;%= i %&gt;"</span> <span class="attr">target</span>=<span class="string">"_blank"</span> <span class="attr">href</span>=<span class="string">"&lt;%- url_for(theme.subnav[i]) %&gt;"</span> <span class="attr">title</span>=<span class="string">"&lt;%= i %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"icon-&lt;%= i %&gt;"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%&#125;%</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--音乐播放插件--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"margin-top:30px;"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">marginwidth</span>=<span class="string">"0"</span> <span class="attr">marginheight</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">240</span> <span class="attr">height</span>=<span class="string">52</span> <span class="attr">src</span>=<span class="string">"//music.163.com/outchain/player?type=2&amp;id=33035954&amp;auto=1&amp;height=32"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="八、添加页面访问量"><a href="#八、添加页面访问量" class="headerlink" title="八、添加页面访问量"></a>八、添加页面访问量</h2><h3 id="1、添加站点访问量"><a href="#1、添加站点访问量" class="headerlink" title="1、添加站点访问量"></a>1、添加站点访问量</h3><p>下面是个人改变完成后的<code>\themes\yilia\layout\_partial\footer.ejs</code>文件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">footer</span> <span class="attr">id</span>=<span class="string">"footer"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"outer"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"footer-info"</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"footer-left"</span>&gt;</span></span><br><span class="line">    		<span class="symbol">&amp;copy;</span> <span class="tag">&lt;<span class="name">%=</span> <span class="attr">date</span>(<span class="attr">new</span> <span class="attr">Date</span>(), '<span class="attr">YYYY</span>') %&gt;</span> <span class="tag">&lt;<span class="name">%=</span> <span class="attr">config.author</span> || <span class="attr">config.title</span> %&gt;</span></span><br><span class="line">    	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"footer-right"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">            <span class="tag">&lt;<span class="name">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">      		<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_site_pv"</span>&gt;</span></span><br><span class="line">                本站总访问量：<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_pv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>次</span><br><span class="line">            <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-divider"</span>&gt;</span>|<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_site_uv"</span>&gt;</span></span><br><span class="line">                本站访客数：<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_uv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>人</span><br><span class="line">            <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">      	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中空格间那部分是额外添加的，这部分处于页脚的右边（原来是主题的说明，这里已删去）。</p>
+<h3 id="2、添加文章访问量"><a href="#2、添加文章访问量" class="headerlink" title="2、添加文章访问量"></a>2、添加文章访问量</h3><p>下面是个人改变完成后的<code>\themes\yilia\layout\_partial\article.ejs</code>文件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">header</span> <span class="attr">class</span>=<span class="string">"article-header"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>('<span class="attr">post</span>/<span class="attr">title</span>', &#123;<span class="attr">class_name:</span> '<span class="attr">article-title</span>'&#125;) %&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (!<span class="attr">post.noDate</span>)&#123; %&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>('<span class="attr">post</span>/<span class="attr">date</span>', &#123;<span class="attr">class_name:</span> '<span class="attr">archive-article-date</span>', <span class="attr">date_format:</span> <span class="attr">null</span>&#125;) %&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> ( !<span class="attr">index</span> )&#123; %&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"archive-article-date"</span>&gt;</span></span><br><span class="line">        阅读量 <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_page_pv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>正如参考文章所说，空格间那部分是额外添加的，保证了每篇文章都有阅读量统计，同时这里加一个if判断，如果是首页不显示该文章的访问量。</p>
+<h2 id="九、Hexo-Yilia网站运行时间"><a href="#九、Hexo-Yilia网站运行时间" class="headerlink" title="九、Hexo-Yilia网站运行时间"></a>九、Hexo-Yilia网站运行时间</h2><p>在<code>hexo/themes/yelee/layout/_partial/footer.ejs</code>文件中<code>&lt;div class=&quot;footer-left&quot;&gt;</code>内（具体位置可自选）加入如下代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"timeDate"</span>&gt;</span>载入天数...<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"times"</span>&gt;</span>载入时分秒...<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">	<span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>(); </span></span><br><span class="line"><span class="actionscript">	<span class="function"><span class="keyword">function</span> <span class="title">createtime</span><span class="params">()</span> </span>&#123; </span></span><br><span class="line"><span class="javascript">		<span class="keyword">var</span> grt= <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"11/23/2018 20:00:00"</span>);<span class="comment">//此处修改你的建站时间或者网站上线时间 </span></span></span><br><span class="line">		now.setTime(now.getTime()+250); </span><br><span class="line"><span class="javascript">		days = (now - grt ) / <span class="number">1000</span> / <span class="number">60</span> / <span class="number">60</span> / <span class="number">24</span>; dnum = <span class="built_in">Math</span>.floor(days); </span></span><br><span class="line"><span class="javascript">		hours = (now - grt ) / <span class="number">1000</span> / <span class="number">60</span> / <span class="number">60</span> - (<span class="number">24</span> * dnum); hnum = <span class="built_in">Math</span>.floor(hours); </span></span><br><span class="line"><span class="javascript">		<span class="keyword">if</span>(<span class="built_in">String</span>(hnum).length ==<span class="number">1</span> )&#123;hnum = <span class="string">"0"</span> + hnum;&#125; minutes = (now - grt ) / <span class="number">1000</span> /<span class="number">60</span> - (<span class="number">24</span> * <span class="number">60</span> * dnum) - (<span class="number">60</span> * hnum); </span></span><br><span class="line"><span class="javascript">		mnum = <span class="built_in">Math</span>.floor(minutes); <span class="keyword">if</span>(<span class="built_in">String</span>(mnum).length ==<span class="number">1</span> )&#123;mnum = <span class="string">"0"</span> + mnum;&#125; </span></span><br><span class="line">		seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); </span><br><span class="line"><span class="javascript">		snum = <span class="built_in">Math</span>.round(seconds); <span class="keyword">if</span>(<span class="built_in">String</span>(snum).length ==<span class="number">1</span> )&#123;snum = <span class="string">"0"</span> + snum;&#125; </span></span><br><span class="line"><span class="javascript">		<span class="built_in">document</span>.getElementById(<span class="string">"timeDate"</span>).innerHTML = <span class="string">"本站已安全运行 "</span>+dnum+<span class="string">" 天 "</span>; </span></span><br><span class="line"><span class="javascript">		<span class="built_in">document</span>.getElementById(<span class="string">"times"</span>).innerHTML = hnum + <span class="string">" 小时 "</span> + mnum + <span class="string">" 分 "</span> + snum + <span class="string">" 秒"</span>; </span></span><br><span class="line">	&#125; </span><br><span class="line"><span class="actionscript">	setInterval(<span class="string">"createtime()"</span>,<span class="number">250</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：日期格式<code>11/23/2018 20:00:00</code>。</p>
+<h2 id="十、字数、阅读时长添加"><a href="#十、字数、阅读时长添加" class="headerlink" title="十、字数、阅读时长添加"></a>十、字数、阅读时长添加</h2><h3 id="1、安装hexo-wordcount"><a href="#1、安装hexo-wordcount" class="headerlink" title="1、安装hexo-wordcount"></a>1、安装hexo-wordcount</h3><p>在博客目录下打开Git Bash，输入命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i –save hexo-wordcount</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、文件配置"><a href="#2、文件配置" class="headerlink" title="2、文件配置"></a>2、文件配置</h3><p>在<code>theme\yilia\layout\_partial\post</code>下创建<code>word.ejs</code>文件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"margin-top:10px;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-time"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-keyboard-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-text"</span>&gt;</span>  字数统计: <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-count"</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">wordcount</span>(<span class="attr">post.content</span>) %&gt;</span>字<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-time"</span>&gt;</span></span><br><span class="line">      <span class="symbol">&amp;nbsp;</span> | <span class="symbol">&amp;nbsp;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-hourglass-half"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-text"</span>&gt;</span>  阅读时长: <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-count"</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">min2read</span>(<span class="attr">post.content</span>) %&gt;</span>分<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在 <code>themes/yilia/layout/_partial/article.ejs</code>中添加</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"article-inner"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (<span class="attr">post.link</span> || <span class="attr">post.title</span>)&#123; %&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">header</span> <span class="attr">class</span>=<span class="string">"article-header"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>('<span class="attr">post</span>/<span class="attr">title</span>', &#123;<span class="attr">class_name:</span> '<span class="attr">article-title</span>'&#125;) %&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (!<span class="attr">post.noDate</span>)&#123; %&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>('<span class="attr">post</span>/<span class="attr">date</span>', &#123;<span class="attr">class_name:</span> '<span class="attr">archive-article-date</span>', <span class="attr">date_format:</span> <span class="attr">null</span>&#125;) %&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 需要添加的位置 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 开始添加字数统计--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span>(<span class="attr">theme.word_count</span> &amp;&amp; !<span class="attr">post.no_word_count</span>)&#123;%&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>('<span class="attr">post</span>/<span class="attr">word</span>') %&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 添加完成 --&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3、开启功能"><a href="#3、开启功能" class="headerlink" title="3、开启功能"></a>3、开启功能</h3><p>在站点的（不是主题的）<code>_config.yml</code>中添加下面代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 是否开启字数统计</span><br><span class="line">#不需要使用，直接设置值为false，或注释掉</span><br><span class="line">word_count: True</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="十一、添加版权信息"><a href="#十一、添加版权信息" class="headerlink" title="十一、添加版权信息"></a>十一、添加版权信息</h2><h3 id="1、添加代码"><a href="#1、添加代码" class="headerlink" title="1、添加代码"></a>1、添加代码</h3><p>在<code>themes/yilia/layout/_partial/article.ejs</code>中标注的位置添加代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"article-entry"</span> <span class="attr">itemprop</span>=<span class="string">"articleBody"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (<span class="attr">post.excerpt</span> &amp;&amp; <span class="attr">index</span>)&#123; %&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">%-</span> <span class="attr">post.excerpt</span> %&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (<span class="attr">theme.excerpt_link</span>) &#123; %&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"article-more-a"</span> <span class="attr">href</span>=<span class="string">"&lt;%- url_for(post.path) %&gt;#more"</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">theme.excerpt_link</span> %&gt;</span> &gt;&gt;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> &#123; %&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">%-</span> <span class="attr">post.content</span> %&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">--</span> 在此处添加代码<span class="attr">--</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> ((<span class="attr">theme.reward_type</span> === <span class="string">2</span> || (<span class="attr">theme.reward_type</span> === <span class="string">1</span> &amp;&amp; <span class="attr">post.reward</span>)) &amp;&amp; !<span class="attr">index</span>)&#123; %&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"page-reward"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:;"</span> <span class="attr">class</span>=<span class="string">"page-reward-btn tooltip-top"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tooltip tooltip-east"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>添加的代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%</span></span></span><br><span class="line"><span class="tag">  <span class="attr">var</span> <span class="attr">sUrl</span> = <span class="string">url.replace(/index\.html$/,</span> '');</span></span><br><span class="line"><span class="tag">  <span class="attr">sUrl</span> = <span class="string">/^(http:|https:)\/\//.test(sUrl)</span> ? <span class="attr">sUrl</span> <span class="attr">:</span> '<span class="attr">https:</span>' + <span class="attr">sUrl</span>;</span></span><br><span class="line"><span class="tag">%&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> ((<span class="attr">theme.declare_type</span> === <span class="string">2</span> || (<span class="attr">theme.declare_type</span> === <span class="string">1</span> &amp;&amp; <span class="attr">post.declare</span>)) &amp;&amp; !<span class="attr">index</span>)&#123; %&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"declare"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">strong</span>&gt;</span>本文作者：<span class="tag">&lt;/<span class="name">strong</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span>(<span class="attr">config.author</span> != <span class="string">undefined)&#123;</span> %&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">%=</span> <span class="attr">config.author</span>%&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%</span> &#125;<span class="attr">else</span>&#123;%&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">"red"</span>&gt;</span>请在博客根目录“_config.yml”中填入正确的“author”<span class="tag">&lt;/<span class="name">font</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%&#125;%</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">strong</span>&gt;</span>本文链接：<span class="tag">&lt;/<span class="name">strong</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%=</span> <span class="attr">sUrl</span>%&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">strong</span>&gt;</span>版权声明：<span class="tag">&lt;/<span class="name">strong</span>&gt;</span></span><br><span class="line">    本作品采用</span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">rel</span>=<span class="string">"license"</span> <span class="attr">href</span>=<span class="string">"&lt;%= theme.licensee_url%&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">theme.licensee_name</span>%&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    进行许可。转载请注明出处！</span><br><span class="line">    <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span>(<span class="attr">theme.licensee_img</span> != <span class="string">undefined)&#123;</span> %&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">rel</span>=<span class="string">"license"</span> <span class="attr">href</span>=<span class="string">"&lt;%= theme.licensee_url%&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">alt</span>=<span class="string">"知识共享许可协议"</span> <span class="attr">style</span>=<span class="string">"border-width:0"</span> <span class="attr">src</span>=<span class="string">"&lt;%= theme.licensee_img%&gt;"</span>/&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> &#123;%&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"declare"</span> <span class="attr">hidden</span>=<span class="string">"hidden"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、版权添加样式"><a href="#2、版权添加样式" class="headerlink" title="2、版权添加样式"></a>2、版权添加样式</h3><p>在<code>yilia/source/main.0cf68a.css</code>添加如下代码：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.declare</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#eaeaea</span>;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">2em</span>;</span><br><span class="line">  <span class="attribute">border-left</span>: <span class="number">3px</span> solid <span class="number">#ff1700</span>;</span><br><span class="line">  <span class="attribute">padding</span>: .<span class="number">5em</span> <span class="number">1em</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、添加配置文件-1"><a href="#3、添加配置文件-1" class="headerlink" title="3、添加配置文件"></a>3、添加配置文件</h3><p>修改<code>themes/yilia/_config.yml</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## 版权声明</span><br><span class="line">declare_type: 1</span><br><span class="line">licensee_url: https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-nc-sa&#x2F;4.0&#x2F;          # 当前应用的版权协议地址。</span><br><span class="line">licensee_name: &#39;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&#39;  # 版权协议的名称</span><br><span class="line">licensee_img: https:&#x2F;&#x2F;i.creativecommons.org&#x2F;l&#x2F;by-nc-sa&#x2F;4.0&#x2F;88x31.png      # 版权协议的Logo</span><br></pre></td></tr></table></figure>
+
+<p>在需要进行版权声明的文章的md文件头部，设置属性declare: true。</p>
+<p>版权基础设定：</p>
+<ul>
+<li>0-关闭声明； </li>
+<li>1-文章对应的md文件里有declare: true属性，才有版权声明； </li>
+<li>2-所有文章均有版权声明</li>
+</ul>
+<h3 id="4、修改博客的url"><a href="#4、修改博客的url" class="headerlink" title="4、修改博客的url"></a>4、修改博客的url</h3><p>修改主目录下的<code>_config.yml</code>中的url,改成自己的地址。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">url: https:&#x2F;&#x2F;dta0502.github.io&#x2F;</span><br><span class="line">root: &#x2F;</span><br><span class="line">permalink: :year&#x2F;:month&#x2F;:day&#x2F;:title&#x2F;</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="十二、添加sitemap"><a href="#十二、添加sitemap" class="headerlink" title="十二、添加sitemap"></a>十二、添加sitemap</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<p>查看public文件夹，可以看到<code>sitemap.xml</code>文件。</p>
+<p>sitemap的初衷是给搜索引擎看的，为了提高搜索引擎对自己站点的收录效果，我们最好手动到Google和百度等搜索引擎提交<code>sitemap.xml</code>。</p>
+<p>Google提交<code>sitemap.xml</code>的详细过程见：<a href="https://jactor-sue.github.io/zh-CN/how-blog-on-githubpages-can-be-searched-by-google/" target="_blank" rel="noopener external nofollow noreferrer">让Google搜索到搭建在Github Pages上的博客</a>。</p>
+<h2 id="十三、Url持久化"><a href="#十三、Url持久化" class="headerlink" title="十三、Url持久化"></a>十三、Url持久化</h2><p>我们可以发现hexo默认生成的文章地址路径是 <code>【网站名称／年／月／日／文章名称】</code>。</p>
+<p>这种链接对搜索爬虫是很不友好的，它的url结构超过了三层，太深了。</p>
+<p>下面我推荐安装<code>hexo-abbrlink</code>插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
+
+<p>然后配置<code>_config.yml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># permalink: :title&#x2F;</span><br><span class="line">permalink: archives&#x2F;:abbrlink.html</span><br><span class="line">abbrlink:</span><br><span class="line">  alg: crc32  # 算法：crc16(default) and crc32</span><br><span class="line">  rep: hex    # 进制：dec(default) and hex</span><br></pre></td></tr></table></figure>
+
+<h2 id="十四、nofollow标签的使用"><a href="#十四、nofollow标签的使用" class="headerlink" title="十四、nofollow标签的使用"></a>十四、nofollow标签的使用</h2><p>减少出站链接能够有效防止权重分散，hexo有很方便的自动为出站链接添加nofollow的插件。</p>
+<p>首先安装<code>hexo-autonofollow</code>插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-autonofollow --save</span><br></pre></td></tr></table></figure>
+
+<p>再在外层<code>_config.yml</code>中添加配置，将nofollow设置为true：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 外部链接优化</span><br><span class="line">nofollow:</span><br><span class="line">    enable: true</span><br><span class="line">    exclude:     # 例外的链接，可将友情链接放置此处</span><br><span class="line">    - &#39;yousite&#39;</span><br></pre></td></tr></table></figure>
+
+<p>这样，例外的链接将不会被加上nofollow属性。 </p>
+<h2 id="十五、鼠标点击小红心的设置"><a href="#十五、鼠标点击小红心的设置" class="headerlink" title="十五、鼠标点击小红心的设置"></a>十五、鼠标点击小红心的设置</h2><ul>
+<li>在<code>hexo/themes/yilia/source</code>文件目录下添加<code>love.js</code>文件。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!<span class="function"><span class="keyword">function</span>(<span class="params">e,t,a</span>)</span>&#123;<span class="function"><span class="keyword">function</span> <span class="title">r</span>(<span class="params"></span>)</span>&#123;<span class="keyword">for</span>(<span class="keyword">var</span> e=<span class="number">0</span>;e&lt;s.length;e++)s[e].alpha&lt;=<span class="number">0</span>?(t.body.removeChild(s[e].el),s.splice(e,<span class="number">1</span>)):(s[e].y--,s[e].scale+=<span class="number">.004</span>,s[e].alpha-=<span class="number">.013</span>,s[e].el.style.cssText=<span class="string">"left:"</span>+s[e].x+<span class="string">"px;top:"</span>+s[e].y+<span class="string">"px;opacity:"</span>+s[e].alpha+<span class="string">";transform:scale("</span>+s[e].scale+<span class="string">","</span>+s[e].scale+<span class="string">") rotate(45deg);background:"</span>+s[e].color+<span class="string">";z-index:99999"</span>);requestAnimationFrame(r)&#125;<span class="function"><span class="keyword">function</span> <span class="title">n</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> t=<span class="string">"function"</span>==<span class="keyword">typeof</span> e.onclick&amp;&amp;e.onclick;e.onclick=<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;t&amp;&amp;t(),o(e)&#125;&#125;<span class="function"><span class="keyword">function</span> <span class="title">o</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> a=t.createElement(<span class="string">"div"</span>);a.className=<span class="string">"heart"</span>,s.push(&#123;<span class="attr">el</span>:a,<span class="attr">x</span>:e.clientX<span class="number">-5</span>,<span class="attr">y</span>:e.clientY<span class="number">-5</span>,<span class="attr">scale</span>:<span class="number">1</span>,<span class="attr">alpha</span>:<span class="number">1</span>,<span class="attr">color</span>:c()&#125;),t.body.appendChild(a)&#125;<span class="function"><span class="keyword">function</span> <span class="title">i</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> a=t.createElement(<span class="string">"style"</span>);a.type=<span class="string">"text/css"</span>;<span class="keyword">try</span>&#123;a.appendChild(t.createTextNode(e))&#125;<span class="keyword">catch</span>(t)&#123;a.styleSheet.cssText=e&#125;t.getElementsByTagName(<span class="string">"head"</span>)[<span class="number">0</span>].appendChild(a)&#125;<span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span><span class="string">"rgb("</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">","</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">","</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">")"</span>&#125;<span class="keyword">var</span> s=[];e.requestAnimationFrame=e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;setTimeout(e,<span class="number">1e3</span>/<span class="number">60</span>)&#125;,i(<span class="string">".heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;"</span>),n(),r()&#125;(<span class="built_in">window</span>,<span class="built_in">document</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在<code>hexo/themes/yilia/layout/_partial/footer.ejs</code>文件的最后， 添加以下代码：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--页面点击小红心--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"/love.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="十六、Hexo-Yilia代码块行号显示错乱问题"><a href="#十六、Hexo-Yilia代码块行号显示错乱问题" class="headerlink" title="十六、Hexo-Yilia代码块行号显示错乱问题"></a>十六、Hexo-Yilia代码块行号显示错乱问题</h2><img src="/archives/9a232bbe/%E4%BB%A3%E7%A0%81%E8%A1%8C%E5%87%BA%E9%94%99-%E4%BF%AE%E6%94%B9%E5%89%8D.png" class="" title="代码行出错-修改前">
+
+<p>这是因为<code>yilia/source/main.0cf68a.css</code>文件中的pre标签的样式造成的，将<code>white-space: pre-wrap;</code>注释掉即可，这个问题是自动换行造成的，使用不自动换行的<code>white-space: pre;</code>即可，这样样式代码块部分会自动出现底部滚动条，行号错乱问题就没有了。</p>
+<p>然后改一下滚动块样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">::-webkit-scrollbar-track</span><span class="selector-pseudo">:hover</span>&#123;<span class="attribute">background-color</span>:<span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.75</span>)&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面是修改后的代码块：</p>
+<img src="/archives/9a232bbe/%E4%BB%A3%E7%A0%81%E8%A1%8C%E5%87%BA%E9%94%99-%E4%BF%AE%E6%94%B9%E5%90%8E.png" class="" title="代码行出错-修改后">
+
+
+<h2 id="十七、添加相册"><a href="#十七、添加相册" class="headerlink" title="十七、添加相册"></a>十七、添加相册</h2><h3 id="1、创建可以点击链接"><a href="#1、创建可以点击链接" class="headerlink" title="1、创建可以点击链接"></a>1、创建可以点击链接</h3><p>如果想单独创建一个可以单击的链接，方法是相同的，首先进入您的博客目录执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page photos</span><br></pre></td></tr></table></figure>
+
+<p>立即在source下生成<code>photos/index.md</code>文件，这里<code>index.md</code>需要删除。</p>
+<p>然后在主题站点的配置文件<code>theme/yilia/_config.yml</code>中添加点击的文案和跳转到位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  </span><br><span class="line">  主页: &#x2F;</span><br><span class="line">  </span><br><span class="line">  分类: &#x2F;categories</span><br><span class="line">  </span><br><span class="line">  归档: &#x2F;archives</span><br><span class="line">  </span><br><span class="line">  相册: &#x2F;photos&#x2F;index.html</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、拷贝他人的-photos-内容"><a href="#2、拷贝他人的-photos-内容" class="headerlink" title="2、拷贝他人的 photos 内容"></a>2、拷贝他人的 photos 内容</h3><p>可以参考<a href="https://github.com/dta0502/BlogPhotos/tree/master/source/photos" target="_blank" rel="noopener external nofollow noreferrer">别人做好的博客</a>,下载<code>source/photos</code>下的所有文件，拷贝到你对应的位置。</p>
+<p>一般只需要修改<code>ins.js</code>文件的<code>render()</code>函数。这个函数式用来渲染数据的，里面配置了展示图片的链接地址，图片具体操作见下面。这里主要就修改minSrc、Src两个变量，改成自己的照片缩略图、照片的链接。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> render = <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> ulTmpl = <span class="string">""</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>, len2 = res.list.length; j &lt; len2; j++) &#123;</span><br><span class="line">    <span class="keyword">var</span> data = res.list[j].arr;</span><br><span class="line">    <span class="keyword">var</span> liTmpl = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = data.link.length; i &lt; len; i++) &#123;</span><br><span class="line">      <span class="keyword">var</span> minSrc = <span class="string">'https://raw.githubusercontent.com/dta0502/BlogPhotos/master/min_photos/'</span> + data.link[i];</span><br><span class="line">      <span class="keyword">var</span> src = <span class="string">'https://raw.githubusercontent.com/dta0502/BlogPhotos/master/photos/'</span> + data.link[i];</span><br><span class="line">      <span class="keyword">var</span> type = data.type[i];</span><br><span class="line">      <span class="keyword">var</span> target = src + (type === <span class="string">'video'</span> ? <span class="string">'.mp4'</span> : <span class="string">'.jpg'</span>);</span><br><span class="line">      src += <span class="string">''</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、图片放置"><a href="#3、图片放置" class="headerlink" title="3、图片放置"></a>3、图片放置</h3><h4 id="1）图片命名格式"><a href="#1）图片命名格式" class="headerlink" title="1）图片命名格式"></a>1）图片命名格式</h4><p>最前面是日期，然后用<code>_</code>进行分隔，后面是图片的描述信息，注意不要包含<code>_</code>和<code>.</code>符号。</p>
+<p>举例来说：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2018-10-05_西湖文化广场.jpg</span><br></pre></td></tr></table></figure>
+
+<h4 id="2）图片放置目录"><a href="#2）图片放置目录" class="headerlink" title="2）图片放置目录"></a>2）图片放置目录</h4><p>然后在Hexo根目录下创建<code>photos</code>和<code>min_photos</code>文件夹，然后把图片原图放置到<code>photos</code>文件夹下，后面会用Python脚本对这个原图进行压缩处理，自动生成一个缩略图在<code>min_photos</code>文件夹下。</p>
+<h3 id="4、处理图片并引入图片"><a href="#4、处理图片并引入图片" class="headerlink" title="4、处理图片并引入图片"></a>4、处理图片并引入图片</h3><h4 id="1）Python脚本处理图片"><a href="#1）Python脚本处理图片" class="headerlink" title="1）Python脚本处理图片"></a>1）Python脚本处理图片</h4><p>接下来就是最后一步，也是最重要的一步了，使用Python写的脚本，生成一套大图和一套小图，随即生成json文件，这个文件保存在<code>source/photos/data.json</code>中。</p>
+<p>脚本下载地址：<a href="https://github.com/dta0502/BlogPhotos" target="_blank" rel="noopener external nofollow noreferrer">BlogPhotos</a></p>
+<p>这里需要下载两个.py脚本（<code>ImageProcess.py</code>、<code>tool.py</code>），其中<code>ImageProcess.py</code>是<code>tool.py</code>这个脚本用到的。</p>
+<p>然后执行<code>tool.py</code>脚本即可生成一套大图和一套小图，并且在<code>source/photos/</code>下生成这个json文件。</p>
+<h4 id="2）上传图片到Github"><a href="#2）上传图片到Github" class="headerlink" title="2）上传图片到Github"></a>2）上传图片到Github</h4><p>然后我把<code>photos</code>和<code>min_photos</code>文件夹全部上传到Github上，然后得到了原图和缩略图的链接，这个链接就是<code>ins.js</code>文件的<code>render()</code>函数中需要修改的链接。</p>
+<p>每次更新图片，都需要重新执行以下Python脚本，并且将图片上传到GitHub上。</p>
+<h3 id="5、测试是否成功"><a href="#5、测试是否成功" class="headerlink" title="5、测试是否成功"></a>5、测试是否成功</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+
+<h2 id="十八、Hexo增加RSS功能"><a href="#十八、Hexo增加RSS功能" class="headerlink" title="十八、Hexo增加RSS功能"></a>十八、Hexo增加RSS功能</h2><h3 id="安装RSS插件"><a href="#安装RSS插件" class="headerlink" title="安装RSS插件"></a>安装RSS插件</h3><p>注意一定要安装到blog的根目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-generator-feed</span><br></pre></td></tr></table></figure>
+
+<h3 id="更改配置文件"><a href="#更改配置文件" class="headerlink" title="更改配置文件"></a>更改配置文件</h3><p>在你的项目的<code>_config.yml</code>配置文件下找到<code>Extensions</code>添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Extensions  #插件和主题</span><br><span class="line">## Plugins: https:&#x2F;&#x2F;hexo.io&#x2F;plugins&#x2F;</span><br><span class="line">## Themes: https:&#x2F;&#x2F;hexo.io&#x2F;themes&#x2F;</span><br><span class="line">#RSS订阅</span><br><span class="line">plugins: hexo-generater-feed</span><br></pre></td></tr></table></figure>
+
+<p>在主题配置文件里，在rss位置，添加<code>/atom.xml</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">subnav:</span><br><span class="line">  #github: &quot;#&quot;</span><br><span class="line">  #weibo: &quot;#&quot;</span><br><span class="line">  rss: &quot;&#x2F;atom.xml&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="十九、Hexo增加谷歌统计"><a href="#十九、Hexo增加谷歌统计" class="headerlink" title="十九、Hexo增加谷歌统计"></a>十九、Hexo增加谷歌统计</h2><ol>
+<li><p>注册一个google analytics账号</p>
+</li>
+<li><p>在主题配置文件里，在<code>google_analytics: &#39;&#39;</code>处添加统计ID，例如<code>UA-3534xxxx</code></p>
+</li>
+<li><p>使用google tag assistant来验证设置，google tag assistant是一款chrome扩展插件</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\aad98408.html" rel="bookmark">Hexo搭建个人博客文章汇总</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\d179c86b.html" rel="bookmark">LeanCloud云引擎因流控无法唤醒解决方案</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\2bd6d82.html" rel="bookmark">Hexo-NexT版本更新记录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\73ce4e7.html" rel="bookmark">Hexo-NexT新增友链</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\567debe0.html" rel="bookmark">本博客当前使用的插件总结</a></div>
+    </li>
+  </ul>
+<div>
+    
+        <div class="end-slogan" style="text-align:center;font-size:22px;letter-spacing:10px;user-select:none;color:#bbb;"><br/>----------- 本文结束啦<i class="fa fa-star"></i>感谢您阅读 -----------<br/><br/></div>
+    
+</div> 
+        <div class="reward-container">
+  <div>赞赏一杯咖啡</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="小丁 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="小丁 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小丁
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tding.top/archives/9a232bbe.html" title="Hexo-Yilia进阶笔记">https://tding.top/archives/9a232bbe.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/atom.xml">
+                <span class="icon">
+                  <i class="fa fa-rss"></i>
+                </span>
+
+                <span class="label">RSS</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
+              <a href="/tags/Yilia/" rel="tag"><i class="fa fa-tag"></i> Yilia</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/7f189df5.html" rel="prev" title="Hexo建站教程">
+      <i class="fa fa-chevron-left"></i> Hexo建站教程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/d8ac59cc.html" rel="next" title="XPath无法匹配tbody标签">
+      XPath无法匹配tbody标签 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、GitHub下载Yilia主题"><span class="nav-number">1.</span> <span class="nav-text">一、GitHub下载Yilia主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、分类的构建"><span class="nav-number">2.</span> <span class="nav-text">二、分类的构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、添加categories链接"><span class="nav-number">2.1.</span> <span class="nav-text">1、添加categories链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、分类页面的构建"><span class="nav-number">2.2.</span> <span class="nav-text">2、分类页面的构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、修改-yilia-主题"><span class="nav-number">2.3.</span> <span class="nav-text">3、修改 yilia 主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、多层分类"><span class="nav-number">2.4.</span> <span class="nav-text">4、多层分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、修改自己的文章"><span class="nav-number">2.5.</span> <span class="nav-text">5、修改自己的文章</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、yilia下的-config-yml完善"><span class="nav-number">3.</span> <span class="nav-text">三、yilia下的_config.yml完善</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、点击所有文章提示缺失模块"><span class="nav-number">4.</span> <span class="nav-text">四、点击所有文章提示缺失模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、问题"><span class="nav-number">4.1.</span> <span class="nav-text">1、问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、解决办法"><span class="nav-number">4.2.</span> <span class="nav-text">2、解决办法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、头像-图标设置"><span class="nav-number">5.</span> <span class="nav-text">五、头像&#x2F;图标设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、存放位置"><span class="nav-number">5.1.</span> <span class="nav-text">1、存放位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、配置设置"><span class="nav-number">5.2.</span> <span class="nav-text">2、配置设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、添加评论"><span class="nav-number">6.</span> <span class="nav-text">六、添加评论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建gitalk-ejs"><span class="nav-number">6.1.</span> <span class="nav-text">1、创建gitalk.ejs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、修改article-ejs"><span class="nav-number">6.2.</span> <span class="nav-text">2、修改article.ejs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、添加配置文件"><span class="nav-number">6.3.</span> <span class="nav-text">3、添加配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、侧边栏添加音乐"><span class="nav-number">7.</span> <span class="nav-text">七、侧边栏添加音乐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、网易云音乐外链播放器生成"><span class="nav-number">7.1.</span> <span class="nav-text">1、网易云音乐外链播放器生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、侧栏添加背景音乐"><span class="nav-number">7.2.</span> <span class="nav-text">2、侧栏添加背景音乐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、添加页面访问量"><span class="nav-number">8.</span> <span class="nav-text">八、添加页面访问量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、添加站点访问量"><span class="nav-number">8.1.</span> <span class="nav-text">1、添加站点访问量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、添加文章访问量"><span class="nav-number">8.2.</span> <span class="nav-text">2、添加文章访问量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九、Hexo-Yilia网站运行时间"><span class="nav-number">9.</span> <span class="nav-text">九、Hexo-Yilia网站运行时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十、字数、阅读时长添加"><span class="nav-number">10.</span> <span class="nav-text">十、字数、阅读时长添加</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、安装hexo-wordcount"><span class="nav-number">10.1.</span> <span class="nav-text">1、安装hexo-wordcount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、文件配置"><span class="nav-number">10.2.</span> <span class="nav-text">2、文件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、开启功能"><span class="nav-number">10.3.</span> <span class="nav-text">3、开启功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十一、添加版权信息"><span class="nav-number">11.</span> <span class="nav-text">十一、添加版权信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、添加代码"><span class="nav-number">11.1.</span> <span class="nav-text">1、添加代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、版权添加样式"><span class="nav-number">11.2.</span> <span class="nav-text">2、版权添加样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、添加配置文件-1"><span class="nav-number">11.3.</span> <span class="nav-text">3、添加配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、修改博客的url"><span class="nav-number">11.4.</span> <span class="nav-text">4、修改博客的url</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十二、添加sitemap"><span class="nav-number">12.</span> <span class="nav-text">十二、添加sitemap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十三、Url持久化"><span class="nav-number">13.</span> <span class="nav-text">十三、Url持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十四、nofollow标签的使用"><span class="nav-number">14.</span> <span class="nav-text">十四、nofollow标签的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十五、鼠标点击小红心的设置"><span class="nav-number">15.</span> <span class="nav-text">十五、鼠标点击小红心的设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十六、Hexo-Yilia代码块行号显示错乱问题"><span class="nav-number">16.</span> <span class="nav-text">十六、Hexo-Yilia代码块行号显示错乱问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十七、添加相册"><span class="nav-number">17.</span> <span class="nav-text">十七、添加相册</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建可以点击链接"><span class="nav-number">17.1.</span> <span class="nav-text">1、创建可以点击链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、拷贝他人的-photos-内容"><span class="nav-number">17.2.</span> <span class="nav-text">2、拷贝他人的 photos 内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、图片放置"><span class="nav-number">17.3.</span> <span class="nav-text">3、图片放置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）图片命名格式"><span class="nav-number">17.3.1.</span> <span class="nav-text">1）图片命名格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）图片放置目录"><span class="nav-number">17.3.2.</span> <span class="nav-text">2）图片放置目录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、处理图片并引入图片"><span class="nav-number">17.4.</span> <span class="nav-text">4、处理图片并引入图片</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）Python脚本处理图片"><span class="nav-number">17.4.1.</span> <span class="nav-text">1）Python脚本处理图片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）上传图片到Github"><span class="nav-number">17.4.2.</span> <span class="nav-text">2）上传图片到Github</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、测试是否成功"><span class="nav-number">17.5.</span> <span class="nav-text">5、测试是否成功</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十八、Hexo增加RSS功能"><span class="nav-number">18.</span> <span class="nav-text">十八、Hexo增加RSS功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装RSS插件"><span class="nav-number">18.1.</span> <span class="nav-text">安装RSS插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改配置文件"><span class="nav-number">18.2.</span> <span class="nav-text">更改配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十九、Hexo增加谷歌统计"><span class="nav-number">19.</span> <span class="nav-text">十九、Hexo增加谷歌统计</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">166</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/290f3ac4.html" title="梅花品种-3系5类18型" target="_blank">梅花品种-3系5类18型</a>
+          </li>
+        
+          <li>
+            <a href="/archives/d179c86b.html" title="LeanCloud云引擎因流控无法唤醒解决方案" target="_blank">LeanCloud云引擎因流控无法唤醒解决方案</a>
+          </li>
+        
+          <li>
+            <a href="/archives/192fb032.html" title="Word公式如何多行对齐" target="_blank">Word公式如何多行对齐</a>
+          </li>
+        
+          <li>
+            <a href="/archives/ee1790c8.html" title="Word题注对图表进行自动化标号" target="_blank">Word题注对图表进行自动化标号</a>
+          </li>
+        
+          <li>
+            <a href="/archives/e1eb25a0.html" title="新冠肺炎疫情数据可视化" target="_blank">新冠肺炎疫情数据可视化</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">878k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:18</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 19729,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/archives/9a232bbe.html',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/archives/9a232bbe.html";
+    this.page.identifier = "archives/9a232bbe.html";
+    this.page.title = "Hexo-Yilia进阶笔记";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>
