@@ -14,7 +14,7 @@
 </ol>
 <p>为解决这两个问题，ES5引入高精度时间戳performance API，其精度可以到达1毫秒的千分之一。</p>
 <h2 id="Performance-API属性"><a href="#Performance-API属性" class="headerlink" title="Performance API属性"></a>Performance API属性</h2><h3 id="timing（PerformanceTiming）"><a href="#timing（PerformanceTiming）" class="headerlink" title="timing（PerformanceTiming）"></a>timing（PerformanceTiming）</h3><p>从输入url到用户可以使用页面的全过程时间统计，会返回一个PerformanceTiming对象，单位均为毫秒</p>
-<img src="/archives/undefined/PerformanceNavigationTiming.svg" class="" title="PerformanceNavigationTiming">
+<img src="/archives/bc52c916/PerformanceNavigationTiming.svg" class="" title="PerformanceNavigationTiming">
 
 <p>按触发顺序排列所有属性：</p>
 <ul>
@@ -220,7 +220,7 @@
 <li><p>访问被测网站，点击【生成报告】就会自动分析你访问的网站，得出性能分析报告</p>
 </li>
 </ol>
-<h2 id="Lighthouse测试流程图"><a href="#Lighthouse测试流程图" class="headerlink" title="Lighthouse测试流程图"></a>Lighthouse测试流程图</h2><img src="/archives/undefined/Lighthouse%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B%E5%9B%BE.jpg" class="" title="Lighthouse测试流程图">
+<h2 id="Lighthouse测试流程图"><a href="#Lighthouse测试流程图" class="headerlink" title="Lighthouse测试流程图"></a>Lighthouse测试流程图</h2><img src="/archives/a896eef1/Lighthouse%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B%E5%9B%BE.jpg" class="" title="Lighthouse测试流程图">
 
 <ul>
 <li>Lighthouse与浏览器建立连接</li>
@@ -243,11 +243,11 @@
 </li>
 <li>Cumulative Layout Shift (CLS):衡量视觉稳定性，为了提供良好的用户体验，页面的CLS应保持小于0.1。</li>
 </ul>
-<img src="/archives/undefined/CoreWebVitals.jpg" class="" title="CoreWebVitals">
+<img src="/archives/a896eef1/CoreWebVitals.jpg" class="" title="CoreWebVitals">
 
 
 <h3 id="First-Contentful-Paint-FCP-首次内容绘制"><a href="#First-Contentful-Paint-FCP-首次内容绘制" class="headerlink" title="First Contentful Paint (FCP) 首次内容绘制"></a>First Contentful Paint (FCP) 首次内容绘制</h3><p>这是当用户看见一些“内容”元素被绘制在页面上的时间点，<strong>和白屏是不一样的</strong>，它可以是文本的首次出现，或者 SVG 的首次出现，或者 Canvas 的首次出现等等。</p>
-<img src="/archives/undefined/FCP-1.png" class="" title="FCP">
+<img src="/archives/a896eef1/FCP-1.png" class="" title="FCP">
 
 <p>如果首次内容绘制耗时太长，可能是因为：</p>
 <ul>
@@ -256,9 +256,9 @@
 </ul>
 <h3 id="Largest-Contentful-Paint-LCP-最大内容绘制"><a href="#Largest-Contentful-Paint-LCP-最大内容绘制" class="headerlink" title="Largest Contentful Paint (LCP) 最大内容绘制"></a>Largest Contentful Paint (LCP) 最大内容绘制</h3><p>LCP全称Largest Contentful Paint，翻译为<strong>最大内容绘制</strong>，用于监控网页可视区内<strong>绘制面积</strong>最大的元素开始呈现在屏幕上的时间点。</p>
 <p>页面在加载过程中，是线性的，元素是一个一个渲染到屏幕上的，而不是一瞬间全渲染到屏幕上，所以“渲染面积”最大的元素随时在发生变化。</p>
-<img src="/archives/undefined/LCP-1.jpg" class="" title="LCP-1">
+<img src="/archives/a896eef1/LCP-1.jpg" class="" title="LCP-1">
 
-<img src="/archives/undefined/LCP-2.jpg" class="" title="LCP-2">
+<img src="/archives/a896eef1/LCP-2.jpg" class="" title="LCP-2">
 
 <p>LCP 目前并不会计算所有元素，因为这样会使这个指标变得非常复杂，它现在只关注下面的元素：</p>
 <ul>
@@ -295,7 +295,7 @@
 <li>分解耗时任务：任何阻塞主线程50毫秒或更长时间的代码段都可以称为长任务，我们可以将长的耗时任务拆分为较小的异步任务。</li>
 </ol>
 <h3 id="Cumulative-Layout-Shift-CLS-累积布局偏移"><a href="#Cumulative-Layout-Shift-CLS-累积布局偏移" class="headerlink" title="Cumulative Layout Shift (CLS) 累积布局偏移"></a>Cumulative Layout Shift (CLS) 累积布局偏移</h3><p>CLS全称是 Cumulative Layout Shift，中文名是累计布局偏移，是 Google Search Console的一个核心网页指标，是指网页布局在加载期间的偏移量。得分范围是0–1，其中 0 表示没有偏移，1 表示最大偏移。</p>
-<img src="/archives/undefined/CLS-1.png" class="" title="CLS-1">
+<img src="/archives/a896eef1/CLS-1.png" class="" title="CLS-1">
 
 <h4 id="计算CLS"><a href="#计算CLS" class="headerlink" title="计算CLS"></a>计算CLS</h4><p>为了计算布局的偏移值，浏览器会查看两个渲染帧之间的视口大小和视口中不稳定元素的移动。布局偏移分是该移动的两个指标的乘积：影响分数和距离分数。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">layout shift score &#x3D; impact fraction * distance fraction</span><br></pre></td></tr></table></figure>
@@ -304,7 +304,7 @@
 <li>影响分数（impact fraction）：前一帧和当前帧的所有不稳定元素的可见区域的并集（占视口总面积的一部分）是当前帧的影响分数。</li>
 <li>距离分数（distance fraction）：距离分数是任何不稳定元素在框架中移动的最大距离(水平或垂直)除以视口的最大尺寸(宽度或高度，以较大的为准)。</li>
 </ul>
-<img src="/archives/undefined/CLS-2.png" class="" title="CLS-2">
+<img src="/archives/a896eef1/CLS-2.png" class="" title="CLS-2">
 
 <p>在上图中，有一个元素在一帧中占据了视口的一半。然后，在下一帧中，元素下移视口高度的25％。红色的虚线矩形表示两个帧中元素的可见区域的并集，在这种情况下，其为总视口的75％，因此其影响分数为 0.75。最大的视口尺寸是高度，并且不稳定元素移动了视口高度的25%，这使得距离分数为0.25。因此布局位移分数（layout shift score）为0.75 * 0.25 = 0.1875。</p>
 <h4 id="改善CLS"><a href="#改善CLS" class="headerlink" title="改善CLS"></a>改善CLS</h4><ol>
@@ -574,10 +574,10 @@
 <a id="more"></a>
 
 <h2 id="全国新冠肺炎疫情地图"><a href="#全国新冠肺炎疫情地图" class="headerlink" title="全国新冠肺炎疫情地图"></a>全国新冠肺炎疫情地图</h2><p>直观的看下全国疫情实时情况：</p>
-<div id="echarts8888" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts3494" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts8888'));
+        var myChart = echarts.init(document.getElementById('echarts3494'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -8341,10 +8341,10 @@
 
 
 <h2 id="全国每日疫情变化趋势"><a href="#全国每日疫情变化趋势" class="headerlink" title="全国每日疫情变化趋势"></a>全国每日疫情变化趋势</h2><p>主要关注全国每日<strong>确诊、治愈、死亡</strong>人数的变化，实时跟踪疫情：</p>
-<div id="echarts1349" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts5768" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts1349'));
+        var myChart = echarts.init(document.getElementById('echarts5768'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -9139,10 +9139,10 @@
 </script>
 
 <p>上面的累计的病例，很难看出疫情处于什么阶段，因此，下面我关注的是每日新增的确诊病例数，由于湖北处于封城状态，因此，我分别看一下全国、湖北地区、全国（除湖北地区）的每日新增确诊病例变化趋势：</p>
-<div id="echarts2517" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts4300" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts2517'));
+        var myChart = echarts.init(document.getElementById('echarts4300'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -9727,10 +9727,10 @@
 
 
 <h2 id="每日死亡率变化趋势"><a href="#每日死亡率变化趋势" class="headerlink" title="每日死亡率变化趋势"></a>每日死亡率变化趋势</h2><p>死亡率是一个非常重要的数据，下面我看下全国除湖北地区、湖北地区、武汉地区的死亡率：</p>
-<div id="echarts4510" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts650" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts4510'));
+        var myChart = echarts.init(document.getElementById('echarts650'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -10577,10 +10577,10 @@
 </ul>
 <h2 id="各省份疫情情况"><a href="#各省份疫情情况" class="headerlink" title="各省份疫情情况"></a>各省份疫情情况</h2><p>下面主要看一下各个省份的疫情情况。</p>
 <h3 id="各省份累计确诊病例变化趋势"><a href="#各省份累计确诊病例变化趋势" class="headerlink" title="各省份累计确诊病例变化趋势"></a>各省份累计确诊病例变化趋势</h3><p>这里我选取了在2月7日感染人数超过100人的省份（一共20个省份），看下他们从1月27日-现在的累计确诊病例变化趋势：</p>
-<div id="echarts6770" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts3001" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts6770'));
+        var myChart = echarts.init(document.getElementById('echarts3001'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -13388,10 +13388,10 @@
 </script>
 
 <h3 id="各省份新增确诊病例变化趋势"><a href="#各省份新增确诊病例变化趋势" class="headerlink" title="各省份新增确诊病例变化趋势"></a>各省份新增确诊病例变化趋势</h3><p>这里我选取了在2月8日感染人数超过100人的省份（一共21个省份），看下他们从1月27日-现在的新增确诊病例变化趋势：</p>
-<div id="echarts72" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts7516" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts72'));
+        var myChart = echarts.init(document.getElementById('echarts7516'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -16103,10 +16103,10 @@
 </ul>
 <h3 id="疫情严重地区情况"><a href="#疫情严重地区情况" class="headerlink" title="疫情严重地区情况"></a>疫情严重地区情况</h3><p>下面看一下几个疫情比较严重的省份的具体疫情情况：</p>
 <h4 id="湖北省"><a href="#湖北省" class="headerlink" title="湖北省"></a>湖北省</h4><p>疫情地图：</p>
-<div id="echarts6721" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts4454" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts6721'));
+        var myChart = echarts.init(document.getElementById('echarts4454'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -16341,10 +16341,10 @@
 </script>
 
 <p>饼图：</p>
-<div id="echarts5175" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts6733" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts5175'));
+        var myChart = echarts.init(document.getElementById('echarts6733'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -16526,10 +16526,10 @@
 
 
 <h4 id="广东省"><a href="#广东省" class="headerlink" title="广东省"></a>广东省</h4><p>疫情地图：</p>
-<div id="echarts7340" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts5241" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts7340'));
+        var myChart = echarts.init(document.getElementById('echarts5241'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -16796,10 +16796,10 @@
 </script>
 
 <p>饼图：</p>
-<div id="echarts360" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts2543" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts360'));
+        var myChart = echarts.init(document.getElementById('echarts2543'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -17000,10 +17000,10 @@
 </script>
 
 <h4 id="浙江省"><a href="#浙江省" class="headerlink" title="浙江省"></a>浙江省</h4><p>疫情地图：</p>
-<div id="echarts8838" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts9173" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts8838'));
+        var myChart = echarts.init(document.getElementById('echarts9173'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -17214,10 +17214,10 @@
 </script>
 
 <p>饼图：</p>
-<div id="echarts8214" style="width: 100%;height: 600px;margin: 0 auto"></div>
+<div id="echarts3007" style="width: 100%;height: 600px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts8214'));
+        var myChart = echarts.init(document.getElementById('echarts3007'));
 
         // 指定图表的配置项和数据
         var option = {
@@ -23232,8 +23232,8 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
-        <tag>数组</tag>
         <tag>二叉树</tag>
+        <tag>数组</tag>
         <tag>链表</tag>
         <tag>双指针</tag>
       </tags>
@@ -27677,10 +27677,10 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;% echarts <span class="number">400</span> <span class="string">'85%'</span> %&#125;</span><br><span class="line">&#123;</span><br><span class="line">    title: &#123;</span><br><span class="line">        text: <span class="string">"某站点用户访问来源"</span>,</span><br><span class="line">        subtext: <span class="string">"ECharts示例"</span>,</span><br><span class="line">        x: <span class="string">"center"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    tooltip: &#123;</span><br><span class="line">        trigger: <span class="string">"item"</span>,</span><br><span class="line">        formatter: <span class="string">"&#123;a&#125; &lt;br/&gt;&#123;b&#125; : &#123;c&#125; (&#123;d&#125;%)"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    legend: &#123;</span><br><span class="line">        orient: <span class="string">"vertical"</span>,</span><br><span class="line">        x: <span class="string">"left"</span>,</span><br><span class="line">        data: [<span class="string">"直接访问"</span>, <span class="string">"邮件营销"</span>, <span class="string">"联盟广告"</span>, <span class="string">"视频广告"</span>, <span class="string">"搜索引擎"</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    toolbox: &#123;</span><br><span class="line">        show: <span class="literal">true</span>,</span><br><span class="line">        feature: &#123;</span><br><span class="line">            mark: &#123;</span><br><span class="line">                show: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            dataView: &#123;</span><br><span class="line">                show: <span class="literal">true</span>,</span><br><span class="line">                readOnly: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            restore: &#123;</span><br><span class="line">                show: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            saveAsImage: &#123;</span><br><span class="line">                show: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    calculable: <span class="literal">true</span>,</span><br><span class="line">    series: [</span><br><span class="line">        &#123;</span><br><span class="line">            name: <span class="string">"访问来源"</span>,</span><br><span class="line">            type: <span class="string">"pie"</span>,</span><br><span class="line">            radius: <span class="string">"55%"</span>,</span><br><span class="line">            center: [<span class="string">"50%"</span>, <span class="string">"60%"</span>],</span><br><span class="line">            data: [</span><br><span class="line">                &#123;</span><br><span class="line">                    value: <span class="number">335</span>,</span><br><span class="line">                    name: <span class="string">"直接访问"</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    value: <span class="number">310</span>,</span><br><span class="line">                    name: <span class="string">"邮件营销"</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    value: <span class="number">234</span>,</span><br><span class="line">                    name: <span class="string">"联盟广告"</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    value: <span class="number">135</span>,</span><br><span class="line">                    name: <span class="string">"视频广告"</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    value: <span class="number">1548</span>,</span><br><span class="line">                    name: <span class="string">"搜索引擎"</span></span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endecharts %&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上述代码渲染出来的 ECharts 图表如下：</p>
-<div id="echarts3174" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<div id="echarts8375" style="width: 85%;height: 400px;margin: 0 auto"></div>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts3174'));
+        var myChart = echarts.init(document.getElementById('echarts8375'));
 
         // 指定图表的配置项和数据
         var option = {
