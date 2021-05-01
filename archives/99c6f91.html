@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="标度控制着数据到图形属性的映射，标度将我们的数据转化为视觉上可以感知的东西，如大小、颜色、位置和形状，所以通过标度可以修改坐标轴和图例的参数。 每一种图形属性都拥有一个默认的标度，此标度将在我们每次使用这个图形属性时被自动添加到图形中，这些标度列于下表中，默认属性粗体显示：    图形属性 离散型 连续型    颜色和填充色 brewer grey hue identity manual grad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R数据可视化-ggplot2的标度">
+<meta property="og:url" content="https://tding.top/archives/99c6f91.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="标度控制着数据到图形属性的映射，标度将我们的数据转化为视觉上可以感知的东西，如大小、颜色、位置和形状，所以通过标度可以修改坐标轴和图例的参数。 每一种图形属性都拥有一个默认的标度，此标度将在我们每次使用这个图形属性时被自动添加到图形中，这些标度列于下表中，默认属性粗体显示：    图形属性 离散型 连续型    颜色和填充色 brewer grey hue identity manual grad">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-name.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-limits.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-breaks.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E4%BD%8D%E7%BD%AE-%E8%BF%9E%E7%BB%AD%E5%9E%8B.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E4%BD%8D%E7%BD%AE-%E6%97%B6%E9%97%B4.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E4%BD%8D%E7%BD%AE-%E7%A6%BB%E6%95%A3%E5%9E%8B.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E9%A2%9C%E8%89%B2-%E8%BF%9E%E7%BB%AD%E5%9E%8B-1.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E9%A2%9C%E8%89%B2-%E8%BF%9E%E7%BB%AD%E5%9E%8B-2.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E9%A2%9C%E8%89%B2-%E8%BF%9E%E7%BB%AD%E5%9E%8B-3.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E9%A2%9C%E8%89%B2-%E7%A6%BB%E6%95%A3%E5%9E%8B.png">
+<meta property="og:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E6%89%8B%E5%8A%A8%E7%A6%BB%E6%95%A3%E5%9E%8B.png">
+<meta property="article:published_time" content="2019-12-08T15:30:00.000Z">
+<meta property="article:modified_time" content="2019-12-08T15:53:55.000Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="R">
+<meta property="article:tag" content="数据可视化">
+<meta property="article:tag" content="ggplot2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tding.top/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E7%A4%BA%E4%BE%8B.png">
+
+<link rel="canonical" href="https://tding.top/archives/99c6f91.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>R数据可视化-ggplot2的标度 | 小丁的个人博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">103</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">59</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">168</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tding.top/archives/99c6f91.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="小丁">
+      <meta itemprop="description" content="酒，越喝越暖，水会越喝越寒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小丁的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          R数据可视化-ggplot2的标度
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-08 23:30:00" itemprop="dateCreated datePublished" datetime="2019-12-08T23:30:00+08:00">2019-12-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/R/" itemprop="url" rel="index"><span itemprop="name">R</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/R/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">数据可视化</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/99c6f91.html" class="post-meta-item leancloud_visitors" data-flag-title="R数据可视化-ggplot2的标度" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/archives/99c6f91.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="archives/99c6f91.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/99c6f91.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/99c6f91.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>标度控制着<strong>数据到图形属性的映射</strong>，标度将我们的数据转化为视觉上可以感知的东西，如大小、颜色、位置和形状，所以通过标度可以修改坐标轴和图例的参数。</p>
+<p>每一种图形属性都拥有一个默认的标度，此标度将在我们每次使用这个图形属性时被自动添加到图形中，这些标度列于下表中，默认属性粗体显示：</p>
+<table>
+<thead>
+<tr>
+<th>图形属性</th>
+<th>离散型</th>
+<th>连续型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>颜色和填充色</td>
+<td>brewer grey <strong>hue</strong> identity manual</td>
+<td><strong>gradient</strong> gradient2 gradientn</td>
+</tr>
+<tr>
+<td>位置</td>
+<td><strong>discrete</strong></td>
+<td><strong>continuous</strong> date</td>
+</tr>
+<tr>
+<td>形状</td>
+<td><strong>shape</strong> identity manual</td>
+<td></td>
+</tr>
+<tr>
+<td>线条类型</td>
+<td><strong>linetype</strong> identity manual</td>
+<td></td>
+</tr>
+<tr>
+<td>大小</td>
+<td>identity manual</td>
+<td><strong>size</strong></td>
+</tr>
+</tbody></table>
+<p>如果要添加一个不同的标度或修改默认标度的某些特征，<strong>我们必须构建一个新的标度，然后使用<code>+</code>将其添加到图形上</strong>。所有的标度构建器（scale）都拥有一套通用的命名方案，它们以<code>scale_</code>开头，接下来是图形属性的名称（例如：<code>colour_</code>、<code>shape_</code>、<code>x_</code>）最后以标度的名称结尾（<code>gradient</code>、<code>hue</code>、<code>manual</code>）。</p>
+<ul>
+<li>离散图形的颜色属性采用默认标度：<code>scale_colour_hue()</code></li>
+<li>离散图形的填充色属性采用ColorBrewer配色标度：<code>scale_fill_brewer()</code></li>
+</ul>
+<a id="more"></a>
+
+<p>下面是一个例子：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认标度-左图</span></span><br><span class="line">p &lt;- ggplot(data = diamonds, mapping = aes(x = carat, y = price, color = factor(cut)))</span><br><span class="line">p &lt;- p + geom_point()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调整标度的参数-右图</span></span><br><span class="line">p + scale_colour_hue(<span class="string">"cut"</span>,breaks=c(<span class="string">"Fair"</span>,<span class="string">"Good"</span>,<span class="string">"Very Good"</span>),labels=c(<span class="string">"A"</span>,<span class="string">"B"</span>,<span class="string">"C"</span>))</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E7%A4%BA%E4%BE%8B.png" class="" title="标度-示例">
+
+
+<h2 id="标度系列函数"><a href="#标度系列函数" class="headerlink" title="标度系列函数"></a>标度系列函数</h2><p>标度系列函数可以粗略的分为4类：</p>
+<ul>
+<li><strong>位置标度</strong>：用于将连续型、离散型和日期-时间型变量映射到绘图区域，以及构造对应的坐标轴</li>
+<li><strong>颜色标度</strong>：用于将连续型和离散型变量映射到颜色</li>
+<li><strong>手动离散型标度</strong>：用于将离散型变量映射到我们选择的符号大小、线条类型、形状或颜色，以及创建对应的图例</li>
+<li><strong>同一型标度</strong>：用于直接将变量值绘制为图形属性，而不去映射他们</li>
+</ul>
+<h3 id="通用参数"><a href="#通用参数" class="headerlink" title="通用参数"></a>通用参数</h3><p>上面这些标度系列函数都会有一些参数，这些就是通用参数，下面简单介绍一下这些通用参数。</p>
+<h4 id="name"><a href="#name" class="headerlink" title="name"></a>name</h4><p><strong>name：设置坐标轴或图例上出现的标签</strong>。可以使用三个辅助函数<code>xlab()</code>、<code>ylab()</code>、<code>labs()</code>来减少代码。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认-左上</span></span><br><span class="line">p &lt;- ggplot(data = diamonds, mapping = aes(x = carat, y = price, color = factor(cut)))</span><br><span class="line">p &lt;- p + geom_point()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加x标签-右上</span></span><br><span class="line">p + scale_x_continuous(<span class="string">"Diamonds carat"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加x标签（使用xlab()这个辅助函数）</span></span><br><span class="line">p + xlab(<span class="string">"Diamonds carat"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同时添加x、y及colour标度-左下</span></span><br><span class="line">p + labs(x = <span class="string">"Diamonds carat"</span>, y = <span class="string">"Diamonds price"</span>, colour = <span class="string">"Diamond Cut"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加x标度为表达式-右下</span></span><br><span class="line">p + xlab(expression(frac(carat,<span class="number">10</span>)))</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-name.png" class="" title="标度-name">
+
+<h4 id="limits"><a href="#limits" class="headerlink" title="limits"></a>limits</h4><p><strong>limits：固定标度的定义域</strong>。</p>
+<ul>
+<li>连续型标度接受一个长度为2的数值型向量</li>
+<li>离散型标度接受一个字符型向量</li>
+</ul>
+<p>我们可以通过设定limits来移除不想在图形上展示的数据，<strong>任何不在此范围内的数据将会被丢弃</strong>。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">p &lt;- ggplot(data = diamonds, mapping = aes(x = carat, y = price, color = factor(cut)))</span><br><span class="line">p &lt;- p + geom_point()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定x轴的范围-左图</span></span><br><span class="line">p + scale_x_continuous(limits = c(<span class="number">0</span>,<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定colour的范围-右图</span></span><br><span class="line">p + scale_colour_hue(limits = <span class="string">"Fair"</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-limits.png" class="" title="标度-limits">
+
+<h4 id="breaks、labels"><a href="#breaks、labels" class="headerlink" title="breaks、labels"></a>breaks、labels</h4><ul>
+<li>breaks表示在坐标轴/图例上哪些点的位置标标签</li>
+<li>labels表示标什么标签，若设定labels，则必须同时指定breaks。</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">p &lt;- ggplot(data = diamonds, mapping = aes(x = carat, y = price, color = factor(cut)))</span><br><span class="line">p &lt;- p + geom_point()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定x轴的坐标轴的值-左图</span></span><br><span class="line">p + scale_x_continuous(breaks = c(<span class="number">0</span>,<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定图例上的值-右图</span></span><br><span class="line">p + scale_colour_hue(breaks = <span class="string">"Fair"</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-breaks.png" class="" title="标度-breaks">
+
+<h3 id="位置标度"><a href="#位置标度" class="headerlink" title="位置标度"></a>位置标度</h3><p>每幅图都一定拥有两个位置标度，一个指定水平位置（x标度），另外一个指定竖直位置（y标度）。ggplot2提供了连续型、离散型（针对因子型、字符型和逻辑型向量）以及日期型标度。</p>
+<h4 id="连续型位置标度"><a href="#连续型位置标度" class="headerlink" title="连续型位置标度"></a>连续型位置标度</h4><p>最常用的连续型位置标度是<code>scale_x_continuous</code>和<code>scale_y_continuous</code>，它们均将数据映射到x轴和y轴。而最有趣的变式是通过变换来生成的，每一个连续型标度都可以接受一个trans 参数，允许指定若干种线性或非线性的变换。</p>
+<p>下面是支持的变换：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>变换函数$f(x)$</th>
+<th>逆变换函数$f^{−1}(x)$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>asn</td>
+<td>$tanh^{−1}(x)$</td>
+<td>$tanh(y)$</td>
+</tr>
+<tr>
+<td>exp</td>
+<td>$e^x$</td>
+<td>$log(y)$</td>
+</tr>
+<tr>
+<td>identity</td>
+<td>$x$</td>
+<td>$y$</td>
+</tr>
+<tr>
+<td>log</td>
+<td>$log(x)$</td>
+<td>$e^y$</td>
+</tr>
+<tr>
+<td>log10</td>
+<td>$log_{10}(x)$</td>
+<td>$10^y$</td>
+</tr>
+<tr>
+<td>log2</td>
+<td>$log_2(x)$</td>
+<td>$2^y$</td>
+</tr>
+<tr>
+<td>logit</td>
+<td>$log(\frac{x}{1−x})$</td>
+<td>$\frac{1}{1+e(y)}$</td>
+</tr>
+<tr>
+<td>pow10</td>
+<td>$10^x$</td>
+<td>$log_{10}(y)$</td>
+</tr>
+<tr>
+<td>probit</td>
+<td>$\phi(x)$</td>
+<td>$\phi^{−1}(y)$</td>
+</tr>
+<tr>
+<td>recip</td>
+<td>$x^{−1}$</td>
+<td>$y^{−1}$</td>
+</tr>
+<tr>
+<td>reverse</td>
+<td>$−x$</td>
+<td>$−y$</td>
+</tr>
+<tr>
+<td>sqrt</td>
+<td>$x^{\frac{1}{2}}$</td>
+<td>$y^2$</td>
+</tr>
+</tbody></table>
+<p><strong>对于连续型位置标度，变换有简写形式</strong>，比如<code>scale_x_continuous(trans = “log10”)</code>可以简写为<code>scale_x_log10()</code>。参数trans对任意连续型标度均有效，但只有位置标度有简写形式。</p>
+<p>当然，可以直接对变量进行变换，而不使用标度变换。比如我们可以直接绘制<code>log10(x)</code>，而不去使用<code>scale_x_log10()</code>。</p>
+<p><strong>这两种做法将在绘图区域生成完全相同的结果，但是坐标轴和刻度标签却是不同的</strong>。</p>
+<p>下面是一个对比：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自行变换log10()-左图</span></span><br><span class="line">p &lt;- ggplot(data = diamonds, mapping = aes(x = log10(carat), y = log10(price), color = factor(cut)))</span><br><span class="line">p &lt;- p + geom_point()</span><br><span class="line"></span><br><span class="line"><span class="comment"># scale_x_log10()变换-右图</span></span><br><span class="line">p &lt;- ggplot(data = diamonds, mapping = aes(x = carat, y = price, color = factor(cut)))</span><br><span class="line">p &lt;- p + geom_point()</span><br><span class="line">p &lt;- p + scale_x_log10() + scale_y_log10()</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E4%BD%8D%E7%BD%AE-%E8%BF%9E%E7%BB%AD%E5%9E%8B.png" class="" title="标度-位置-连续型">
+
+<h4 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h4><p>日期和时间值基本上属于连续型标度，但在标注坐标轴时有着特殊的处理方式。目前我们仅支持属于<code>date</code>类的日期值和属于<code>POSIXct</code>类的时间值。如果你的日期和时间值是其他格式的，则需要<code>as.Date()</code>或<code>as.POSIXct()</code>对其进行转换。</p>
+<p>一共有三个参数可以控制坐标轴外观和刻度的位置：major、minor、format：</p>
+<ul>
+<li>major、minor：以时间的单位（即年月周日时分秒）来指定主要和次要断点的位置，并且允许以这些单位的倍数出现，比如，<code>major = &quot;2weeks&quot;</code>将在每隔两周的位置放置一个主刻度。如果未指定，日期刻度可以自动选出合适的默认值。</li>
+<li>format：指定了刻度标签的格式。</li>
+</ul>
+<p>下面是一个例子：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">library</span>(scales)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 时间序列-左上</span></span><br><span class="line">p &lt;- ggplot(data = economics, mapping = aes(x = date, y = psavert))</span><br><span class="line">p &lt;- p + geom_line()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加水平线-右上</span></span><br><span class="line">p &lt;- p + geom_hline(xintercept = <span class="number">0</span>, yintercept = <span class="number">0</span>, colour = <span class="string">"gray50"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每隔10年为一个断点-左下</span></span><br><span class="line">p + scale_x_date(breaks = date_breaks(<span class="string">"10 years"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用年月日的格式仅显示在2004年内的图形-右下</span></span><br><span class="line">p + scale_x_date(limits = as.Date(c(<span class="string">"2004-01-01"</span>,<span class="string">"2005-01-01"</span>)), labels = date_format(<span class="string">"%Y-%m-%d"</span>))</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E4%BD%8D%E7%BD%AE-%E6%97%B6%E9%97%B4.png" class="" title="标度-位置-时间">
+
+<h4 id="离散型位置标度"><a href="#离散型位置标度" class="headerlink" title="离散型位置标度"></a>离散型位置标度</h4><p>离散型位置标度<code>scale_x_discrete</code>、<code>scale_y_discrete</code>将输入中的各个水平映射为整数。结果的顺序可用参数breaks进行控制，不想要的水平可以使用limits（或xlim、ylim）进行丢弃。</p>
+<p>由于我们经常也会在图形的非整点位置放置标签和标注，所以离散型位置标度也可以接受连续型的值。如果你尚未调整breaks或limits，某个因子水平的所在位置的数值表示可以使用<code>as.numeric()</code>进行计算：以从1开始的整数表示。</p>
+<p>离散型位置标度的参数主要是前面提到的<strong>通用参数</strong>。</p>
+<p>下面看一个例子：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认方案-左图</span></span><br><span class="line">p &lt;- ggplot(data = diamonds, mapping = aes(cut, price))</span><br><span class="line">p &lt;- p + geom_boxplot()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更改横轴标度-中图</span></span><br><span class="line">p + scale_x_discrete(labels = c(<span class="string">"Fair"</span> = <span class="string">"A"</span>,<span class="string">"Good"</span> = <span class="string">"B"</span>, <span class="string">"Very Good"</span> = <span class="string">"C"</span>,<span class="string">"Premium"</span> = <span class="string">"D"</span>,<span class="string">"Ideal"</span> = <span class="string">"E"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除不想展示的cut-右图</span></span><br><span class="line">p + scale_x_discrete(limits = c(<span class="string">"Fair"</span>,<span class="string">"Good"</span>))</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E4%BD%8D%E7%BD%AE-%E7%A6%BB%E6%95%A3%E5%9E%8B.png" class="" title="标度-位置-离散型">
+
+
+<h3 id="颜色标度"><a href="#颜色标度" class="headerlink" title="颜色标度"></a>颜色标度</h3><p>以下标度对<strong>边界色（colour）图形属性</strong>和<strong>填充色（fill）图形属性</strong>均有效。</p>
+<h4 id="连续型颜色标度"><a href="#连续型颜色标度" class="headerlink" title="连续型颜色标度"></a>连续型颜色标度</h4><p>根据颜色梯度中的色彩数量划分，共有三类连续型颜色梯度（即渐变色）：</p>
+<ul>
+<li><strong><code>scale_colour_gradient()</code>、<code>scale_fill_gradient()</code>：双色梯度</strong>。参数low和high控制梯度两端的颜色</li>
+<li><strong><code>scale_colour_gradient2()</code>、<code>scale_fill_gradient2()</code>：三色梯度</strong>。顺序为低-中-高，这两种标度还在中点处拥有一个中间色</li>
+<li><strong><code>scale_colour_gradientn()</code>、<code>scale_fill_gradientn()</code>：自定义n色梯度</strong></li>
+</ul>
+<p><strong>颜色梯度常被用来展示一个二维表面的高度，用以描述第三维度，颜色的深浅代表着不同的值</strong>。例如描述地势高低时，地势的高低常常用颜色深浅来展现。</p>
+<p>下面我们用R自带的一个向量数据集volcano，因为ggplot2只接受数据框格式，因此我们先把数据转换成数据框格式：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">library</span>(reshape2)</span><br><span class="line"></span><br><span class="line">volcano3d &lt;- melt(volcano)</span><br><span class="line">names(volcano3d) &lt;- c(<span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>下面展示双色梯度<code>scale_fill_gradient()</code>的用法：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认参数-左图</span></span><br><span class="line">p &lt;- ggplot(data = volcano3d,mapping = aes(x,y,fill=z))</span><br><span class="line">p &lt;- p + geom_tile()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 控制填充颜色的值范围-中图</span></span><br><span class="line">p + scale_fill_gradient(limits = c(<span class="number">120</span>,<span class="number">170</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过参数low与high，控制颜色在low与high之间渐变-右图</span></span><br><span class="line">p + scale_fill_gradient(low = <span class="string">"blue"</span>, high = <span class="string">"red"</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E9%A2%9C%E8%89%B2-%E8%BF%9E%E7%BB%AD%E5%9E%8B-1.png" class="" title="标度-颜色-连续型-1">
+
+<p>下面展示三色梯度<code>scale_fill_gradient2()</code>的用法：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认参数，即midpoint=0-左图</span></span><br><span class="line">p + scale_fill_gradient2(low = <span class="string">"blue"</span>, high = <span class="string">"red"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置midpoint=150-右图</span></span><br><span class="line">p + scale_fill_gradient2(low = <span class="string">"blue"</span>, high = <span class="string">"red"</span>, midpoint = <span class="number">150</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E9%A2%9C%E8%89%B2-%E8%BF%9E%E7%BB%AD%E5%9E%8B-2.png" class="" title="标度-颜色-连续型-2">
+
+<p>以上两图都设定了颜色由 blue 到 red 渐变，但是左图使用默认参数 <code>midpoint=0</code>，右图使用参数<code>midpoint=150</code>，而 z 值的范围是 <code>94~195</code>，所有他们在图中实际渐变色为，<strong>左图：浅红-红，右图：蓝-白-红</strong>。</p>
+<p>下面展示自定义n色梯度<code>scale_fill_gradientn()</code>的用法：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 手动设置颜色-左图</span></span><br><span class="line">p + scale_fill_gradientn(colours = c(<span class="string">"black"</span>,<span class="string">"blue"</span>,<span class="string">"red"</span>,<span class="string">"white"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 采用R语言预设的调色盘-右图</span></span><br><span class="line">p + scale_fill_gradientn(colours = topo.colors(<span class="number">10</span>))</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E9%A2%9C%E8%89%B2-%E8%BF%9E%E7%BB%AD%E5%9E%8B-3.png" class="" title="标度-颜色-连续型-3">
+
+<h4 id="离散型颜色标度"><a href="#离散型颜色标度" class="headerlink" title="离散型颜色标度"></a>离散型颜色标度</h4><p>离散型数据有两种颜色标度。一种可以自动选择颜色，另一种可以手工从颜色集中选择颜色。</p>
+<ul>
+<li><p>默认的配色方案，即<code>scale_colour_hue()</code>、<code>scale_fill_hue()</code>，可通过沿着hcl色轮选取均匀分布的色相来生成颜色。这种方案对颜色较少时有比较好的效果，但对于更多不同的颜色就不好区分开来。</p>
+</li>
+<li><p>另一种可选的方案是<a href="http://colorbrewer.org" target="_blank" rel="noopener external nofollow noreferrer">ColorBrewer配色</a>。即<code>scale_colour_brewer()</code>、<code>scale_fill_brewer()</code>。要想了解所有的调色板，可以使用<code>RColorBrewer::display.brewer.all()</code>查看。我们可以用参数<code>palette=”调色板名称或者数字”</code>来使用。例如，使用第二个调色板时用<code>palette = 2</code>（等价于<code>palette = &#39;YIOrBr&#39;</code>）。</p>
+</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认方案，即scale_colour_hue()-左上图</span></span><br><span class="line">p &lt;- ggplot(data = diamonds, mapping = aes(cut, price, fill = color))</span><br><span class="line">p &lt;- p + geom_boxplot()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 采用ColorBrewer配色-右上图</span></span><br><span class="line">p + scale_fill_brewer()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 采用ColorBrewer配色中第二个调色板-左下图</span></span><br><span class="line">p + scale_fill_brewer(palette = <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 采用ColorBrewer配色中'Spectral'调色板-右下图</span></span><br><span class="line">p + scale_fill_brewer(palette = <span class="string">"Spectral"</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E9%A2%9C%E8%89%B2-%E7%A6%BB%E6%95%A3%E5%9E%8B.png" class="" title="标度-颜色-离散型">
+
+
+<h3 id="手动离散型标度"><a href="#手动离散型标度" class="headerlink" title="手动离散型标度"></a>手动离散型标度</h3><p>离散型标度<code>scale_linetype()</code>、<code>scale_colour_manual()</code>、<code>scale_size_discrete()</code>、<code>scale_shape()</code>是按一定的顺序将因子的水平映射到一系列取值中。<strong>如果想要定制这些标度，需要使用以下手动型标度创建新的标度</strong>：</p>
+<ul>
+<li><code>scale_linetype_manual()</code></li>
+<li><code>scale_colour_manual()</code></li>
+<li><code>scale_size_discrete()</code></li>
+<li><code>scale_shape_manual()</code></li>
+</ul>
+<p>手动型标度拥有一个重要参数values，我们可以用它来指定这个标度应该生成的值。</p>
+<p>下面是一个例子：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认颜色-左上图</span></span><br><span class="line">p &lt;- ggplot(data = diamonds, mapping = aes(x = carat, y = price, color = factor(cut)))</span><br><span class="line">p &lt;- p + geom_point()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 手动改变颜色-右上图</span></span><br><span class="line">p + scale_colour_manual(values = c(<span class="string">"Fair"</span> = <span class="string">"red"</span>,<span class="string">"Good"</span> = <span class="string">"yellow"</span>,<span class="string">"Very Good"</span> = <span class="string">"green"</span>,<span class="string">"Premium"</span> = <span class="string">"blue"</span>,<span class="string">"Ideal"</span> = <span class="string">"black"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认大小-左下图</span></span><br><span class="line">p &lt;- ggplot(data = diamonds, mapping = aes(x = carat, y = price, size = factor(cut)))</span><br><span class="line">p &lt;- p + geom_point()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 手动改变大小-右下图</span></span><br><span class="line">p + scale_size_manual(values = c(<span class="number">10</span>,<span class="number">8</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<img src="/archives/99c6f91/%E6%A0%87%E5%BA%A6-%E6%89%8B%E5%8A%A8%E7%A6%BB%E6%95%A3%E5%9E%8B.png" class="" title="标度-手动离散型">
+
+
+<h3 id="同一型标度"><a href="#同一型标度" class="headerlink" title="同一型标度"></a>同一型标度</h3><p>当你的数据能被R中的绘图函数理解时，即数据空间和图形属性空间相同时，可以使用同一性标度(identity scale)，这意味着此时无法仅从数据本身派生出有意义的图例，所以默认是不绘制图例。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.cnblogs.com/lantingg/p/7999251.html" target="_blank" rel="noopener external nofollow noreferrer">ggplot2入门与进阶（上）</a></li>
+<li><a href="https://www.cnblogs.com/lizhilei-123/p/6808370.html" target="_blank" rel="noopener external nofollow noreferrer">R数据可视化—-ggplot2之标度、坐标轴和图例详解</a></li>
+<li><a href="https://blog.csdn.net/songzhilian22/article/details/49388677" target="_blank" rel="noopener external nofollow noreferrer">ggplot2学习笔记之颜色标度</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\c363755b.html" rel="bookmark">ggplot2柱状图按数值大小排序</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\7fa1138e.html" rel="bookmark">R数据可视化-相关矩阵热力图</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\67c7ad2c.html" rel="bookmark">ggplot2去除箱型图中的离群点</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\b6c1b732.html" rel="bookmark">Matplotlib系列之标注</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\1439dcd2.html" rel="bookmark">Matplotlib系列之LineStyles及Markers</a></div>
+    </li>
+  </ul>
+<div>
+    
+        <div class="end-slogan" style="text-align:center;font-size:22px;letter-spacing:10px;user-select:none;color:#bbb;"><br/>----------- 本文结束啦<i class="fa fa-star"></i>感谢您阅读 -----------<br/><br/></div>
+    
+</div> 
+        <div class="reward-container">
+  <div>赞赏一杯咖啡</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="小丁 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="小丁 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小丁
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tding.top/archives/99c6f91.html" title="R数据可视化-ggplot2的标度">https://tding.top/archives/99c6f91.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/atom.xml">
+                <span class="icon">
+                  <i class="fa fa-rss"></i>
+                </span>
+
+                <span class="label">RSS</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/R/" rel="tag"><i class="fa fa-tag"></i> R</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 数据可视化</a>
+              <a href="/tags/ggplot2/" rel="tag"><i class="fa fa-tag"></i> ggplot2</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/16cc1f7e.html" rel="prev" title="R数据可视化-ggplot2的坐标系">
+      <i class="fa fa-chevron-left"></i> R数据可视化-ggplot2的坐标系
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/71d12648.html" rel="next" title="R数据可视化-ggplot2的几何对象与统计变换">
+      R数据可视化-ggplot2的几何对象与统计变换 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#标度系列函数"><span class="nav-number">1.</span> <span class="nav-text">标度系列函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用参数"><span class="nav-number">1.1.</span> <span class="nav-text">通用参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#name"><span class="nav-number">1.1.1.</span> <span class="nav-text">name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#limits"><span class="nav-number">1.1.2.</span> <span class="nav-text">limits</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#breaks、labels"><span class="nav-number">1.1.3.</span> <span class="nav-text">breaks、labels</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位置标度"><span class="nav-number">1.2.</span> <span class="nav-text">位置标度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#连续型位置标度"><span class="nav-number">1.2.1.</span> <span class="nav-text">连续型位置标度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期和时间"><span class="nav-number">1.2.2.</span> <span class="nav-text">日期和时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#离散型位置标度"><span class="nav-number">1.2.3.</span> <span class="nav-text">离散型位置标度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色标度"><span class="nav-number">1.3.</span> <span class="nav-text">颜色标度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#连续型颜色标度"><span class="nav-number">1.3.1.</span> <span class="nav-text">连续型颜色标度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#离散型颜色标度"><span class="nav-number">1.3.2.</span> <span class="nav-text">离散型颜色标度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动离散型标度"><span class="nav-number">1.4.</span> <span class="nav-text">手动离散型标度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同一型标度"><span class="nav-number">1.5.</span> <span class="nav-text">同一型标度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">168</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/bc52c916.html" title="Performance API详解" target="_blank">Performance API详解</a>
+          </li>
+        
+          <li>
+            <a href="/archives/a896eef1.html" title="Lighthouse介绍" target="_blank">Lighthouse介绍</a>
+          </li>
+        
+          <li>
+            <a href="/archives/290f3ac4.html" title="梅花品种-3系5类18型" target="_blank">梅花品种-3系5类18型</a>
+          </li>
+        
+          <li>
+            <a href="/archives/d179c86b.html" title="LeanCloud云引擎因流控无法唤醒解决方案" target="_blank">LeanCloud云引擎因流控无法唤醒解决方案</a>
+          </li>
+        
+          <li>
+            <a href="/archives/192fb032.html" title="Word公式如何多行对齐" target="_blank">Word公式如何多行对齐</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">891k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:30</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 19729,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/archives/99c6f91.html',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/archives/99c6f91.html";
+    this.page.identifier = "archives/99c6f91.html";
+    this.page.title = "R数据可视化-ggplot2的标度";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>
