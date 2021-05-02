@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>小丁的个人博客</title>
+  <icon>https://tding.top/icon.png</icon>
+  <subtitle>世间所有的相遇，都是久别重逢</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://tding.top/"/>
+  <updated>2021-05-01T14:27:26.395Z</updated>
+  <id>https://tding.top/</id>
+  
+  <author>
+    <name>小丁</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Performance API详解</title>
+    <link href="https://tding.top/archives/bc52c916.html"/>
+    <id>https://tding.top/archives/bc52c916.html</id>
+    <published>2021-04-30T12:20:00.000Z</published>
+    <updated>2021-05-01T14:27:26.395Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Performance 接口可以获取到当前页面中与性能相关的信息。它是 High Resolution Time API 的一部分，同时也融合了 Performance Timeline API、Navigation Timing API、 User Timing API 和 Resource Timing API。&lt;/p&gt;
+&lt;p&gt;本文主要记录Performance API的几个属性、方法，以及页面加载慢问题的排查分析。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能监控" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能监控" scheme="https://tding.top/tags/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="Performance API" scheme="https://tding.top/tags/Performance-API/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Lighthouse介绍</title>
+    <link href="https://tding.top/archives/a896eef1.html"/>
+    <id>https://tding.top/archives/a896eef1.html</id>
+    <published>2021-04-30T12:10:00.000Z</published>
+    <updated>2021-05-01T14:27:26.392Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Lighthouse 是谷歌开源的一款 Web 前端性能测试工具，用于改进网络应用的质量，适用于网页版和移动端。能生成一个包括页面性能、PWA（Progressive Web apps，渐进式 Web 应用）、可访问性（无障碍）、最佳实践、SEO 的报告清单提供参考，看看可以采取哪些措施来改进您的应用。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能监控" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能监控" scheme="https://tding.top/tags/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="Lighthouse" scheme="https://tding.top/tags/Lighthouse/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>梅花品种-3系5类18型</title>
+    <link href="https://tding.top/archives/290f3ac4.html"/>
+    <id>https://tding.top/archives/290f3ac4.html</id>
+    <published>2020-06-27T04:00:00.000Z</published>
+    <updated>2020-06-27T04:13:43.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;梅花在中国经长期选育，现有品种300多个。梅花分3系5类18型，将323个梅花品种，首先按其种源组成分为真梅、杏梅和樱李梅3个种系(Branch)，其下按枝态分若干类(Group)，再按花的特征分若干型(Form)。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="生活" scheme="https://tding.top/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+      <category term="植物" scheme="https://tding.top/categories/%E7%94%9F%E6%B4%BB/%E6%A4%8D%E7%89%A9/"/>
+    
+    
+      <category term="植物" scheme="https://tding.top/tags/%E6%A4%8D%E7%89%A9/"/>
+    
+      <category term="梅花" scheme="https://tding.top/tags/%E6%A2%85%E8%8A%B1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LeanCloud云引擎因流控无法唤醒解决方案</title>
+    <link href="https://tding.top/archives/d179c86b.html"/>
+    <id>https://tding.top/archives/d179c86b.html</id>
+    <published>2020-06-01T14:00:00.000Z</published>
+    <updated>2020-06-27T04:13:43.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前段时间，博客的Valine评论后基本收不到邮件通知，这是因为LeanCloud的云引擎休眠后没有被定时任务正常唤醒。去LeanCloud一看，发现了”因流控原因，通过定时任务唤醒体验版实例失败，建议升级至标准版云引擎实例避免休眠”。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;官方说法：我们近期发现有大量云引擎的体验版（免费版）用户创建了在同一时刻触发的定时任务唤醒容器运行，会对服务的负载产生一定影响。因此我们决定根据服务器的负载，对这些定时任务添加流控，通过定时任务唤醒容器将有可能会失败。这个改动不会对云引擎的标准版（付费版）用户产生影响。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;下面是解决方案。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="Hexo" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="https://tding.top/tags/Hexo/"/>
+    
+      <category term="Valine" scheme="https://tding.top/tags/Valine/"/>
+    
+      <category term="LeanCloud" scheme="https://tding.top/tags/LeanCloud/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Word公式如何多行对齐</title>
+    <link href="https://tding.top/archives/192fb032.html"/>
+    <id>https://tding.top/archives/192fb032.html</id>
+    <published>2020-05-09T15:00:00.000Z</published>
+    <updated>2020-05-10T07:41:24.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在用Word写论文时，经常碰到公式很长的情况，这时候需要将公式分成多行，每一行的公式在等号处对齐。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="软件" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="Word" scheme="https://tding.top/tags/Word/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Word题注对图表进行自动化标号</title>
+    <link href="https://tding.top/archives/ee1790c8.html"/>
+    <id>https://tding.top/archives/ee1790c8.html</id>
+    <published>2020-05-09T14:00:00.000Z</published>
+    <updated>2020-05-10T07:37:28.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;写论文时一般都会要求图、表进行标号，正文中需要通过这个标号来引用图、表。这时候，如果一个个手打就会碰到以下问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;当我们需要在文中添加一张图片，那么这会导致后续的图片标号全部需要重新编号，同时正文中的引用也全部需要更改。&lt;/li&gt;
+&lt;li&gt;当我们需要图片目录的时候就非常麻烦。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这时候我们就需要使用&lt;strong&gt;题注&lt;/strong&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="软件" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="Word" scheme="https://tding.top/tags/Word/"/>
+    
+      <category term="题注" scheme="https://tding.top/tags/%E9%A2%98%E6%B3%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>新冠肺炎疫情数据可视化</title>
+    <link href="https://tding.top/archives/e1eb25a0.html"/>
+    <id>https://tding.top/archives/e1eb25a0.html</id>
+    <published>2020-02-06T15:30:00.000Z</published>
+    <updated>2020-02-21T09:45:37.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;全国新冠肺炎（2019-nCoV）数据可视化，数据来源于丁香园，从不同的角度进行呈现。&lt;/p&gt;
+&lt;p&gt;数据更新：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2020.02.21-全国除湖北地区的新增病例有所增加，20日（45人）、21日（258人），这是因为山东、浙江两地的监狱确诊了200多人。&lt;/li&gt;
+&lt;li&gt;2020.02.20-湖北省新增疑似病例下降到3位数，因为&lt;strong&gt;2月14日发布的第六版《新型冠状病毒肺炎诊疗方案》中，对诊断标准又做了调整，不再分湖北和湖北以外，取消了专门针对湖北的临床诊断病例。所以，核减人数中部分可能是12日临床诊断纳入后，经过观察再核实排除的病人&lt;/strong&gt;。而这个核减的病例是在&lt;strong&gt;当日新增&lt;/strong&gt;中！！这也造成了武汉新增数据比湖北省还多的现象。&lt;/li&gt;
+&lt;li&gt;2020.02.13-从今天起，湖北省将临床诊断病例数纳入确诊病例数进行公布，因此今天湖北省一下新增确诊病例14000多人，做预测模型的小伙伴恐怕要哭晕….&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We must remember that these are people, not numbers.  —WHO&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="生活" scheme="https://tding.top/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+      <category term="社会事件" scheme="https://tding.top/categories/%E7%94%9F%E6%B4%BB/%E7%A4%BE%E4%BC%9A%E4%BA%8B%E4%BB%B6/"/>
+    
+    
+      <category term="数据可视化" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+      <category term="新冠肺炎" scheme="https://tding.top/tags/%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E/"/>
+    
+      <category term="2020" scheme="https://tding.top/tags/2020/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【R语言】readr笔记</title>
+    <link href="https://tding.top/archives/a61fec0e.html"/>
+    <id>https://tding.top/archives/a61fec0e.html</id>
+    <published>2020-02-02T14:40:00.000Z</published>
+    <updated>2020-05-07T08:07:44.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;readr包提供了一些在R中读写文本数据的函数。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="R" scheme="https://tding.top/categories/R/"/>
+    
+      <category term="数据处理" scheme="https://tding.top/categories/R/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/"/>
+    
+    
+      <category term="R" scheme="https://tding.top/tags/R/"/>
+    
+      <category term="tidyverse" scheme="https://tding.top/tags/tidyverse/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【R语言】tibble笔记</title>
+    <link href="https://tding.top/archives/80be9be7.html"/>
+    <id>https://tding.top/archives/80be9be7.html</id>
+    <published>2020-02-02T14:30:00.000Z</published>
+    <updated>2020-05-06T07:23:17.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;tibble是一种简单数据框，它对传统数据框的功能进行了一些修改，以便更易于使用。tibble包是tidyverse中的核心R包。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="R" scheme="https://tding.top/categories/R/"/>
+    
+      <category term="数据处理" scheme="https://tding.top/categories/R/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/"/>
+    
+    
+      <category term="R" scheme="https://tding.top/tags/R/"/>
+    
+      <category term="tidyverse" scheme="https://tding.top/tags/tidyverse/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【R语言】dplyr笔记</title>
+    <link href="https://tding.top/archives/372a6b87.html"/>
+    <id>https://tding.top/archives/372a6b87.html</id>
+    <published>2020-02-01T14:30:00.000Z</published>
+    <updated>2020-05-06T07:20:23.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;dplyr包是tidyverse中的核心R包。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="R" scheme="https://tding.top/categories/R/"/>
+    
+      <category term="数据处理" scheme="https://tding.top/categories/R/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/"/>
+    
+    
+      <category term="R" scheme="https://tding.top/tags/R/"/>
+    
+      <category term="tidyverse" scheme="https://tding.top/tags/tidyverse/"/>
+    
+      <category term="dplyr" scheme="https://tding.top/tags/dplyr/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Matplotlib系列之标注</title>
+    <link href="https://tding.top/archives/b6c1b732.html"/>
+    <id>https://tding.top/archives/b6c1b732.html</id>
+    <published>2020-01-27T04:15:00.000Z</published>
+    <updated>2020-01-27T06:51:53.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我们经常需要在绘图中添加一些箭头、文字之类的标注，让图片更易懂。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Python" scheme="https://tding.top/categories/Python/"/>
+    
+      <category term="数据可视化" scheme="https://tding.top/categories/Python/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+    
+      <category term="Python" scheme="https://tding.top/tags/Python/"/>
+    
+      <category term="matplotlib" scheme="https://tding.top/tags/matplotlib/"/>
+    
+      <category term="数据可视化" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Matplotlib系列之LineStyles及Markers</title>
+    <link href="https://tding.top/archives/1439dcd2.html"/>
+    <id>https://tding.top/archives/1439dcd2.html</id>
+    <published>2020-01-23T13:10:00.000Z</published>
+    <updated>2020-01-23T13:19:42.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要记录Matplotlib中的曲线、点号的样式，便于后续查询。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Python" scheme="https://tding.top/categories/Python/"/>
+    
+      <category term="数据可视化" scheme="https://tding.top/categories/Python/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+    
+      <category term="Python" scheme="https://tding.top/tags/Python/"/>
+    
+      <category term="matplotlib" scheme="https://tding.top/tags/matplotlib/"/>
+    
+      <category term="数据可视化" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Matplotlib系列之画布与坐标轴设置</title>
+    <link href="https://tding.top/archives/21d3feb6.html"/>
+    <id>https://tding.top/archives/21d3feb6.html</id>
+    <published>2020-01-22T12:00:00.000Z</published>
+    <updated>2020-01-22T12:31:01.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;通过&lt;a href=&quot;https://tding.top/archives/ea3d181f.html&quot;&gt;Matplotlib系列之简述&lt;/a&gt;这篇文章，我们已经从宏观上大致了解了Matplotlib图像的组成部分。今天，我们主要介绍画布与坐标轴这两个概念，并详细介绍一下坐标轴属性设置以及脊柱设置。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Python" scheme="https://tding.top/categories/Python/"/>
+    
+      <category term="数据可视化" scheme="https://tding.top/categories/Python/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+    
+      <category term="Python" scheme="https://tding.top/tags/Python/"/>
+    
+      <category term="matplotlib" scheme="https://tding.top/tags/matplotlib/"/>
+    
+      <category term="数据可视化" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Matplotlib系列之简述</title>
+    <link href="https://tding.top/archives/ea3d181f.html"/>
+    <id>https://tding.top/archives/ea3d181f.html</id>
+    <published>2020-01-22T11:30:00.000Z</published>
+    <updated>2020-01-22T12:27:26.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在学习Matplotlib之前，我们可以先大致了解一下Matplotlib图像的组成部分，后面再详细学习其中的各个对象。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Python" scheme="https://tding.top/categories/Python/"/>
+    
+      <category term="数据可视化" scheme="https://tding.top/categories/Python/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+    
+      <category term="Python" scheme="https://tding.top/tags/Python/"/>
+    
+      <category term="matplotlib" scheme="https://tding.top/tags/matplotlib/"/>
+    
+      <category term="数据可视化" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Win7开机蓝屏报出STOP 0X0000007B错误的解决办法</title>
+    <link href="https://tding.top/archives/9f1322c6.html"/>
+    <id>https://tding.top/archives/9f1322c6.html</id>
+    <published>2020-01-21T14:30:00.000Z</published>
+    <updated>2020-02-06T03:13:32.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Win7电脑，开机直接蓝屏，报出如下错误：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A problem has been detected and windows has been shut down to prevent damage to your computer.&lt;/p&gt;
+&lt;p&gt;If this is the first time you’ve seen this stop error screen, restart your computer. If this screen appears again, follow these steps:&lt;/p&gt;
+&lt;p&gt;Check for viruses on your computer. Remove any newly installed hard drives or hard drive controllers. Check your hard drive to make sure it is properly configured and terminated. Run CHKDSK /F to check for hard drive corruption and then restart your computer.&lt;/p&gt;
+&lt;p&gt;Technical information:&lt;/p&gt;
+&lt;p&gt;*** STOP: 0x0000007B (0xFFFFF880009A98E8, 0xFFFFFFFFC0000034, 0x0000000000000000, 0x0000000000000000)&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="Windows" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Windows/"/>
+    
+    
+      <category term="Windows" scheme="https://tding.top/tags/Windows/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>思源宋体与思源黑体</title>
+    <link href="https://tding.top/archives/160f8560.html"/>
+    <id>https://tding.top/archives/160f8560.html</id>
+    <published>2020-01-12T15:00:15.000Z</published>
+    <updated>2020-01-12T15:06:59.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;2014年，Google联合Adobe发布了非衬线&lt;strong&gt;思源黑体&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;2017年，Google联合Adobe发布了衬线&lt;strong&gt;思源宋体&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;思源系列字体支持四种不同的东亚语言（简体中文、繁体中文、日语和朝鲜语），7种粗细类型中的每一种都有 65535 个字形，可共同呈现一致的视觉美感。该字体还包含多个西方字形，支持拉丁语、希腊语和西里尔文脚本，这些字形均来源于&lt;code&gt;Source Serif&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;思源系列字体是&lt;strong&gt;迄今为止唯一一款可以免费用于任何场合的“泛中日韩”字体&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;注：关于衬线、非衬线的介绍见&lt;a href=&quot;https://tding.top/archives/7026a363.html&quot;&gt;衬线（Serif）与非衬线（Sans-serif）字体&lt;/a&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="CSS" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/CSS/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="字体" scheme="https://tding.top/tags/%E5%AD%97%E4%BD%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>衬线（Serif）与非衬线（Sans-serif）字体</title>
+    <link href="https://tding.top/archives/7026a363.html"/>
+    <id>https://tding.top/archives/7026a363.html</id>
+    <published>2020-01-12T14:00:15.000Z</published>
+    <updated>2020-01-12T15:03:46.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在西方国家罗马字母阵营中，字体分为两大种类：&lt;code&gt;Sans Serif&lt;/code&gt;和&lt;code&gt;Serif&lt;/code&gt;，打字机体虽然也属于&lt;code&gt;Sans Serif&lt;/code&gt;，但由于是等宽字体，所以另外独立出&lt;code&gt;Monospace&lt;/code&gt;这一种类，例如在Web中，表示代码时常常要使用等宽字体。 &lt;/p&gt;
+&lt;p&gt;Serif的意思是，在&lt;strong&gt;字的笔划开始及结束的地方有额外的装饰&lt;/strong&gt;，而且笔划的粗细会因直横的不同而有不同。相反的，&lt;code&gt;Sans Serif&lt;/code&gt;则没有这些额外的装饰，笔划粗细大致差不多。如下图： &lt;/p&gt;
+&lt;img src=&quot;/archives/7026a363/%E6%AF%94%E8%BE%83.jpg&quot; class=&quot;&quot; title=&quot;比较&quot;&gt;
+
+&lt;p&gt;常用字体的分类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Serif&lt;/code&gt;字体：&lt;code&gt;Times New Roman&lt;/code&gt;、宋体、细明体&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Sans Serif&lt;/code&gt;字体：&lt;code&gt;Arial&lt;/code&gt;、&lt;code&gt;Tahoma&lt;/code&gt;、黑体、幼圆&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="CSS" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/CSS/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="字体" scheme="https://tding.top/tags/%E5%AD%97%E4%BD%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Word插入矢量图</title>
+    <link href="https://tding.top/archives/7a65918e.html"/>
+    <id>https://tding.top/archives/7a65918e.html</id>
+    <published>2020-01-12T13:00:00.000Z</published>
+    <updated>2020-01-12T15:03:46.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;写论文的时候经常需要放上一些仿真、测试的数据图，一般审论文的时候，首先关注的就是图片，因此，图片的质量十分重要。本文主要介绍如何在Word中插入矢量图。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="软件" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="Word" scheme="https://tding.top/tags/Word/"/>
+    
+      <category term="矢量图" scheme="https://tding.top/tags/%E7%9F%A2%E9%87%8F%E5%9B%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo-NexT版本更新记录</title>
+    <link href="https://tding.top/archives/2bd6d82.html"/>
+    <id>https://tding.top/archives/2bd6d82.html</id>
+    <published>2020-01-11T15:30:00.000Z</published>
+    <updated>2020-03-06T03:38:47.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本博客之前的主题版本是NexT-7.1.2，如今最新的版本已经是7.7.0了，为了能用上最新的特性，前几天对主题进行了升级，也踩了不少坑。本文主要记录升级过程。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;更新前的版本：Hexo-3.8.0、NexT-7.1.2&lt;/li&gt;
+&lt;li&gt;更新后的版本：Hexo-4.2.0、NexT-7.7.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;说明：本文升级过程中没有修改主题源代码，同时保留了除主页轮播图外基本所有自定义布局、样式&lt;/strong&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="Hexo" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="https://tding.top/tags/Hexo/"/>
+    
+      <category term="NexT" scheme="https://tding.top/tags/NexT/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo-NexT新增友链</title>
+    <link href="https://tding.top/archives/73ce4e7.html"/>
+    <id>https://tding.top/archives/73ce4e7.html</id>
+    <published>2020-01-10T15:30:00.000Z</published>
+    <updated>2020-02-12T06:06:59.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;NexT主题自带的友链模块放在侧边栏下面，视觉上比较臃肿。&lt;/p&gt;
+&lt;p&gt;本文介绍两种修改友链样式的方法以及具体的步骤。其中第一种方法需要修改 NexT 主题文件，第二种则不需要。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;本博客的友链见：&lt;a href=&quot;https://tding.top/about/links.html&quot;&gt;友链&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="Hexo" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="https://tding.top/tags/Hexo/"/>
+    
+      <category term="NexT" scheme="https://tding.top/tags/NexT/"/>
+    
+  </entry>
+  
+</feed>
