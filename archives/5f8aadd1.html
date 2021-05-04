@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="我们发现：  在链表中，插入、删除速度很快O(1)，但查找速度较慢O(n)。 在数组中，查找速度很快O(1)，但插入、删除速度很慢O(n)。  为了解决这个问题，我们需要寻找一种能够在插入、删除、查找、遍历等操作都相对快的容器，于是人们发明了二叉搜索树（二叉树仅作为二叉搜索树的基础）。二叉搜索树的插入、删除、查找成本均为O(log n)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode题目总结-二叉搜索树">
+<meta property="og:url" content="https://tding.top/archives/5f8aadd1.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="我们发现：  在链表中，插入、删除速度很快O(1)，但查找速度较慢O(n)。 在数组中，查找速度很快O(1)，但插入、删除速度很慢O(n)。  为了解决这个问题，我们需要寻找一种能够在插入、删除、查找、遍历等操作都相对快的容器，于是人们发明了二叉搜索树（二叉树仅作为二叉搜索树的基础）。二叉搜索树的插入、删除、查找成本均为O(log n)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tding.top/archives/5f8aadd1/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91-%E6%9F%A5%E6%89%BE-2.gif">
+<meta property="og:image" content="https://tding.top/archives/5f8aadd1/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91-%E6%9F%A5%E6%89%BE-1.gif">
+<meta property="og:image" content="https://tding.top/archives/5f8aadd1/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91-%E6%8F%92%E5%85%A5.gif">
+<meta property="og:image" content="https://tding.top/archives/5f8aadd1/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91-%E5%88%A0%E9%99%A4.gif">
+<meta property="og:image" content="https://tding.top/archives/5f8aadd1/235-1.png">
+<meta property="og:image" content="https://tding.top/archives/5f8aadd1/235-2.png">
+<meta property="og:image" content="https://tding.top/archives/5f8aadd1/450-1.png">
+<meta property="og:image" content="https://tding.top/archives/5f8aadd1/450-2.png">
+<meta property="og:image" content="https://tding.top/archives/5f8aadd1/450-3.png">
+<meta property="og:image" content="https://tding.top/archives/5f8aadd1/450-4.png">
+<meta property="article:published_time" content="2019-11-21T15:51:00.000Z">
+<meta property="article:modified_time" content="2019-11-28T08:51:30.000Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="LeetCode">
+<meta property="article:tag" content="二叉树">
+<meta property="article:tag" content="二叉搜索树">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tding.top/archives/5f8aadd1/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91-%E6%9F%A5%E6%89%BE-2.gif">
+
+<link rel="canonical" href="https://tding.top/archives/5f8aadd1.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>LeetCode题目总结-二叉搜索树 | 小丁的个人博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">111</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">173</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tding.top/archives/5f8aadd1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="小丁">
+      <meta itemprop="description" content="酒，越喝越暖，水会越喝越寒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小丁的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          LeetCode题目总结-二叉搜索树
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-21 23:51:00" itemprop="dateCreated datePublished" datetime="2019-11-21T23:51:00+08:00">2019-11-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机基础</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/5f8aadd1.html" class="post-meta-item leancloud_visitors" data-flag-title="LeetCode题目总结-二叉搜索树" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/archives/5f8aadd1.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="archives/5f8aadd1.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/5f8aadd1.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/5f8aadd1.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我们发现：</p>
+<ul>
+<li>在链表中，插入、删除速度很快<code>O(1)</code>，但查找速度较慢<code>O(n)</code>。</li>
+<li>在数组中，查找速度很快<code>O(1)</code>，但插入、删除速度很慢<code>O(n)</code>。</li>
+</ul>
+<p>为了解决这个问题，我们需要寻找一种能够在插入、删除、查找、遍历等操作都相对快的容器，于是人们发明了二叉搜索树（二叉树仅作为二叉搜索树的基础）。二叉搜索树的插入、删除、查找成本均为<code>O(log n)</code></p>
+<a id="more"></a>
+
+<h2 id="二叉搜索树的性质"><a href="#二叉搜索树的性质" class="headerlink" title="二叉搜索树的性质"></a>二叉搜索树的性质</h2><ul>
+<li>如果节点的左子树不空，则左子树上所有结点的值均小于等于它的根结点的值；</li>
+<li>如果节点的右子树不空，则右子树上所有结点的值均大于等于它的根结点的值；</li>
+<li>任意节点的左、右子树也分别为二叉搜索树；</li>
+</ul>
+<h2 id="二叉搜索树的查找、插入、删除过程"><a href="#二叉搜索树的查找、插入、删除过程" class="headerlink" title="二叉搜索树的查找、插入、删除过程"></a>二叉搜索树的查找、插入、删除过程</h2><h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><p>通过二叉搜索树查找节点，理想情况下我们需要检查的节点数可以减半。</p>
+<p>但是<strong>二叉搜索树十分依赖于树中节点的拓扑结构</strong>，也就是节点间的布局关系。下图描绘了一个节点插入顺序为 <code>20, 50, 90, 150, 175, 200</code> 的二叉搜索树。这些节点是按照递升顺序被插入的，结果就是这棵树没有广度（Breadth）可言。也就是说，它的拓扑结构其实就是将节点排布在一条线上，而不是以扇形结构散开，所以查找时间也为 <code>O(n)</code>。</p>
+<img src="/archives/5f8aadd1/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91-%E6%9F%A5%E6%89%BE-2.gif" class="" title="二叉搜索树-查找-2">
+
+<p>下面是一个查找过程：</p>
+<img src="/archives/5f8aadd1/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91-%E6%9F%A5%E6%89%BE-1.gif" class="" title="二叉搜索树-查找-1">
+
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><p>当向树中插入一个新的节点时，<strong>该节点将总是作为叶子节点</strong>。所以，最困难的地方就是如何找到该节点的父节点。</p>
+<p>下面是一个插入过程：</p>
+<img src="/archives/5f8aadd1/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91-%E6%8F%92%E5%85%A5.gif" class="" title="二叉搜索树-插入">
+
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>删除节点算法的第一步是定位要被删除的节点，这可以使用前面介绍的查找算法，因此运行时间为 <code>O(logn)</code>。接着应该选择合适的节点来代替删除节点的位置，它共有三种情况需要考虑。</p>
+<ul>
+<li>情况 1：如果<strong>被删除的节点没有右孩子</strong>，那么就选择它的左孩子来代替原来的节点。二叉搜索树的性质保证了被删除节点的左子树必然符合二叉搜索树的性质。因此左子树的值要么都大于，要么都小于被删除节点的父节点的值，这取决于被删除节点是左孩子还是右孩子。因此用被删除节点的左子树来替代被删除节点，是完全符合二叉搜索树的性质的。</li>
+<li>情况 2：如果<strong>被删除节点的右孩子没有左孩子</strong>，那么这个右孩子被用来替换被删除节点。因为被删除节点的右孩子都大于被删除节点左子树的所有节点，同时也大于或小于被删除节点的父节点，这同样取决于被删除节点是左孩子还是右孩子。因此，用右孩子来替换被删除节点，符合二叉搜索树的性质。</li>
+<li>情况 3：如果<strong>被删除节点的右孩子有左孩子</strong>，就需要用被删除节点右孩子的左子树中的最下面的节点来替换它，就是说，我们用<strong>被删除节点的右子树中最小值的节点来替换</strong>。</li>
+</ul>
+<img src="/archives/5f8aadd1/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91-%E5%88%A0%E9%99%A4.gif" class="" title="二叉搜索树-删除">
+
+<h2 id="LeetCode相关题目"><a href="#LeetCode相关题目" class="headerlink" title="LeetCode相关题目"></a>LeetCode相关题目</h2><ul>
+<li><p><strong>基本操作</strong></p>
+<ul>
+<li><a href="#235-二叉搜索树的最近公共祖先">235-二叉搜索树的最近公共祖先</a></li>
+<li><a href="#450-删除二叉搜索树中的节点">450-删除二叉搜索树中的节点</a></li>
+<li><a href="#669-修剪二叉搜索树">669-修剪二叉搜索树</a></li>
+<li><a href="#700-二叉搜索树中的搜索">700-二叉搜索树中的搜索</a></li>
+<li><a href="#701-二叉搜索树中的插入操作">701-二叉搜索树中的插入操作</a></li>
+</ul>
+</li>
+<li><p><strong>基于中序遍历</strong></p>
+<ul>
+<li><a href="#98-验证二叉搜索树">98-验证二叉搜索树</a></li>
+<li><a href="#99-恢复二叉搜索树">99-恢复二叉搜索树</a></li>
+<li><a href="#230-二叉搜索树中第K小的元素">230-二叉搜索树中第K小的元素</a></li>
+<li><a href="#501-二叉搜索树中的众数">501-二叉搜索树中的众数</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="235-二叉搜索树的最近公共祖先"><a href="#235-二叉搜索树的最近公共祖先" class="headerlink" title="235-二叉搜索树的最近公共祖先"></a>235-二叉搜索树的最近公共祖先</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。</p>
+<p>百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”</p>
+<p>例如，给定如下二叉搜索树:  <code>root = [6,2,8,0,4,7,9,null,null,3,5]</code></p>
+<img src="/archives/5f8aadd1/235-1.png" class="" title="二叉搜索树的最近公共祖先-1">
+
+<p>示例 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: root &#x3D; [6,2,8,0,4,7,9,null,null,3,5], p &#x3D; 2, q &#x3D; 8</span><br><span class="line">输出: 6 </span><br><span class="line">解释: 节点 2 和节点 8 的最近公共祖先是 6。</span><br></pre></td></tr></table></figure>
+
+<p>示例 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: root &#x3D; [6,2,8,0,4,7,9,null,null,3,5], p &#x3D; 2, q &#x3D; 4</span><br><span class="line">输出: 2</span><br><span class="line">解释: 节点 2 和节点 4 的最近公共祖先是 2, 因为根据定义最近公共祖先节点可以为节点本身。</span><br></pre></td></tr></table></figure>
+
+<p>说明:</p>
+<ul>
+<li>所有节点的值都是唯一的。</li>
+<li>p、q 为不同节点且均存在于给定的二叉搜索树中。</li>
+</ul>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>最近公共子节点有可能是下面这几种情况：</p>
+<img src="/archives/5f8aadd1/235-2.png" class="" title="二叉搜索树的最近公共祖先-2">
+
+<p>具体步骤如下：</p>
+<ul>
+<li>从根节点开始遍历树</li>
+<li>如果节点 p 和节点 q 都在右子树上，那么以右孩子为根节点继续 1 的操作</li>
+<li>如果节点 p 和节点 q 都在左子树上，那么以左孩子为根节点继续 1 的操作</li>
+<li>如果条件 2 和条件 3 都不成立，这就意味着我们已经找到节 p 和节点 q 的 LCA 了</li>
+</ul>
+<blockquote>
+<p><a href="https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-search-tree/solution/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian--2/" target="_blank" rel="noopener external nofollow noreferrer">二叉搜索树的最近公共祖先</a></p>
+</blockquote>
+<h4 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h4><p>方法1：递归</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lowestCommonAncestor</span><span class="params">(self, root: <span class="string">'TreeNode'</span>, p: <span class="string">'TreeNode'</span>, q: <span class="string">'TreeNode'</span>)</span> -&gt; 'TreeNode':</span></span><br><span class="line">        <span class="keyword">if</span> root.val &lt; p.val <span class="keyword">and</span> root.val &lt; q.val:</span><br><span class="line">            <span class="keyword">return</span> self.lowestCommonAncestor(root.right,p,q)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">elif</span> root.val &gt; p.val <span class="keyword">and</span> root.val &gt; q.val:</span><br><span class="line">            <span class="keyword">return</span> self.lowestCommonAncestor(root.left,p,q)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
+
+<p>方法2：迭代</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lowestCommonAncestor</span><span class="params">(self, root: <span class="string">'TreeNode'</span>, p: <span class="string">'TreeNode'</span>, q: <span class="string">'TreeNode'</span>)</span> -&gt; 'TreeNode':</span></span><br><span class="line">        cur_node = root</span><br><span class="line">        <span class="keyword">while</span> cur_node:</span><br><span class="line">            <span class="keyword">if</span> p.val &gt; cur_node.val <span class="keyword">and</span> q.val &gt; cur_node.val:</span><br><span class="line">                cur_node = cur_node.right</span><br><span class="line">            <span class="keyword">elif</span> p.val &lt; cur_node.val <span class="keyword">and</span> q.val &lt; cur_node.val:</span><br><span class="line">                cur_node = cur_node.left</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> cur_node</span><br></pre></td></tr></table></figure>
+
+<h3 id="450-删除二叉搜索树中的节点"><a href="#450-删除二叉搜索树中的节点" class="headerlink" title="450-删除二叉搜索树中的节点"></a>450-删除二叉搜索树中的节点</h3><h4 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的 key 对应的节点，并保证二叉搜索树的性质不变。返回二叉搜索树（有可能被更新）的根节点的引用。</p>
+<p>一般来说，删除节点可分为两个步骤：</p>
+<ol>
+<li>首先找到需要删除的节点；</li>
+<li>如果找到了，删除它。</li>
+</ol>
+<p>说明： 要求算法时间复杂度为 O(h)，h 为树的高度。</p>
+<p>示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root &#x3D; [5,3,6,2,4,null,7]</span><br><span class="line">key &#x3D; 3</span><br><span class="line"></span><br><span class="line">    5</span><br><span class="line">   &#x2F; \</span><br><span class="line">  3   6</span><br><span class="line"> &#x2F; \   \</span><br><span class="line">2   4   7</span><br></pre></td></tr></table></figure>
+
+<p>给定需要删除的节点值是 3，所以我们首先找到 3 这个节点，然后删除它。</p>
+<p>一个正确的答案是 <code>[5,4,6,2,null,null,7]</code>, 如下图所示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    5</span><br><span class="line">   &#x2F; \</span><br><span class="line">  4   6</span><br><span class="line"> &#x2F;     \</span><br><span class="line">2       7</span><br></pre></td></tr></table></figure>
+
+<p>另一个正确答案是 <code>[5,2,6,null,4,null,7]</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  5</span><br><span class="line"> &#x2F; \</span><br><span class="line">2   6</span><br><span class="line"> \   \</span><br><span class="line">  4   7</span><br></pre></td></tr></table></figure>
+
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>理解这个算法的关键在于保持 BST 中序遍历的顺序性。</p>
+<p>删除一个节点会有三种情况，具体见下面的图解：</p>
+<div class="tabs" id="tab"><ul class="nav-tabs"><li class="tab active"><a href="#tab-1">流程1</a></li><li class="tab"><a href="#tab-2">流程2</a></li><li class="tab"><a href="#tab-3">流程3</a></li><li class="tab"><a href="#tab-4">流程4</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab-1"><img src="/archives/5f8aadd1/450-1.png" class="" title="删除二叉搜索树中的节点-1"></div><div class="tab-pane" id="tab-2"><img src="/archives/5f8aadd1/450-2.png" class="" title="删除二叉搜索树中的节点-2"></div><div class="tab-pane" id="tab-3"><img src="/archives/5f8aadd1/450-3.png" class="" title="删除二叉搜索树中的节点-3"></div><div class="tab-pane" id="tab-4"><img src="/archives/5f8aadd1/450-4.png" class="" title="删除二叉搜索树中的节点-4"></div></div></div>
+
+<blockquote>
+<p><a href="https://leetcode-cn.com/problems/delete-node-in-a-bst/solution/yong-qian-qu-huo-zhe-hou-ji-jie-dian-zi-shu-dai-ti/" target="_blank" rel="noopener external nofollow noreferrer">用前驱或者后继结点代替被删除结点（Python、Java 代码）</a></p>
+</blockquote>
+<h4 id="Python实现-1"><a href="#Python实现-1" class="headerlink" title="Python实现"></a>Python实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">deleteNode</span><span class="params">(self, root: TreeNode, key: int)</span> -&gt; TreeNode:</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 递归调用左子树</span></span><br><span class="line">        <span class="keyword">if</span> key &lt; root.val:</span><br><span class="line">            root.left = self.deleteNode(root.left, key)</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 递归调用右子树</span></span><br><span class="line">        <span class="keyword">if</span> key &gt; root.val:</span><br><span class="line">            root.right = self.deleteNode(root.right, key)</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 当前节点的val正好等于key</span></span><br><span class="line">        <span class="comment"># 当前节点的左子节点不存在，直接提升右子节点即可</span></span><br><span class="line">        <span class="keyword">if</span> root.left <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            new_root = root.right</span><br><span class="line">            root.right = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">return</span> new_root</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 当前节点的右子节点不存在，直接提升左子节点即可</span></span><br><span class="line">        <span class="keyword">if</span> root.right <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            new_root = root.left</span><br><span class="line">            root.left = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">return</span> new_root</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 当前节点的左右子节点均存在，这里我用左子树中最大的点来替换</span></span><br><span class="line">        <span class="comment"># 寻找左子树中最大的点（即最右边这个节点）</span></span><br><span class="line">        node = root.left</span><br><span class="line">        <span class="keyword">while</span> node.right != <span class="literal">None</span>:</span><br><span class="line">            node = node.right</span><br><span class="line">        <span class="comment"># 左子树中最大的点变为新的根节点</span></span><br><span class="line">        new_root = TreeNode(node.val)</span><br><span class="line">        <span class="comment"># 新的根节点的左子树需要更新</span></span><br><span class="line">        new_root.left = self.removeMax(root.left)</span><br><span class="line">        <span class="comment"># 新的根节点的右子树即为原来的右子树</span></span><br><span class="line">        new_root.right = root.right</span><br><span class="line"></span><br><span class="line">        root.left = <span class="literal">None</span></span><br><span class="line">        root.right = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">return</span> new_root</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeMax</span><span class="params">(self, node)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> node.right == <span class="literal">None</span>:</span><br><span class="line">            new_root = node.left</span><br><span class="line">            node.left = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">return</span> new_root</span><br><span class="line">        node.right = self.removeMax(node.right)</span><br><span class="line">        <span class="keyword">return</span> node</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果不把待删除节点的左右节点设置为None会怎么样？</p>
+</blockquote>
+<p>写这两行代码是出于面向对象的程序语言（Python 和 Java 都是）的垃圾回收机制（Garbage Collection，GC）的考虑。如果一个对象没有被其它对象引用，它会在合适的时候被垃圾回收机制回收，被垃圾回收机制回收即是真正从内存中删除了，语义上也没有必要保留这两个引用。</p>
+<h3 id="669-修剪二叉搜索树"><a href="#669-修剪二叉搜索树" class="headerlink" title="669-修剪二叉搜索树"></a>669-修剪二叉搜索树</h3><h4 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个二叉搜索树，同时给定最小边界L 和最大边界 R。通过修剪二叉搜索树，使得所有节点的值在<code>[L, R]</code>中 (<code>R&gt;=L</code>) 。你可能需要改变树的根节点，所以结果应当返回修剪好的二叉搜索树的新的根节点。</p>
+<p>示例 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入: </span><br><span class="line">    1</span><br><span class="line">   &#x2F; \</span><br><span class="line">  0   2</span><br><span class="line"></span><br><span class="line">  L &#x3D; 1</span><br><span class="line">  R &#x3D; 2</span><br><span class="line"></span><br><span class="line">输出: </span><br><span class="line">    1</span><br><span class="line">      \</span><br><span class="line">       2</span><br></pre></td></tr></table></figure>
+
+<p>示例 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">输入: </span><br><span class="line">    3</span><br><span class="line">   &#x2F; \</span><br><span class="line">  0   4</span><br><span class="line">   \</span><br><span class="line">    2</span><br><span class="line">   &#x2F;</span><br><span class="line">  1</span><br><span class="line"></span><br><span class="line">  L &#x3D; 1</span><br><span class="line">  R &#x3D; 3</span><br><span class="line"></span><br><span class="line">输出: </span><br><span class="line">      3</span><br><span class="line">     &#x2F; </span><br><span class="line">   2   </span><br><span class="line">  &#x2F;</span><br><span class="line"> 1</span><br></pre></td></tr></table></figure>
+
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>这里我用递归来进行修建：</p>
+<ul>
+<li>当 <code>node.val &gt; R</code>，那么修剪后的二叉树必定出现在节点的左边。</li>
+<li>当 <code>node.val &lt; L</code>，那么修剪后的二叉树出现在节点的右边。</li>
+<li>否则，我们将会修剪树的两边。</li>
+</ul>
+<h4 id="Python实现-2"><a href="#Python实现-2" class="headerlink" title="Python实现"></a>Python实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">trimBST</span><span class="params">(self, root: TreeNode, L: int, R: int)</span> -&gt; TreeNode:</span></span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> root.val &gt; R:</span><br><span class="line">            <span class="keyword">return</span> self.trimBST(root.left,L,R)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> root.val &lt; L:</span><br><span class="line">            <span class="keyword">return</span> self.trimBST(root.right,L,R)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> root.val &gt;= L <span class="keyword">and</span> root.val &lt;= R:</span><br><span class="line">            root.left = self.trimBST(root.left,L,R)</span><br><span class="line">            root.right = self.trimBST(root.right,L,R)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="700-二叉搜索树中的搜索"><a href="#700-二叉搜索树中的搜索" class="headerlink" title="700-二叉搜索树中的搜索"></a>700-二叉搜索树中的搜索</h3><h4 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定二叉搜索树（BST）的根节点和一个值。 你需要在BST中找到节点值等于给定值的节点。 返回以该节点为根的子树。 如果节点不存在，则返回 NULL。</p>
+<p>例如，给定二叉搜索树:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    4</span><br><span class="line">   &#x2F; \</span><br><span class="line">  2   7</span><br><span class="line"> &#x2F; \</span><br><span class="line">1   3</span><br></pre></td></tr></table></figure>
+
+<p>和值：2</p>
+<p>你应该返回如下子树:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  2     </span><br><span class="line"> &#x2F; \   </span><br><span class="line">1   3</span><br></pre></td></tr></table></figure>
+
+<p>在上述示例中，如果要找的值是 5，但因为没有节点值为 5，我们应该返回 NULL。</p>
+<h4 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h4><p>根据二叉搜索树的性质：如果val小于当前结点的值，转向其左子树继续搜索；如果val大于当前结点的值，转向其右子树继续搜索；如果已找到，则返回当前结点。如果搜索到最后仍未找到结点，则返回None。</p>
+<h4 id="Python实现-3"><a href="#Python实现-3" class="headerlink" title="Python实现"></a>Python实现</h4><p>方法1：递归</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">searchBST</span><span class="params">(self, root: TreeNode, val: int)</span> -&gt; TreeNode:</span></span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> val &gt; root.val:</span><br><span class="line">            <span class="keyword">return</span> self.searchBST(root.right,val)</span><br><span class="line">        <span class="keyword">elif</span> val &lt; root.val:</span><br><span class="line">            <span class="keyword">return</span> self.searchBST(root.left,val)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
+
+<p>方法2：迭代</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">searchBST</span><span class="params">(self, root: TreeNode, val: int)</span> -&gt; TreeNode:</span></span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> root:</span><br><span class="line">            <span class="keyword">if</span> val &gt; root.val:</span><br><span class="line">                root = root.right</span><br><span class="line">            <span class="keyword">elif</span> val &lt; root.val:</span><br><span class="line">                root = root.left</span><br><span class="line">            <span class="keyword">elif</span> val == root.val:</span><br><span class="line">                <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="701-二叉搜索树中的插入操作"><a href="#701-二叉搜索树中的插入操作" class="headerlink" title="701-二叉搜索树中的插入操作"></a>701-二叉搜索树中的插入操作</h3><h4 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定二叉搜索树（BST）的根节点和要插入树中的值，将值插入二叉搜索树。 返回插入后二叉搜索树的根节点。<strong>保证原始二叉搜索树中不存在新值</strong>。</p>
+<p>注意，可能存在多种有效的插入方式，只要树在插入后仍保持为二叉搜索树即可。 你可以返回任意有效的结果。</p>
+<p>例如，给定二叉搜索树:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    4</span><br><span class="line">   &#x2F; \</span><br><span class="line">  2   7</span><br><span class="line"> &#x2F; \</span><br><span class="line">1   3</span><br></pre></td></tr></table></figure>
+
+<p>和 插入的值: 5</p>
+<p>你可以返回这个二叉搜索树:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">     4</span><br><span class="line">   &#x2F;   \</span><br><span class="line">  2     7</span><br><span class="line"> &#x2F; \   &#x2F;</span><br><span class="line">1   3 5</span><br></pre></td></tr></table></figure>
+
+<p>或者这个树也是有效的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">     5</span><br><span class="line">   &#x2F;   \</span><br><span class="line">  2     7</span><br><span class="line"> &#x2F; \   </span><br><span class="line">1   3</span><br><span class="line">     \</span><br><span class="line">      4</span><br></pre></td></tr></table></figure>
+
+<h4 id="思路-4"><a href="#思路-4" class="headerlink" title="思路"></a>思路</h4><p>这里我们采用经典的插入方法，使整体操作变化最小。</p>
+<ol>
+<li>直接深拷贝构造新树，然后修改</li>
+<li>寻找到合适的叶位置后插入新节点，这样只需要在原树的某个叶节点处延伸一个节点</li>
+</ol>
+<h4 id="Python实现-4"><a href="#Python实现-4" class="headerlink" title="Python实现"></a>Python实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insertIntoBST</span><span class="params">(self, root: TreeNode, val: int)</span> -&gt; TreeNode:</span></span><br><span class="line">        res = copy.deepcopy(root)</span><br><span class="line">        cur_node = res</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 如果二叉搜索树为空树，用val构造二叉树节点作为根节点并返回</span></span><br><span class="line">        <span class="keyword">if</span> cur_node == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> TreeNode(val)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> cur_node:</span><br><span class="line">            <span class="keyword">if</span> val &gt; cur_node.val:</span><br><span class="line">                <span class="comment"># 走向右子树</span></span><br><span class="line">                <span class="keyword">if</span> cur_node.right != <span class="literal">None</span>:</span><br><span class="line">                    cur_node = cur_node.right</span><br><span class="line">                <span class="comment"># 应该走向右子树而右子树为空，即找到了插入位置</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur_node.right = TreeNode(val)</span><br><span class="line">                    <span class="keyword">return</span> res</span><br><span class="line">            <span class="keyword">elif</span> val &lt; cur_node.val:</span><br><span class="line">                <span class="comment"># 走向左子树</span></span><br><span class="line">                <span class="keyword">if</span> cur_node.left != <span class="literal">None</span>:</span><br><span class="line">                    cur_node = cur_node.left</span><br><span class="line">                <span class="comment"># 应该走向左子树而左子树为空，即找到了插入位置</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur_node.left = TreeNode(val)</span><br><span class="line">                    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="98-验证二叉搜索树"><a href="#98-验证二叉搜索树" class="headerlink" title="98-验证二叉搜索树"></a>98-验证二叉搜索树</h3><h4 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个二叉树，判断其是否是一个有效的二叉搜索树。</p>
+<p>假设一个二叉搜索树具有如下特征：</p>
+<ul>
+<li>节点的左子树只包含小于当前节点的数。</li>
+<li>节点的右子树只包含大于当前节点的数。</li>
+<li>所有左子树和右子树自身必须也是二叉搜索树。</li>
+</ul>
+<p>示例 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">    2</span><br><span class="line">   &#x2F; \</span><br><span class="line">  1   3</span><br><span class="line">输出: true</span><br></pre></td></tr></table></figure>
+
+<p>示例 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">    5</span><br><span class="line">   &#x2F; \</span><br><span class="line">  1   4</span><br><span class="line">     &#x2F; \</span><br><span class="line">    3   6</span><br><span class="line">输出: false</span><br><span class="line">解释: 输入为: [5,1,4,null,null,3,6]。根节点的值为 5 ，但是其右子节点值为 4</span><br></pre></td></tr></table></figure>
+
+<h4 id="思路-5"><a href="#思路-5" class="headerlink" title="思路"></a>思路</h4><p>方法1：递归</p>
+<p>看到这道题目，我们首先想到遍历整棵树，检查 <code>node.right.val &gt; node.val</code> 和 <code>node.left.val &lt; node.val</code> 对每个结点是否成立。但是这种方法并不总是正确。因为<strong>不仅右子结点要大于该节点，整个右子树的元素都应该大于该节点</strong>。</p>
+<p>这意味着我们需要在遍历树的同时保留结点的上界与下界，在比较时不仅比较子结点的值，也要与上下界比较。</p>
+<p>方法2：中序遍历</p>
+<p>中序遍历按照<code>左子树 -&gt; 结点 -&gt; 右子树</code>的顺序，这意味着一个<strong>二叉搜索树的中序遍历得到的每个元素都应该比下一个元素小</strong>。</p>
+<p>具体步骤：</p>
+<ol>
+<li>计算中序遍历列表inorder</li>
+<li>检查中序遍历列表是否从小到大</li>
+</ol>
+<h4 id="Python实现-5"><a href="#Python实现-5" class="headerlink" title="Python实现"></a>Python实现</h4><p>方法1：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isValidBST</span><span class="params">(self, root: TreeNode)</span> -&gt; bool:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(root,max_val,min_val)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> root.val &lt; max_val <span class="keyword">and</span> root.val &gt; min_val:</span><br><span class="line">                <span class="keyword">return</span> helper(root.left,root.val,min_val) <span class="keyword">and</span> helper(root.right,max_val,root.val)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        max_val = float(<span class="string">'inf'</span>)</span><br><span class="line">        min_val = -float(<span class="string">'inf'</span>)</span><br><span class="line">        <span class="keyword">return</span> helper(root,max_val,min_val)</span><br></pre></td></tr></table></figure>
+
+<p>方法2：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isValidBST</span><span class="params">(self, root: TreeNode)</span> -&gt; bool:</span></span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">        pre = -float(<span class="string">'inf'</span>)</span><br><span class="line">        stack = []</span><br><span class="line"></span><br><span class="line">        p_node = root</span><br><span class="line">        <span class="keyword">while</span> stack <span class="keyword">or</span> p_node:</span><br><span class="line">            <span class="comment"># 把所有当前访问节点的左孩子都入栈</span></span><br><span class="line">            <span class="keyword">while</span> p_node:</span><br><span class="line">                stack.append(p_node)</span><br><span class="line">                p_node = p_node.left</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 操作栈顶节点，如果是第一次运行到这步，那么这是整棵树的最左节点</span></span><br><span class="line">            cur_node = stack.pop()</span><br><span class="line">            <span class="comment"># 检查是否从小到大</span></span><br><span class="line">            <span class="keyword">if</span> cur_node.val &gt; pre:</span><br><span class="line">                pre = cur_node.val</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将指针指向当前节点的右节点</span></span><br><span class="line">            <span class="keyword">if</span> cur_node.right != <span class="literal">None</span>:</span><br><span class="line">                p_node = cur_node.right</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="99-恢复二叉搜索树"><a href="#99-恢复二叉搜索树" class="headerlink" title="99-恢复二叉搜索树"></a>99-恢复二叉搜索树</h3><h4 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h4><p>二叉搜索树中的两个节点被错误地交换。</p>
+<p>请在不改变其结构的情况下，恢复这棵树。</p>
+<p>示例 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,3,null,null,2]</span><br><span class="line"></span><br><span class="line">   1</span><br><span class="line">  &#x2F;</span><br><span class="line"> 3</span><br><span class="line">  \</span><br><span class="line">   2</span><br><span class="line"></span><br><span class="line">输出: [3,1,null,null,2]</span><br><span class="line"></span><br><span class="line">   3</span><br><span class="line">  &#x2F;</span><br><span class="line"> 1</span><br><span class="line">  \</span><br><span class="line">   2</span><br></pre></td></tr></table></figure>
+
+<p>示例 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">输入: [3,1,4,null,null,2]</span><br><span class="line"></span><br><span class="line">  3</span><br><span class="line"> &#x2F; \</span><br><span class="line">1   4</span><br><span class="line">   &#x2F;</span><br><span class="line">  2</span><br><span class="line"></span><br><span class="line">输出: [2,1,4,null,null,3]</span><br><span class="line"></span><br><span class="line">  2</span><br><span class="line"> &#x2F; \</span><br><span class="line">1   4</span><br><span class="line">   &#x2F;</span><br><span class="line">  3</span><br></pre></td></tr></table></figure>
+
+<p>进阶:</p>
+<ul>
+<li>使用 O(n) 空间复杂度的解法很容易实现。</li>
+<li>你能想出一个只使用常数空间的解决方案吗？</li>
+</ul>
+<h4 id="思路-6"><a href="#思路-6" class="headerlink" title="思路"></a>思路</h4><p>二叉搜索树中序遍历输出应该是递增的，在遍历二叉树的过程中找到不满足递增的点（即错误交换的点），交换两者的值即可。</p>
+<p><strong>注意：错误交换的点在中序遍历结果中可能是相邻的，也可能是不相邻的</strong>。</p>
+<ul>
+<li><strong>错误交换的点是相邻的（中序遍历结果1324）</strong>：使用first和second表示错误交换的两个点，在第一次遇到不递增的情况时，将first置为3，second置为2，遍历结束后交换first与second。</li>
+<li><strong>错误交换的点是不相邻的（中序遍历结果3214）</strong>：在第一次遇到不递增的情况时，将first设置为3，second设置为2，在第二次遇到不递增的情况时，只改变second，将second置为1.遍历结束后交换first与second。</li>
+</ul>
+<h4 id="Python实现-6"><a href="#Python实现-6" class="headerlink" title="Python实现"></a>Python实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">recoverTree</span><span class="params">(self, root: TreeNode)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Do not return anything, modify root in-place instead.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        pre = TreeNode(-float(<span class="string">'inf'</span>))</span><br><span class="line">        first_node = <span class="literal">None</span></span><br><span class="line">        second_node = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        stack = []</span><br><span class="line">        p_node = root</span><br><span class="line">        <span class="keyword">while</span> stack <span class="keyword">or</span> p_node:</span><br><span class="line">            <span class="keyword">while</span> p_node:</span><br><span class="line">                stack.append(p_node)</span><br><span class="line">                p_node = p_node.left</span><br><span class="line"></span><br><span class="line">            cur_node = stack.pop()</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 根据当前节点和前一个节点的值来判断节点是否错误</span></span><br><span class="line">            <span class="keyword">if</span> cur_node.val &gt; pre.val:</span><br><span class="line">                pre = cur_node</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># 第一次相遇</span></span><br><span class="line">                <span class="keyword">if</span> first_node == <span class="literal">None</span>:</span><br><span class="line">                    first_node = pre</span><br><span class="line">                    second_node = cur_node</span><br><span class="line">                <span class="comment"># 第二次相遇</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    second_node = cur_node</span><br><span class="line">                </span><br><span class="line">            <span class="keyword">if</span> cur_node.right != <span class="literal">None</span>:</span><br><span class="line">                p_node = cur_node.right</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 交换两个错误交换的节点</span></span><br><span class="line">        first_node.val,second_node.val = second_node.val,first_node.val</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="230-二叉搜索树中第K小的元素"><a href="#230-二叉搜索树中第K小的元素" class="headerlink" title="230-二叉搜索树中第K小的元素"></a>230-二叉搜索树中第K小的元素</h3><h4 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个二叉搜索树，编写一个函数 kthSmallest 来查找其中第 k 个最小的元素。</p>
+<p>说明：你可以假设 k 总是有效的，1 ≤ k ≤ 二叉搜索树元素个数。</p>
+<p>示例 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入: root &#x3D; [3,1,4,null,2], k &#x3D; 1</span><br><span class="line">   3</span><br><span class="line">  &#x2F; \</span><br><span class="line"> 1   4</span><br><span class="line">  \</span><br><span class="line">   2</span><br><span class="line">输出: 1</span><br></pre></td></tr></table></figure>
+
+<p>示例 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入: root &#x3D; [5,3,6,2,4,null,null,1], k &#x3D; 3</span><br><span class="line">       5</span><br><span class="line">      &#x2F; \</span><br><span class="line">     3   6</span><br><span class="line">    &#x2F; \</span><br><span class="line">   2   4</span><br><span class="line">  &#x2F;</span><br><span class="line"> 1</span><br><span class="line">输出: 3</span><br></pre></td></tr></table></figure>
+
+<p>进阶：如果二叉搜索树经常被修改（插入/删除操作）并且你需要频繁地查找第 k 小的值，你将如何优化 kthSmallest 函数？</p>
+<h4 id="思路-7"><a href="#思路-7" class="headerlink" title="思路"></a>思路</h4><p>二叉搜索树的中序遍历序列为递增序列，因此可中序遍历二叉搜索树，返回第K个元素。</p>
+<h4 id="Python实现-7"><a href="#Python实现-7" class="headerlink" title="Python实现"></a>Python实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kthSmallest</span><span class="params">(self, root: TreeNode, k: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 中序遍历二叉树</span></span><br><span class="line">        res = []</span><br><span class="line">        stack = []</span><br><span class="line">        p_node = root</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> stack <span class="keyword">or</span> p_node:</span><br><span class="line">            <span class="keyword">while</span> p_node:</span><br><span class="line">                stack.append(p_node)</span><br><span class="line">                p_node = p_node.left</span><br><span class="line"></span><br><span class="line">            cur_node = stack.pop()</span><br><span class="line">            res.append(cur_node.val)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> cur_node.right != <span class="literal">None</span>:</span><br><span class="line">                p_node = cur_node.right</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 返回第k个元素</span></span><br><span class="line">        <span class="keyword">return</span> res[k<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+
+<p>我们也可以提前中止中序遍历：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kthSmallest</span><span class="params">(self, root: TreeNode, k: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 中序遍历二叉树</span></span><br><span class="line">        stack = []</span><br><span class="line">        p_node = root</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> stack <span class="keyword">or</span> p_node:</span><br><span class="line">            <span class="keyword">while</span> p_node:</span><br><span class="line">                stack.append(p_node)</span><br><span class="line">                p_node = p_node.left</span><br><span class="line"></span><br><span class="line">            cur_node = stack.pop()</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 返回第k个元素</span></span><br><span class="line">            k -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> k == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> cur_node.val</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> cur_node.right != <span class="literal">None</span>:</span><br><span class="line">                p_node = cur_node.right</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="501-二叉搜索树中的众数"><a href="#501-二叉搜索树中的众数" class="headerlink" title="501-二叉搜索树中的众数"></a>501-二叉搜索树中的众数</h3><h4 id="题目描述-8"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个有相同值的二叉搜索树（BST），找出 BST 中的所有众数（出现频率最高的元素）。</p>
+<p>假定 BST 有如下定义：</p>
+<ul>
+<li>结点左子树中所含结点的值小于等于当前结点的值</li>
+<li>结点右子树中所含结点的值大于等于当前结点的值</li>
+<li>左子树和右子树都是二叉搜索树</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">给定 BST [1,null,2,2],</span><br><span class="line"></span><br><span class="line">   1</span><br><span class="line">    \</span><br><span class="line">     2</span><br><span class="line">    &#x2F;</span><br><span class="line">   2</span><br><span class="line">返回[2].</span><br></pre></td></tr></table></figure>
+
+<p>提示：如果众数超过1个，不需考虑输出顺序</p>
+<p>进阶：你可以不使用额外的空间吗？（假设由递归产生的隐式调用栈的开销不被计算在内）</p>
+<h4 id="思路-8"><a href="#思路-8" class="headerlink" title="思路"></a>思路</h4><p>方法1：层序遍历+字典</p>
+<p>这里我用层次遍历，然后用一个字典记录每个值出现的次数，最后在字典中搜索最大值（即出现次数最多的值，也就是众数）。</p>
+<p>但是这种方法用了额外的空间。</p>
+<p>方法2：中序遍历</p>
+<p>二叉搜索树的中序遍历是一个<strong>升序序列</strong>，逐个比对当前结点值<code>cur_node.val</code>与前驱结点值<code>pre_node.val</code>。更新当前节点值出现次数<code>curTimes</code>及最大出现次数<code>maxTimes</code>，更新规则：</p>
+<ul>
+<li>若<code>curTimes=maxTimes</code>，将<code>cur_node.val</code>添加到结果向量<code>res</code>中</li>
+<li>若<code>curTimes&gt;maxTimes</code>，清空<code>res</code>，将<code>cur_node.val</code>添加到<code>res</code>，并更新<code>maxTimes</code>为<code>curTimes</code></li>
+</ul>
+<h4 id="Python实现-8"><a href="#Python实现-8" class="headerlink" title="Python实现"></a>Python实现</h4><p>方法1：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findMode</span><span class="params">(self, root: TreeNode)</span> -&gt; List[int]:</span></span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        </span><br><span class="line">        dicts = &#123;&#125;</span><br><span class="line">        queue = [root]</span><br><span class="line">        <span class="keyword">while</span> queue:</span><br><span class="line">            length = len(queue)</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> range(length):</span><br><span class="line">                node = queue.pop(<span class="number">0</span>)</span><br><span class="line">                <span class="comment"># 节点值存入字典</span></span><br><span class="line">                <span class="keyword">if</span> node.val <span class="keyword">in</span> dicts:</span><br><span class="line">                    dicts[node.val] += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    dicts[node.val] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> node.left != <span class="literal">None</span>:</span><br><span class="line">                    queue.append(node.left)</span><br><span class="line">                <span class="keyword">if</span> node.right != <span class="literal">None</span>:</span><br><span class="line">                    queue.append(node.right)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算众数</span></span><br><span class="line">        max_num = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i,counts <span class="keyword">in</span> dicts.items():</span><br><span class="line">            <span class="keyword">if</span> counts &gt; max_num:</span><br><span class="line">                res = [i]</span><br><span class="line">                max_num = counts</span><br><span class="line">            <span class="comment"># 输出所有众数</span></span><br><span class="line">            <span class="keyword">elif</span> counts == max_num:</span><br><span class="line">                res.append(i)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<p>方法2：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findMode</span><span class="params">(self, root: TreeNode)</span> -&gt; List[int]:</span></span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        stack = []</span><br><span class="line">        p_node = root</span><br><span class="line">        pre_node = TreeNode(float(<span class="string">'inf'</span>))</span><br><span class="line">        maxTimes = <span class="number">0</span></span><br><span class="line">        res = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> stack <span class="keyword">or</span> p_node:</span><br><span class="line">            <span class="comment"># 把所有当前访问节点的左孩子都入栈</span></span><br><span class="line">            <span class="keyword">while</span> p_node != <span class="literal">None</span>:</span><br><span class="line">                stack.append(p_node)</span><br><span class="line">                p_node = p_node.left</span><br><span class="line"></span><br><span class="line">            cur_node = stack.pop()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 更新当前节点出现次数</span></span><br><span class="line">            <span class="keyword">if</span> pre_node.val == cur_node.val:</span><br><span class="line">                curTimes += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                curTimes = <span class="number">1</span></span><br><span class="line">            <span class="comment"># 最大出现次数</span></span><br><span class="line">            <span class="keyword">if</span> maxTimes == curTimes:</span><br><span class="line">                res.append(cur_node.val)</span><br><span class="line">            <span class="keyword">elif</span> maxTimes &lt; curTimes:</span><br><span class="line">                res = [cur_node.val]</span><br><span class="line">                maxTimes = curTimes</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 更新前驱节点</span></span><br><span class="line">            pre_node = cur_node</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> cur_node.right != <span class="literal">None</span>:</span><br><span class="line">                <span class="comment"># 将指针指向当前节点的右节点</span></span><br><span class="line">                p_node = cur_node.right</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://lufficc.com/blog/binary-search-tree" target="_blank" rel="noopener external nofollow noreferrer">多动态图详细讲解二叉搜索树</a></li>
+<li><a href="https://www.cnblogs.com/gaochundong/p/binary_search_tree.html" target="_blank" rel="noopener external nofollow noreferrer">二叉查找树</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\91220368.html" rel="bookmark">LeetCode题解汇总</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\101cdf53.html" rel="bookmark">LeetCode题目总结-二叉树</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\e1014f63.html" rel="bookmark">LeetCode题目总结-二叉树的遍历</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\551df4d4.html" rel="bookmark">LeetCode题目总结-链表</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\647f3958.html" rel="bookmark">LeetCode题目总结-数组中的双指针问题</a></div>
+    </li>
+  </ul>
+<div>
+    
+        <div class="end-slogan" style="text-align:center;font-size:22px;letter-spacing:10px;user-select:none;color:#bbb;"><br/>----------- 本文结束啦<i class="fa fa-star"></i>感谢您阅读 -----------<br/><br/></div>
+    
+</div> 
+        <div class="reward-container">
+  <div>赞赏一杯咖啡</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="小丁 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="小丁 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小丁
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tding.top/archives/5f8aadd1.html" title="LeetCode题目总结-二叉搜索树">https://tding.top/archives/5f8aadd1.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/atom.xml">
+                <span class="icon">
+                  <i class="fa fa-rss"></i>
+                </span>
+
+                <span class="label">RSS</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/LeetCode/" rel="tag"><i class="fa fa-tag"></i> LeetCode</a>
+              <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 二叉树</a>
+              <a href="/tags/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 二叉搜索树</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/91220368.html" rel="prev" title="LeetCode题解汇总">
+      <i class="fa fa-chevron-left"></i> LeetCode题解汇总
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/e1014f63.html" rel="next" title="LeetCode题目总结-二叉树的遍历">
+      LeetCode题目总结-二叉树的遍历 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉搜索树的性质"><span class="nav-number">1.</span> <span class="nav-text">二叉搜索树的性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉搜索树的查找、插入、删除过程"><span class="nav-number">2.</span> <span class="nav-text">二叉搜索树的查找、插入、删除过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找"><span class="nav-number">2.1.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.3.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode相关题目"><span class="nav-number">3.</span> <span class="nav-text">LeetCode相关题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#235-二叉搜索树的最近公共祖先"><span class="nav-number">3.1.</span> <span class="nav-text">235-二叉搜索树的最近公共祖先</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">3.1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">3.1.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python实现"><span class="nav-number">3.1.3.</span> <span class="nav-text">Python实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#450-删除二叉搜索树中的节点"><span class="nav-number">3.2.</span> <span class="nav-text">450-删除二叉搜索树中的节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python实现-1"><span class="nav-number">3.2.3.</span> <span class="nav-text">Python实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#669-修剪二叉搜索树"><span class="nav-number">3.3.</span> <span class="nav-text">669-修剪二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-2"><span class="nav-number">3.3.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-2"><span class="nav-number">3.3.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python实现-2"><span class="nav-number">3.3.3.</span> <span class="nav-text">Python实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#700-二叉搜索树中的搜索"><span class="nav-number">3.4.</span> <span class="nav-text">700-二叉搜索树中的搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-3"><span class="nav-number">3.4.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-3"><span class="nav-number">3.4.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python实现-3"><span class="nav-number">3.4.3.</span> <span class="nav-text">Python实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#701-二叉搜索树中的插入操作"><span class="nav-number">3.5.</span> <span class="nav-text">701-二叉搜索树中的插入操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-4"><span class="nav-number">3.5.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-4"><span class="nav-number">3.5.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python实现-4"><span class="nav-number">3.5.3.</span> <span class="nav-text">Python实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#98-验证二叉搜索树"><span class="nav-number">3.6.</span> <span class="nav-text">98-验证二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-5"><span class="nav-number">3.6.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-5"><span class="nav-number">3.6.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python实现-5"><span class="nav-number">3.6.3.</span> <span class="nav-text">Python实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#99-恢复二叉搜索树"><span class="nav-number">3.7.</span> <span class="nav-text">99-恢复二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-6"><span class="nav-number">3.7.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-6"><span class="nav-number">3.7.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python实现-6"><span class="nav-number">3.7.3.</span> <span class="nav-text">Python实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#230-二叉搜索树中第K小的元素"><span class="nav-number">3.8.</span> <span class="nav-text">230-二叉搜索树中第K小的元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-7"><span class="nav-number">3.8.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-7"><span class="nav-number">3.8.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python实现-7"><span class="nav-number">3.8.3.</span> <span class="nav-text">Python实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#501-二叉搜索树中的众数"><span class="nav-number">3.9.</span> <span class="nav-text">501-二叉搜索树中的众数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-8"><span class="nav-number">3.9.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-8"><span class="nav-number">3.9.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python实现-8"><span class="nav-number">3.9.3.</span> <span class="nav-text">Python实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/bc52c916.html" title="Performance API详解" target="_blank">Performance API详解</a>
+          </li>
+        
+          <li>
+            <a href="/archives/a896eef1.html" title="Lighthouse介绍" target="_blank">Lighthouse介绍</a>
+          </li>
+        
+          <li>
+            <a href="/archives/9c7d6d63.html" title="Nginx反向代理配置总结" target="_blank">Nginx反向代理配置总结</a>
+          </li>
+        
+          <li>
+            <a href="/archives/9d6997a4.html" title="ElasticSearch基本操作" target="_blank">ElasticSearch基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/archives/d5e02e8f.html" title="Vue nextTick的原理及用法" target="_blank">Vue nextTick的原理及用法</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">928k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">14:04</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 19729,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/archives/5f8aadd1.html',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/archives/5f8aadd1.html";
+    this.page.identifier = "archives/5f8aadd1.html";
+    this.page.title = "LeetCode题目总结-二叉搜索树";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>

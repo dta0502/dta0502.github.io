@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="dplyr包是tidyverse中的核心R包。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【R语言】dplyr笔记">
+<meta property="og:url" content="https://tding.top/archives/372a6b87.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="dplyr包是tidyverse中的核心R包。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-01T14:30:00.000Z">
+<meta property="article:modified_time" content="2020-05-06T07:20:23.000Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="R">
+<meta property="article:tag" content="tidyverse">
+<meta property="article:tag" content="dplyr">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tding.top/archives/372a6b87.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>【R语言】dplyr笔记 | 小丁的个人博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">111</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">173</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tding.top/archives/372a6b87.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="小丁">
+      <meta itemprop="description" content="酒，越喝越暖，水会越喝越寒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小丁的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          【R语言】dplyr笔记
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-01 22:30:00" itemprop="dateCreated datePublished" datetime="2020-02-01T22:30:00+08:00">2020-02-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/R/" itemprop="url" rel="index"><span itemprop="name">R</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/R/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">数据处理</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/372a6b87.html" class="post-meta-item leancloud_visitors" data-flag-title="【R语言】dplyr笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/archives/372a6b87.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="archives/372a6b87.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/372a6b87.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/372a6b87.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>dplyr包是tidyverse中的核心R包。</p>
+<a id="more"></a>
+
+<h2 id="本文用到的数据集"><a href="#本文用到的数据集" class="headerlink" title="本文用到的数据集"></a>本文用到的数据集</h2><p>本文用到的是<code>nycflights13::flights</code>这个数据集，这个数据框包含了2013 年从纽约市出发的所有336776次航班的信息。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">flights</span><br><span class="line"><span class="comment">#&gt; # A tibble: 336,776 × 19</span></span><br><span class="line"><span class="comment">#&gt; year month day dep_time sched_dep_time dep_delay</span></span><br><span class="line"><span class="comment">#&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;</span></span><br><span class="line"><span class="comment">#&gt; 1 2013 1 1 517 515 2</span></span><br><span class="line"><span class="comment">#&gt; 2 2013 1 1 533 529 4</span></span><br><span class="line"><span class="comment">#&gt; 3 2013 1 1 542 540 2</span></span><br><span class="line"><span class="comment">#&gt; 4 2013 1 1 544 545 -1</span></span><br><span class="line"><span class="comment">#&gt; 5 2013 1 1 554 600 -6</span></span><br><span class="line"><span class="comment">#&gt; 6 2013 1 1 554 558 -4</span></span><br><span class="line"><span class="comment">#&gt; # ... with 336,776 more rows, and 13 more variables:</span></span><br><span class="line"><span class="comment">#&gt; # arr_time &lt;int&gt;, sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,</span></span><br><span class="line"><span class="comment">#&gt; # carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;,</span></span><br><span class="line"><span class="comment">#&gt; # dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,</span></span><br><span class="line"><span class="comment">#&gt; # minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="dplyr基础"><a href="#dplyr基础" class="headerlink" title="dplyr基础"></a>dplyr基础</h2><p>下面主要介绍5分dplyr核心函数：</p>
+<ul>
+<li>按值筛选观测（filter()）。</li>
+<li>对行进行重新排序（arrange()）。</li>
+<li>按名称选取变量（select()）。</li>
+<li>使用现有变量的函数创建新变量（mutate()）。</li>
+<li>将多个值总结为一个摘要统计量（summarize()）。</li>
+</ul>
+<p>以上5个函数的工作方式都是相同的。</p>
+<ul>
+<li>第一个参数是一个数据框。</li>
+<li>随后的参数使用变量名称（不带引号）描述了在数据框上进行的操作。</li>
+<li>输出结果是一个新数据框。</li>
+</ul>
+<h3 id="fliter-函数"><a href="#fliter-函数" class="headerlink" title="fliter()函数"></a>fliter()函数</h3><p><code>filter()</code>函数可以基于观测的值筛选出一个观测子集。第一个参数是数据框名称，第二个参数以及随后的参数是用来筛选数据框的表达式。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filter(flights, month == <span class="number">1</span>, day == <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="arrange-函数"><a href="#arrange-函数" class="headerlink" title="arrange()函数"></a>arrange()函数</h3><p><code>arrange()</code>函数用来改变行的顺序。它接受一个数据框和一组作为排序依据的列名（或者更复杂的表达式）作为参数。如果列名不只一个，那么就使用后面的列在前面排序的基础上继续排序。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrange(flights, year, month, day)</span><br></pre></td></tr></table></figure>
+
+<p>我们可以采用<code>desc()</code>按列进行降序排序</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrange(flights, desc(arr_delay))</span><br></pre></td></tr></table></figure>
+
+<h3 id="select-函数"><a href="#select-函数" class="headerlink" title="select()函数"></a>select()函数</h3><h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p><code>select()</code>函数可以用来快速生成一个有用的变量子集。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按名称选择列</span></span><br><span class="line">select(flights, year, month, day)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 选择“year”和“day”之间的所有列（包括“year”和“day”）</span></span><br><span class="line">select(flights, year:day)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 选择不在“year”和“day”之间的所有列（不包括“year”和“day”）</span></span><br><span class="line">select(flights, -(year:day))</span><br></pre></td></tr></table></figure>
+
+<h4 id="select-函数中的辅助函数"><a href="#select-函数中的辅助函数" class="headerlink" title="select()函数中的辅助函数"></a>select()函数中的辅助函数</h4><p><code>select()</code>函数中的辅助函数：</p>
+<ul>
+<li><code>starts_with(&quot;abc&quot;)</code>：匹配以“abc”开头的名称。</li>
+<li><code>ends_with(&quot;xyz&quot;)</code>：匹配以“xyz”结尾的名称。</li>
+<li><code>contains(&quot;ijk&quot;)</code>：匹配包含“ijk”的名称。</li>
+<li><code>matches(&quot;(.)\\1&quot;)</code>：选择匹配正则表达式的那些变量。这个正则表达式会匹配名称中有重复字符的变量。</li>
+<li><code>num_range(&quot;x&quot;, 1:3)</code>：匹配x1、x2和x3。</li>
+</ul>
+<p>我们可以通过<code>everything()</code>辅助函数将几个变量移到数据框开头：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select(flights, time_hour, air_time, everything())</span><br></pre></td></tr></table></figure>
+
+<h4 id="重命名变量"><a href="#重命名变量" class="headerlink" title="重命名变量"></a>重命名变量</h4><p><code>select()</code>可以重命名变量，但我们很少这样使用它，<strong>因为这样会丢掉所有未明确提及的变量</strong>。我们应该使用<code>select()</code>函数的变体<code>rename()</code>函数来重命名变量，以保留所有未明确提及的变量：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rename(flights, tail_num = tailnum)</span><br></pre></td></tr></table></figure>
+
+<h3 id="mutate-函数"><a href="#mutate-函数" class="headerlink" title="mutate()函数"></a>mutate()函数</h3><p>我们可以通过<code>mutate()</code>函数根据需要添加新列，新列是现有列的函数。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mutate(flights, </span><br><span class="line">    gain = arr_delay - dep_delay, </span><br><span class="line">    speed = distance / air_time * <span class="number">60</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>如果只想保留新变量，可以使用<code>transmute()</code>函数：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">transmute(flights,</span><br><span class="line">    gain = arr_delay - dep_delay,</span><br><span class="line">    hours = air_time / <span class="number">60</span>,</span><br><span class="line">    gain_per_hour = gain / hours</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>注意：一旦创建后，新列就可以立即使用，比如后面的<code>gain_per_hour</code>可以直接用到刚刚创建的<code>gain</code>以及<code>hours</code>。</p>
+<h4 id="常用的创建函数"><a href="#常用的创建函数" class="headerlink" title="常用的创建函数"></a>常用的创建函数</h4><p>创建函数必须是向量化的：它必须接受一个向量作为输入，并返回一个向量作为输出，而且输入向量与输出向量具有同样数目的分量。</p>
+<p>下面介绍下常见的创建函数：</p>
+<ul>
+<li>算术运算符：<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>、<code>^</code></li>
+<li>模运算符：<code>%/%</code> 和 <code>%%</code></li>
+<li>对数函数：<code>log()</code>、<code>log2()</code> 和 <code>log10()</code></li>
+<li>偏移函数：<code>lead()</code> 和 <code>lag()</code>函数可以返回一个序列的领先值和滞后值</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(x &lt;- <span class="number">1</span>:<span class="number">10</span>)</span><br><span class="line"><span class="comment">#&gt; [1] 1 2 3 4 5 6 7 8 9 10</span></span><br><span class="line">lag(x)</span><br><span class="line"><span class="comment">#&gt; [1] NA 1 2 3 4 5 6 7 8 9</span></span><br><span class="line">lead(x)</span><br><span class="line"><span class="comment">#&gt; [1] 2 3 4 5 6 7 8 9 10 NA</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>累加和滚动聚合：累加和<code>cumsum()</code>、累加积<code>cumprod()</code>、累加最小值<code>commin()</code>和累加最大值<code>cummax()</code>、累加均值<code>cummean()</code></li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x</span><br><span class="line"><span class="comment">#&gt; [1] 1 2 3 4 5 6 7 8 9 10</span></span><br><span class="line">cumsum(x)</span><br><span class="line"><span class="comment">#&gt; [1] 1 3 6 10 15 21 28 36 45 55</span></span><br><span class="line">cummean(x)</span><br><span class="line"><span class="comment">#&gt; [1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>逻辑比较：<code>&lt;</code>、<code>&lt;=</code>、<code>&gt;</code>、<code>&gt;=</code> 和 <code>!=</code></li>
+<li>排秩：<ul>
+<li><code>min_rank()</code></li>
+<li><code>row_number()</code></li>
+<li><code>dense_rank()</code></li>
+<li><code>percent_rank()</code></li>
+<li><code>cume_dist()</code></li>
+<li><code>ntile()</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">y &lt;- c(<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="literal">NA</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">min_rank(y)</span><br><span class="line"><span class="comment">#&gt; [1] 1 2 2 NA 4 5</span></span><br><span class="line">min_rank(desc(y))</span><br><span class="line"><span class="comment">#&gt; [1] 5 3 3 NA 2 1</span></span><br><span class="line">row_number(y)</span><br><span class="line"><span class="comment">#&gt; [1] 1 2 3 NA 4 5</span></span><br><span class="line">dense_rank(y)</span><br><span class="line"><span class="comment">#&gt; [1] 1 2 2 NA 3 4</span></span><br><span class="line">percent_rank(y)</span><br><span class="line"><span class="comment">#&gt; [1] 0.00 0.25 0.25 NA 0.75 1.00</span></span><br><span class="line">cume_dist(y)</span><br><span class="line"><span class="comment">#&gt; [1] 0.2 0.6 0.6 NA 0.8 1.0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="summarize-函数"><a href="#summarize-函数" class="headerlink" title="summarize()函数"></a>summarize()函数</h3><p><code>summarize()</code>函数可以将数据框折叠成一行。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">summarize(flights, delay = mean(dep_delay, na.rm = <span class="literal">TRUE</span>))</span><br><span class="line"><span class="comment">#&gt; # A tibble: 1 × 1</span></span><br><span class="line"><span class="comment">#&gt; delay</span></span><br><span class="line"><span class="comment">#&gt; &lt;dbl&gt;</span></span><br><span class="line"><span class="comment">#&gt; 1 12.6</span></span><br></pre></td></tr></table></figure>
+
+<p>这个函数一般和<code>group_by()</code>一起使用。</p>
+<p>每日平均延误时间的计算：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">by_day &lt;- group_by(flights, year, month, day)</span><br><span class="line">summarize(by_day, delay = mean(dep_delay, na.rm = <span class="literal">TRUE</span>))</span><br></pre></td></tr></table></figure>
+
+<h4 id="管道组合多种操作"><a href="#管道组合多种操作" class="headerlink" title="管道组合多种操作"></a>管道组合多种操作</h4><p>如果不使用管道，我们不得不对每个中间数据框命名。管道可以显著提高代码的可读性。</p>
+<p>下面是用管道来实现每日平均延误时间的计算：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flights %&gt;%</span><br><span class="line">    group_by(year, month, day) %&gt;%</span><br><span class="line">        summarize(mean = mean(dep_delay), na.rm = <span class="literal">TRUE</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h4><p>聚合函数中也是遵循缺失值的一般规则：<strong>如果输入中有缺失值，那么输出也会是缺失值</strong>。因此，我们可以通过聚合函数的<code>na.rm</code>参数，在计算前除去缺失值。</p>
+<h4 id="常见的摘要函数"><a href="#常见的摘要函数" class="headerlink" title="常见的摘要函数"></a>常见的摘要函数</h4><ul>
+<li>位置度量：平均值<code>mean(x)</code>、中位数<code>median(x)</code></li>
+<li>分散程度度量：均方误差<code>sd(x)</code>、四分位距<code>IQR(x)</code>、绝对中位数<code>mad(x)</code></li>
+<li>秩的度量：<ul>
+<li>最小值<code>min(x)</code></li>
+<li>最大值<code>max(x)</code></li>
+<li>分位数<code>quantile(x, 0.25)</code>：分位数是中位数的扩展。例如，<code>quantile(x, 0.25)</code> 会找出x中按从小到大顺序大于前25%而小于后75%的值</li>
+</ul>
+</li>
+<li>定位度量：<code>first(x)</code>、<code>last(x)</code>、<code>nth(x, 2)</code></li>
+<li>计数：<ul>
+<li><code>n()</code>：无需任何参数，返回当前分组的大小</li>
+<li><code>sum(!is.na(x))</code>：计算<strong>非缺失值</strong>的数量</li>
+<li><code>n_distinct(x)</code>：计算出唯一值的数量</li>
+</ul>
+</li>
+<li><strong>逻辑值的计数和比例：当与数值型函数一同使用时，TRUE会转换为1，FALSE会转换为0，这使得<code>sum()</code>和<code>mean()</code>非常适用于逻辑值</strong><ul>
+<li><code>sum(x &gt; 10)</code>：找出x中TRUE的数量</li>
+<li><code>mean(y == 0)</code>：找出比例</li>
+</ul>
+</li>
+</ul>
+<h2 id="dplyr处理关系数据"><a href="#dplyr处理关系数据" class="headerlink" title="dplyr处理关系数据"></a>dplyr处理关系数据</h2><p>存在于多个表中的这种数据统称为关系数据，因为重要的是数据间的关系，而不是单个数据集。</p>
+<h3 id="键"><a href="#键" class="headerlink" title="键"></a>键</h3><ul>
+<li>主键：唯一标识其所在数据表中的观测。</li>
+<li>外键：唯一标识另一个数据表中的观测。</li>
+</ul>
+<p>当数据表没有明确的主键（即每行都是一个观测，但没有一个变量组合能够明确地标识<br>它）时。我们可以使用<code>mutate()</code>函数和<code>row_number()</code>函数为表加上一个主键。这种主键称为<strong>代理键</strong>。</p>
+<h3 id="合并连接"><a href="#合并连接" class="headerlink" title="合并连接"></a>合并连接</h3><p>合并连接可以将两个表格中的变量组合起来，它先通过两个表格的键匹配观测，然后将一个表格中的变量复制到另一个表格中。</p>
+<p>举例：我们可以通过<code>left_join()</code>函数组合<code>airlines</code>和<code>flights2</code>数据框，把航空公司的全名加入数据集：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flights2 &lt;- flights %&gt;%</span><br><span class="line">    select(year:day, hour, tailnum, carrier)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>year</th>
+<th>month</th>
+<th>day</th>
+<th>hour</th>
+<th>tailnum</th>
+<th>carrier</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><int></td>
+<td><int></td>
+<td><int></td>
+<td><dbl></td>
+<td><chr></td>
+<td><chr></td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>N14228</td>
+<td>UA</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>N24211</td>
+<td>UA</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>N619AA</td>
+<td>AA</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>N804JB</td>
+<td>B6</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+<td>N668DN</td>
+<td>DL</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>N39463</td>
+<td>UA</td>
+</tr>
+</tbody></table>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flights2 %&gt;%</span><br><span class="line">    left_join(airlines, by = <span class="string">"carrier"</span>)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>year</th>
+<th>month</th>
+<th>day</th>
+<th>hour</th>
+<th>tailnum</th>
+<th>carrier</th>
+<th>name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><int></td>
+<td><int></td>
+<td><int></td>
+<td><dbl></td>
+<td><chr></td>
+<td><chr></td>
+<td><chr></td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>N14228</td>
+<td>UA</td>
+<td>United Air Lines Inc.</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>N24211</td>
+<td>UA</td>
+<td>United Air Lines Inc.</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>N619AA</td>
+<td>AA</td>
+<td>American Airlines Inc.</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>N804JB</td>
+<td>B6</td>
+<td>JetBlue Airways</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+<td>N668DN</td>
+<td>DL</td>
+<td>Delta Air Lines Inc.</td>
+</tr>
+<tr>
+<td>2013</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>N39463</td>
+<td>UA</td>
+<td>United Air Lines Inc.</td>
+</tr>
+</tbody></table>
+<h4 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h4><ul>
+<li>内连接<code>inner_join()</code>：只要两个观测的键是相等的，内连接就可以匹配它们。<strong>没有匹配的行不会包含在结果中。</strong></li>
+<li>外连接：保留至少存在于一个表中的观测。<ul>
+<li>左连接<code>left_join()</code>：保留x中的所有观测。</li>
+<li>右连接<code>right_join()</code>：保留y中的所有观测</li>
+<li>全连接<code>full_join()</code>：保留x和y中的所有观测。</li>
+</ul>
+</li>
+</ul>
+<h4 id="两表中的匹配向量名不同"><a href="#两表中的匹配向量名不同" class="headerlink" title="两表中的匹配向量名不同"></a>两表中的匹配向量名不同</h4><p>命名字符向量<code>by = c(&quot;a&quot; = &quot;b&quot;)</code>。这种方式会匹配x表中的a变量和y表中的b变量。输出结果中使用的是x表中的变量。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flights2 %&gt;%</span><br><span class="line">    left_join(airlines, by = d(<span class="string">"dest"</span> = <span class="string">"faa"</span>))</span><br></pre></td></tr></table></figure>
+
+<h4 id="其他实现方式"><a href="#其他实现方式" class="headerlink" title="其他实现方式"></a>其他实现方式</h4><p><code>base::merge()</code>函数可以实现所有4种合并连接操作。</p>
+<table>
+<thead>
+<tr>
+<th>dplyr</th>
+<th>merge</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>inner_join(x, y)</td>
+<td>merge(x, y)</td>
+</tr>
+<tr>
+<td>left_join(x, y)</td>
+<td>merge(x, y, all.x = TRUE)</td>
+</tr>
+<tr>
+<td>right_join(x, y)</td>
+<td>merge(x, y, all.y = TRUE)</td>
+</tr>
+</tbody></table>
+<p>dplyr连接操作的优点是，可以更加清晰地表达出代码的意图：不同连接间的区别确实非常重要，但隐藏在<code>merge()</code>函数的参数中了。dplyr连接操作的速度明显更快，而且不会弄乱行的顺序。</p>
+<h3 id="筛选连接"><a href="#筛选连接" class="headerlink" title="筛选连接"></a>筛选连接</h3><p>筛选连接匹配观测的方式与合并连接相同，但前者影响的是观测，而不是变量。筛选连接有两种类型。</p>
+<ul>
+<li><code>semi_join(x, y)</code>：保留x表中与y表中的观测相匹配的所有观测。</li>
+<li><code>anti_join(x, y)</code>：丢弃x表中与y表中的观测相匹配的所有观测。</li>
+</ul>
+<p>举例：找出飞往<strong>最受欢迎的前10个目的地</strong>的所有航班：</p>
+<ul>
+<li>自己构造筛选器</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">top_dest &lt;- flights %&gt;%</span><br><span class="line">    count(dest, sort = <span class="literal">TRUE</span>) %&gt;%</span><br><span class="line">    head(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">flights %&gt;%</span><br><span class="line">    filter(dest %<span class="keyword">in</span>% top_dest$dest)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>利用筛选连接：</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">top_dest &lt;- flights %&gt;%</span><br><span class="line">    count(dest, sort = <span class="literal">TRUE</span>) %&gt;%</span><br><span class="line">    head(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">flights %&gt;%</span><br><span class="line">    semi_join(top_dest)</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>《R数据科学》学习笔记</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\a61fec0e.html" rel="bookmark">【R语言】readr笔记</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\80be9be7.html" rel="bookmark">【R语言】tibble笔记</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\c363755b.html" rel="bookmark">ggplot2柱状图按数值大小排序</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\26ce33e.html" rel="bookmark">Python中list转换array的一个问题</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\89309e35.html" rel="bookmark">Pandas Series转换为DataFrame</a></div>
+    </li>
+  </ul>
+<div>
+    
+        <div class="end-slogan" style="text-align:center;font-size:22px;letter-spacing:10px;user-select:none;color:#bbb;"><br/>----------- 本文结束啦<i class="fa fa-star"></i>感谢您阅读 -----------<br/><br/></div>
+    
+</div> 
+        <div class="reward-container">
+  <div>赞赏一杯咖啡</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="小丁 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="小丁 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小丁
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tding.top/archives/372a6b87.html" title="【R语言】dplyr笔记">https://tding.top/archives/372a6b87.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/atom.xml">
+                <span class="icon">
+                  <i class="fa fa-rss"></i>
+                </span>
+
+                <span class="label">RSS</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/R/" rel="tag"><i class="fa fa-tag"></i> R</a>
+              <a href="/tags/tidyverse/" rel="tag"><i class="fa fa-tag"></i> tidyverse</a>
+              <a href="/tags/dplyr/" rel="tag"><i class="fa fa-tag"></i> dplyr</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/b6c1b732.html" rel="prev" title="Matplotlib系列之标注">
+      <i class="fa fa-chevron-left"></i> Matplotlib系列之标注
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/80be9be7.html" rel="next" title="【R语言】tibble笔记">
+      【R语言】tibble笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本文用到的数据集"><span class="nav-number">1.</span> <span class="nav-text">本文用到的数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dplyr基础"><span class="nav-number">2.</span> <span class="nav-text">dplyr基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fliter-函数"><span class="nav-number">2.1.</span> <span class="nav-text">fliter()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#arrange-函数"><span class="nav-number">2.2.</span> <span class="nav-text">arrange()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select-函数"><span class="nav-number">2.3.</span> <span class="nav-text">select()函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本用法"><span class="nav-number">2.3.1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#select-函数中的辅助函数"><span class="nav-number">2.3.2.</span> <span class="nav-text">select()函数中的辅助函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重命名变量"><span class="nav-number">2.3.3.</span> <span class="nav-text">重命名变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mutate-函数"><span class="nav-number">2.4.</span> <span class="nav-text">mutate()函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的创建函数"><span class="nav-number">2.4.1.</span> <span class="nav-text">常用的创建函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summarize-函数"><span class="nav-number">2.5.</span> <span class="nav-text">summarize()函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#管道组合多种操作"><span class="nav-number">2.5.1.</span> <span class="nav-text">管道组合多种操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺失值处理"><span class="nav-number">2.5.2.</span> <span class="nav-text">缺失值处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的摘要函数"><span class="nav-number">2.5.3.</span> <span class="nav-text">常见的摘要函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dplyr处理关系数据"><span class="nav-number">3.</span> <span class="nav-text">dplyr处理关系数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#键"><span class="nav-number">3.1.</span> <span class="nav-text">键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并连接"><span class="nav-number">3.2.</span> <span class="nav-text">合并连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本用法-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两表中的匹配向量名不同"><span class="nav-number">3.2.2.</span> <span class="nav-text">两表中的匹配向量名不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他实现方式"><span class="nav-number">3.2.3.</span> <span class="nav-text">其他实现方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#筛选连接"><span class="nav-number">3.3.</span> <span class="nav-text">筛选连接</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/bc52c916.html" title="Performance API详解" target="_blank">Performance API详解</a>
+          </li>
+        
+          <li>
+            <a href="/archives/a896eef1.html" title="Lighthouse介绍" target="_blank">Lighthouse介绍</a>
+          </li>
+        
+          <li>
+            <a href="/archives/9c7d6d63.html" title="Nginx反向代理配置总结" target="_blank">Nginx反向代理配置总结</a>
+          </li>
+        
+          <li>
+            <a href="/archives/9d6997a4.html" title="ElasticSearch基本操作" target="_blank">ElasticSearch基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/archives/d5e02e8f.html" title="Vue nextTick的原理及用法" target="_blank">Vue nextTick的原理及用法</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">928k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">14:04</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 19729,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/archives/372a6b87.html',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/archives/372a6b87.html";
+    this.page.identifier = "archives/372a6b87.html";
+    this.page.title = "【R语言】dplyr笔记";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>

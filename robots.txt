@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /page/
+Allow: /books/
+Allow: /movies/
+Allow: /gallery/
+Allow: /tags/
+Allow: /about/
+Allow: /tools/
+Allow: /top/
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /images/
+Disallow: /fonts/
+Disallow: /lib/
+Disallow: /fancybox/
+
+Sitemap: https://tding.top/sitemap.xml
+Sitemap: https://tding.top/baidusitemap.xml

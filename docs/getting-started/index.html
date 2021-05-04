@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="NexT用户文档 – 快速入门">
+<meta property="og:type" content="website">
+<meta property="og:title" content="快速入门">
+<meta property="og:url" content="https://tding.top/docs/getting-started/index.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="NexT用户文档 – 快速入门">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tding.top/images/docs/next-default-scheme-linux.png">
+<meta property="article:published_time" content="2020-01-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-01-11T07:12:04.000Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="R">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="LeetCode">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tding.top/images/docs/next-default-scheme-linux.png">
+
+<link rel="canonical" href="https://tding.top/docs/getting-started/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false
+  };
+</script>
+
+  <title>快速入门 | 小丁的个人博客
+  </title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">111</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">173</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+
+      
+      
+
+      
+
+        
+        <ul id="sub-menu" class="sub-menu menu">
+          
+            
+          
+          
+            
+                
+  <li class="menu-item menu-item-getting-started">
+
+    <a href="/docs/getting-started/" rel="section"><i class="fa fa-fw fa-flag"></i>快速入门</a>
+
+  </li>
+
+
+          
+              
+  <li class="menu-item menu-item-advanced-settings">
+
+    <a href="/docs/advanced-settings.html" rel="section"><i class="fa fa-fw fa-cogs"></i>高级设置</a>
+
+  </li>
+
+
+          
+        </ul>
+        
+
+        
+
+                
+
+                    
+                    <ul id="sub-menu-2" class="sub-menu menu">
+                      
+                        
+  <li class="menu-item menu-item-installation">
+
+    <a href="/docs/getting-started/installation.html" rel="section"><i class="fa fa-fw fa-download"></i>安装</a>
+
+  </li>
+
+
+                        
+  <li class="menu-item menu-item-deployment">
+
+    <a href="/docs/getting-started/deployment.html" rel="section"><i class="fa fa-fw fa-upload"></i>部署</a>
+
+  </li>
+
+
+                        
+  <li class="menu-item menu-item-data-files">
+
+    <a href="/docs/getting-started/data-files.html" rel="section"><i class="fa fa-fw fa-wrench"></i>数据文件</a>
+
+  </li>
+
+
+                        
+  <li class="menu-item menu-item-update-from-5.x">
+
+    <a href="/docs/getting-started/update-from-v5.html" rel="section"><i class="fa fa-fw fa-retweet"></i>从5.x版本更新</a>
+
+  </li>
+
+
+                    </ul>
+                    
+                
+        
+      
+  
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h2 class="post-title" itemprop="name headline">快速入门
+</h2>
+
+<div class="post-meta">
+    <div class="post-description">NexT用户文档 – 快速入门</div>
+  
+  <ul class="breadcrumb">
+          
+            <li><a href="/docs/">DOCS</a></li>
+          <li>GETTING-STARTED</li>
+        
+  </ul>
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p><a href="https://hexo.io" target="_blank" rel="noopener external nofollow noreferrer">Hexo</a>是一个快速而强大的静态博客生成框架，它基于<a href="https://nodejs.org" target="_blank" rel="noopener external nofollow noreferrer">Node.js</a>。通过使用Hexo，您可以使用Markdown轻松编写文章，除了Markdown的语法外，您还可以使用Hexo提供的<a href="https://hexo.io/docs/tag-plugins" target="_blank" rel="noopener external nofollow noreferrer">tag plugins</a>来简单的插入特殊格式的内容。在此页面中，我们假设您已经安装了Hexo并使用它创建了一个站点。</p>
+<div class="note info">
+            <p>您可以访问<a href="https://hexo.io/docs/" target="_blank" rel="noopener external nofollow noreferrer">Hexo Docs</a>了解如何安装Hexo。</p>
+          </div>
+
+<h3 id="Documentation-Variables"><a href="#Documentation-Variables" class="headerlink" title="Documentation Variables"></a>Documentation Variables</h3><div class="tabs" id="common-variables"><ul class="nav-tabs"><li class="tab active"><a href="#common-variables-1">_config.yml</a></li><li class="tab"><a href="#common-variables-2"><code>Available Settings</code></a></li><li class="tab"><a href="#common-variables-3"><strong><code>Default Settings</code></strong></a></li></ul><div class="tab-content"><div class="tab-pane active" id="common-variables-1"><p>There are two main configuration files using by Hexo and both called <code>_config.yml</code>:</p>
+<ol>
+<li>The first one is under <span class="label info">site root directory</span>, which contains Hexo’s config.</li>
+<li>The second one is under <span class="label primary">theme root directory</span>, which is provided by NexT and contains theme’s config.</li>
+</ol>
+<p>Let’s call the first one – <span class="label info">site config file</span>, and the second one – <span class="label primary">theme config file</span>.</p></div><div class="tab-pane" id="common-variables-2"><p>All <code>available settings</code> will be inside code blocks (with single backtick or <code>&lt;code&gt;</code> tags).</p></div><div class="tab-pane" id="common-variables-3"><p>And all <strong><code>default settings</code></strong> will be bold inside code blocks (with single backtick or <code>&lt;code&gt;</code> and <code>**</code> or <code>&lt;strong&gt;</code> tags).</p></div></div></div>
+
+<div class="tabs" id="colored-variables"><ul class="nav-tabs"><li class="tab active"><a href="#colored-variables-1"><span class="label success">Recommended Settings</span></a></li><li class="tab"><a href="#colored-variables-2"><span class="label warning">Deprecated Settings</span></a></li><li class="tab"><a href="#colored-variables-3"><span class="label danger">Possible Errors</span></a></li></ul><div class="tab-content"><div class="tab-pane active" id="colored-variables-1"><p>All <span class="label success">recommended settings</span> will be highlighted under the success label.</p></div><div class="tab-pane" id="colored-variables-2"><p>All <span class="label warning">deprecated settings</span> will be highlighted under the warning label.</p></div><div class="tab-pane" id="colored-variables-3"><p>And all <span class="label danger">possible errors</span> will be highlighted under the danger label.</p></div></div></div>
+
+<h3 id="NexT-Installation"><a href="#NexT-Installation" class="headerlink" title="NexT Installation"></a>NexT Installation</h3><p>It’s easy to install Hexo theme: you can just download the NexT theme, copy the theme folder to the <code>themes</code> directory under <span class="label info">site root directory</span> and specify in <span class="label info">site config file</span> your <span class="label primary">theme root directory</span>. The detailed steps are as follows:</p>
+<h4 id="Downloading-NexT"><a href="#Downloading-NexT" class="headerlink" title="Downloading NexT"></a>Downloading NexT</h4><div class="tabs" id="downloading-next"><ul class="nav-tabs"><li class="tab active"><a href="#downloading-next-1">Newest Version</a></li><li class="tab"><a href="#downloading-next-2">Stable Version</a></li></ul><div class="tab-content"><div class="tab-pane active" id="downloading-next-1"><p>If you know about <a href="http://git-scm.com" target="_blank" rel="noopener external nofollow noreferrer">Git</a>, you can clone the whole repository and update it in any time with <code>git pull</code> command instead of downloading archive manually.</p>
+<p>Open your Terminal, change to Hexo <span class="label info">site root directory</span> and clone latest master branch of NexT theme:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> hexo</span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="downloading-next-2"><ol>
+<li>Go to NexT version <a href="https://github.com/theme-next/hexo-theme-next/releases" target="_blank" rel="noopener external nofollow noreferrer">Release Page</a>.</li>
+<li>Choose the version you need and download the Source Code (zip) in the Download section. For example v6.0.0.</li>
+<li>Extract the zip file to site’s themes directory and rename the extracted folder (<code>hexo-theme-next-6.0.0</code>) to <code>next</code>.</li>
+</ol></div></div></div>
+
+<div class="note primary">
+            <p>You also can read <a href="/docs/getting-started/installation">detailed installation instructions</a> if you want any other installation variant.</p>
+          </div>
+
+<div class="note warning">
+            <p>If you still use NexT version 5, you can read <a href="/docs/getting-started/update-from-v5">instructions for update from v5 to v6</a>.</p>
+          </div>
+
+<h4 id="Enabling-NexT"><a href="#Enabling-NexT" class="headerlink" title="Enabling NexT"></a>Enabling NexT</h4><p>Like all Hexo themes, after you download it, open <span class="label info">site config file</span>, find <code>theme</code> section, and change its value to <code>next</code> (or another theme directory name).</p>
+<figure class="highlight yml"><figcaption><span>hexo/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+
+<p>Now you have installed NexT theme, next we will verify whether it is enabled correctly. Between changing the theme and verifying it, we’d better use <code>hexo clean</code> to clean Hexo’s cache.</p>
+<h4 id="Checking-NexT"><a href="#Checking-NexT" class="headerlink" title="Checking NexT"></a>Checking NexT</h4><p>First start Hexo local server, and enable debug parameter (by adding <code>--debug</code>), the whole command is <code>hexo s --debug</code>. You can see the output while running, and if you find problem, you can use the output to help others locate error better. When it prints:</p>
+<pre><code>INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.</code></pre><p>Now you can open <code>http://localhost:4000</code> in your browser, and check whether the site works correctly.</p>
+<div class="note success">
+            <p>If you find your site looks like this picture, you have installed it correctly. That’s default NexT scheme – Muse.<br><img src="/images/docs/next-default-scheme-linux.png" alt="Default Scheme – Muse"></p>
+          </div>
+
+<p>Now you’ve installed and enabled NexT. In next steps we will change some settings including personalization and third-party services integration.</p>
+<h4 id="Adding-Plugins"><a href="#Adding-Plugins" class="headerlink" title="Adding Plugins"></a>Adding Plugins</h4><p>There are 2 variants to hook up NexT plugins:</p>
+<ul>
+<li>Local installation (plugins scripts will loaded from your site).</li>
+<li>CDN links (plugins scripts will loaded from remote hosts).</li>
+</ul>
+<div class="note info">
+            <p>If your site hosted on VPS (or any other) with NGINX configuration, recommended to use local installation.<br>And if your files deployed to any free hosting service (Github, Gitlab, etc.), recommended to use CDN links.</p>
+          </div>
+
+<div class="tabs" id="adding-plugins"><ul class="nav-tabs"><li class="tab active"><a href="#adding-plugins-1">Local</a></li><li class="tab"><a href="#adding-plugins-2">CDN</a></li></ul><div class="tab-content"><div class="tab-pane active" id="adding-plugins-1"><p>In NexT config now you can find dependencies on each module which was moved to external repositories which can be found by <a href="https://github.com/theme-next" target="_blank" rel="noopener external nofollow noreferrer">main organization link</a>. For example, you want to use <code>pjax</code> in your site. Go to <span class="label primary">theme config file</span> and see:</p>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Easily enable fast Ajax navigation on your website.</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/theme-next-pjax</span></span><br><span class="line"><span class="attr">pjax:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>Then turn on <code>pjax</code> and go to «Dependencies» link with installation instructions of this module.</p></div><div class="tab-pane" id="adding-plugins-2"><p>If you use cdn for any plugins, you need to replace your cdn link. For example, you want to use <code>mediumzoom</code> and you configured a cdn link. Go to <span class="label primary">theme config file</span> and see:</p>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">vendors:</span></span><br><span class="line">  <span class="comment"># ...</span></span><br><span class="line">  <span class="comment"># Some contents...</span></span><br><span class="line">  <span class="comment"># ...</span></span><br><span class="line">  <span class="attr">mediumzoom:</span> <span class="comment"># Set or update mediumzoom CDN URL.</span></span><br></pre></td></tr></table></figure>
+
+<p>And jsDelivr CDN is recommended to deliver our third-party plugins because it is fast in everywhere and has the valid ICP license issued by the Chinese government. It does not only crawl the js files from npm packages, and it crawls from the GitHub Releases! We could use the following link to reference the js files, just as other CDNs.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;user&#x2F;repo@version&#x2F;file</span><br></pre></td></tr></table></figure>
+
+<p>And it could automatically minify the JS and CSS files, even if you don’t have the minified version. Just use the <code>filename.min.js</code> or the <code>filename.min.css</code> to replace the file above.</p>
+<p>And we also provide other optional CDNs, including the famous <a href="https://cdnjs.com/" target="_blank" rel="noopener external nofollow noreferrer">CDNJS</a> and the <a href="http://www.bootcdn.cn/" target="_blank" rel="noopener external nofollow noreferrer">Bootcss</a> which has the quite high access speed in China.</p></div></div></div>
+
+<h3 id="NexT-Configuration"><a href="#NexT-Configuration" class="headerlink" title="NexT Configuration"></a>NexT Configuration</h3><h4 id="Choosing-Scheme"><a href="#Choosing-Scheme" class="headerlink" title="Choosing Scheme"></a>Choosing Scheme</h4><p>Scheme is a feature supported by NexT, by using Scheme NexT gives you different views. And nearly all config can be used by those Schemes. Till now NexT supports 4 schemes, and they are:</p>
+<ul>
+<li><strong><code>Muse</code></strong> → Default Scheme, this is the initial version of NexT. Uses black-white tone and mainly looks cleanly.</li>
+<li><code>Mist</code> → A tighter version of Muse with a tidy single-column view.</li>
+<li><code>Pisces</code> → Double-column Scheme, fresh like your neighbor’s daughter.</li>
+<li><code>Gemini</code> → Looks like Pisces, but have distinct column blocks with shadow to appear more sensitive to view.</li>
+</ul>
+<p>You can change Scheme by editing <span class="label primary">theme config file</span>, searching scheme keyword. You’ll see 4 lines of scheme settings and can enable one of them by removing it’s <code>#</code> and added <code>#</code> to previous.</p>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="comment">#scheme: Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Gemini</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Choosing-Language"><a href="#Choosing-Language" class="headerlink" title="Choosing Language"></a>Choosing Language</h4><p>Edit <span class="label info">site config file</span>, set the value of <code>language</code> to the language you need. For example, English looks like this:</p>
+<figure class="highlight yml"><figcaption><span>hexo/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">en</span></span><br></pre></td></tr></table></figure>
+
+<p>NexT now supports following languages:</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Example</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🇨🇳 Chinese (Simplified)</td>
+<td>简体中文</td>
+<td><code>zh-CN</code></td>
+</tr>
+<tr>
+<td>🇹🇼 Chinese (Traditional)</td>
+<td>繁體中文</td>
+<td><code>zh-TW</code></td>
+</tr>
+<tr>
+<td>🇭🇰 Chinese (Hong Kong)</td>
+<td>繁體中文-香港</td>
+<td><code>zh-HK</code></td>
+</tr>
+<tr>
+<td>🇧🇶 Dutch</td>
+<td>Niederländisch</td>
+<td><code>nl</code></td>
+</tr>
+<tr>
+<td>🇺🇸 English</td>
+<td>English</td>
+<td><code>en</code></td>
+</tr>
+<tr>
+<td>🇹🇫 French</td>
+<td>Français</td>
+<td><code>fr</code></td>
+</tr>
+<tr>
+<td>🇩🇪 German</td>
+<td>Deutsch</td>
+<td><code>de</code></td>
+</tr>
+<tr>
+<td>🇮🇩 Indonesian</td>
+<td>Indonesia</td>
+<td><code>id</code></td>
+</tr>
+<tr>
+<td>🇮🇹 Italian</td>
+<td>Italiano</td>
+<td><code>it</code></td>
+</tr>
+<tr>
+<td>🇯🇵 Japanese</td>
+<td>日本語</td>
+<td><code>ja</code></td>
+</tr>
+<tr>
+<td>🇰🇷 Korean</td>
+<td>한국어</td>
+<td><code>ko</code></td>
+</tr>
+<tr>
+<td>🇮🇷 Persian</td>
+<td>فارسی</td>
+<td><code>fa</code></td>
+</tr>
+<tr>
+<td>🇵🇹 Portuguese</td>
+<td>Português</td>
+<td><code>pt</code></td>
+</tr>
+<tr>
+<td>🇧🇷 Portuguese (Brazilian)</td>
+<td>Português (Brazilian)</td>
+<td><code>pt-BR</code></td>
+</tr>
+<tr>
+<td>🇷🇺 Russian</td>
+<td>Русский</td>
+<td><code>ru</code></td>
+</tr>
+<tr>
+<td>🇪🇸 Spanish</td>
+<td>Español</td>
+<td><code>es</code></td>
+</tr>
+<tr>
+<td>🇹🇷 Turkish</td>
+<td>Türk</td>
+<td><code>tr</code></td>
+</tr>
+<tr>
+<td>🇺🇦 Ukrainian</td>
+<td>Український</td>
+<td><code>uk</code></td>
+</tr>
+<tr>
+<td>🇻🇳 Vietnamese</td>
+<td>Tiếng Việt</td>
+<td><code>vi</code></td>
+</tr>
+</tbody></table>
+<div class="note primary">
+            <p>If you want to add or improve language for NexT theme, you can do it easily with <a href="https://crwd.in/theme-next" target="_blank" rel="noopener external nofollow noreferrer">crowdin</a> service.</p>
+          </div>
+
+<h4 id="Configuring-Menu-Items"><a href="#Configuring-Menu-Items" class="headerlink" title="Configuring Menu Items"></a>Configuring Menu Items</h4><p>Menu settings items have format <code>Key: /link/ || icon</code> which contains 3 values:</p>
+<div class="tabs" id="menu-items"><ul class="nav-tabs"><li class="tab active"><a href="#menu-items-1"><code>Key</code></a></li><li class="tab"><a href="#menu-items-2"><code>link</code></a></li><li class="tab"><a href="#menu-items-3"><code>icon</code></a></li></ul><div class="tab-content"><div class="tab-pane active" id="menu-items-1"><p><code>Key</code> → is the name of menu item (<code>home</code>, <code>archives</code>, etc.).<br>If translate for this menu will be found in languages, this translate will be loaded; if not, <code>Key</code> name will be used.</p>
+<div class="note danger">
+            <p><code>Key</code> value is case sensitive (e.g. <code>home</code> is not same as <code>Home</code>).</p>
+          </div></div><div class="tab-pane" id="menu-items-2"><p>Value before <code>||</code> delimeter (<code>/link/</code>) → is the target link to relative url inside your site.</p></div><div class="tab-pane" id="menu-items-3"><p>Value after <code>||</code> delimeter (<code>icon</code>) → is the name of FontAwesome icon.<br>Names of that icons can be found in <a href="https://fontawesome.com" target="_blank" rel="noopener external nofollow noreferrer">Font Awesome</a> site.</p></div></div></div>
+
+<p>By default NexT provides <code>home</code> and <code>archives</code> items. To customize menu items, edit the following content in <span class="label primary">theme config file</span>:</p>
+<div class="note warning">
+            <p>All custom pages which commented by default under <code>menu</code> section need to create manually. See <a href="/docs/theme-settings/#Custom-Page-Support">«Custom Page Support»</a></p>
+          </div>
+
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span></span><br><span class="line">  <span class="comment">#about: /about/ || user</span></span><br><span class="line">  <span class="comment">#tags: /tags/ || tags</span></span><br><span class="line">  <span class="comment">#categories: /categories/ || th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || heartbeat</span></span><br></pre></td></tr></table></figure>
+
+<p>Dynamic sub-menu within hierarchy structure is also supported. Add your sub-menu items in <code>menu</code> section in <span class="label primary">theme config file</span> as following:</p>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span></span><br><span class="line">  <span class="attr">Docs:</span></span><br><span class="line">    <span class="attr">default:</span> <span class="string">/docs/</span> <span class="string">||</span> <span class="string">book</span></span><br><span class="line">    <span class="attr">Third Party Services:</span></span><br><span class="line">      <span class="attr">default:</span> <span class="string">/third-party-services/</span> <span class="string">||</span> <span class="string">plug</span></span><br><span class="line">      <span class="attr">Algolia Search:</span> <span class="string">/algolia-search/</span> <span class="string">||</span> <span class="string">adn</span></span><br></pre></td></tr></table></figure>
+
+<div class="note info">
+            <p>If your site runs in a sub-directory, please remove the prefix <code>/</code> from the link.</p>
+          </div>
+
+<p>By default NexT shows the icons of menu items without badges.</p>
+<div class="tabs" id="menu_settings"><ul class="nav-tabs"><li class="tab active"><a href="#menu_settings-1"><code>icons</code></a></li><li class="tab"><a href="#menu_settings-2"><code>badges</code></a></li></ul><div class="tab-content"><div class="tab-pane active" id="menu_settings-1"><p>You can configure it by editing values in <code>menu_settings.icons</code> section in <span class="label primary">theme config file</span>.</p>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu_settings:</span></span><br><span class="line">  <span class="attr">icons:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="menu_settings-2"><p>Set the value <code>badges</code> to <code>true</code> to display the count of Posts / Categories / Tags within menu items in <code>menu_settings</code> section in <span class="label primary">theme config file</span> as following:</p>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu_settings:</span></span><br><span class="line">  <span class="attr">badges:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></div></div></div>
+
+<h4 id="Configuring-Favicon"><a href="#Configuring-Favicon" class="headerlink" title="Configuring Favicon"></a>Configuring Favicon</h4><p>By default the Hexo site use NexT favicons in <code>hexo-site/themes/next/source/images/</code> directory with different size for different device. You can replace them with your own favicons.</p>
+<p>For example, you can put your favicons in <code>hexo-site/source/images/</code> directory. Then you need to rename them and change the settings in <code>favicon</code> section in <span class="label primary">theme config file</span>, otherwise icons from Next will rewrite your custom icons in Hexo.</p>
+<p>You can also put custom favicons into <code>hexo-site/source/</code> directory. In this way, you <strong>must remove</strong> <code>/images</code> prefix from paths.</p>
+<p>To generate custom favicons, you can visit <a href="https://realfavicongenerator.net" target="_blank" rel="noopener external nofollow noreferrer">Favicon Generator</a>.</p>
+<figure class="highlight yml"><figcaption><span>hexo/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">favicon:</span></span><br><span class="line">  <span class="attr">small:</span> <span class="string">/images/favicon-16x16-next.png</span></span><br><span class="line">  <span class="attr">medium:</span> <span class="string">/images/favicon-32x32-next.png</span></span><br><span class="line">  <span class="attr">apple_touch_icon:</span> <span class="string">/images/apple-touch-icon-next.png</span></span><br><span class="line">  <span class="attr">safari_pinned_tab:</span> <span class="string">/images/logo.svg</span></span><br><span class="line">  <span class="attr">android_manifest:</span> <span class="string">/images/manifest.json</span></span><br><span class="line">  <span class="attr">ms_browserconfig:</span> <span class="string">/images/browserconfig.xml</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Configuring-Avatar"><a href="#Configuring-Avatar" class="headerlink" title="Configuring Avatar"></a>Configuring Avatar</h4><p>By default NexT doesn’t show avatar in sidebar. You can configure it by editing values under <code>avatar</code> setting in <span class="label primary">theme config file</span>.</p>
+<div class="tabs" id="avatar"><ul class="nav-tabs"><li class="tab active"><a href="#avatar-1"><code>url</code></a></li><li class="tab"><a href="#avatar-2"><code>rounded</code></a></li><li class="tab"><a href="#avatar-3"><code>rotated</code></a></li></ul><div class="tab-content"><div class="tab-pane active" id="avatar-1"><p>For first test you can uncomment <code>/images/avatar.gif</code> value near the <code>avatar.url</code> setting to see default avatar:</p>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/images/avatar.gif</span></span><br></pre></td></tr></table></figure>
+
+<p>Then you need to specify your own avatar. It can be done one of the ways below:</p>
+<div class="tabs" id="avatar1"><ul class="nav-tabs"><li class="tab active"><a href="#avatar1-1"><span class="label success">Hexo directory</span></a></li><li class="tab"><a href="#avatar1-2">NexT directory</a></li><li class="tab"><a href="#avatar1-3">Absolute URL from Internet</a></li></ul><div class="tab-content"><div class="tab-pane active" id="avatar1-1"><p>Put your avatar under <span class="label info">site directory</span> <code>source/uploads/</code> (create directory if it doesn’t exists).<br>And then change option to <code>avatar: /uploads/avatar.png</code>.</p></div><div class="tab-pane" id="avatar1-2"><p>Put your avatar under <span class="label primary">theme directory</span> <code>source/images/</code>.<br>And then change option to <code>avatar: /images/avatar.png</code>.</p>
+<div class="note info">
+            <p>Current site uses avatar under <span class="label primary">theme directory</span> from file located in <code>next/source/images/apple-touch-icon-next.png</code> with following config:</p><figure class="highlight yml"><figcaption><span>hexo/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme_config:</span></span><br><span class="line">  <span class="attr">avatar:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">/images/apple-touch-icon-next.png</span></span><br><span class="line">    <span class="attr">rounded:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">rotated:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+          </div></div><div class="tab-pane" id="avatar1-3"><p>You also can specify any external URL with absolute path to image: <code>http(s)://example.com/avatar.png</code></p></div></div></div></div><div class="tab-pane" id="avatar-2"><p>Set up rounded of avatar by changing the value of <code>avatar.rounded</code>:</p>
+<ul>
+<li><code>true</code> → Avatar will be rounded.</li>
+<li><strong><code>false</code></strong> → Avatar will be squared.</li>
+</ul>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="attr">rounded:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></div><div class="tab-pane" id="avatar-3"><p>Set up rotated of avatar by changing the value of <code>avatar.rotated</code>:</p>
+<ul>
+<li><code>true</code> → Avatar will be rotate under the mouse hovering.</li>
+<li><strong><code>false</code></strong> → Avatar will not rotate under the mouse hovering.</li>
+</ul>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="attr">rotated:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></div></div></div>
+
+<h4 id="Configuring-Author"><a href="#Configuring-Author" class="headerlink" title="Configuring Author"></a>Configuring Author</h4><p>Edit <span class="label info">site config file</span> and set the value of <code>author</code> to your nickname.</p>
+<figure class="highlight yml"><figcaption><span>hexo/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">author:</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Configuring-Description"><a href="#Configuring-Description" class="headerlink" title="Configuring Description"></a>Configuring Description</h4><p>Edit <span class="label info">site config file</span> and set the value of <code>description</code> to your description, which can be a sentence you like.</p>
+<figure class="highlight yml"><figcaption><span>hexo/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">description:</span></span><br></pre></td></tr></table></figure>
+
+<p>After that we can <a href="/docs/getting-started/deployment">configure deployment</a>.</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+  <ul class="breadcrumb">
+          
+            <li><a href="/docs/">DOCS</a></li>
+          <li>GETTING-STARTED</li>
+        
+  </ul>
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Documentation-Variables"><span class="nav-number">1.</span> <span class="nav-text">Documentation Variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NexT-Installation"><span class="nav-number">2.</span> <span class="nav-text">NexT Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Downloading-NexT"><span class="nav-number">2.1.</span> <span class="nav-text">Downloading NexT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Enabling-NexT"><span class="nav-number">2.2.</span> <span class="nav-text">Enabling NexT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Checking-NexT"><span class="nav-number">2.3.</span> <span class="nav-text">Checking NexT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Adding-Plugins"><span class="nav-number">2.4.</span> <span class="nav-text">Adding Plugins</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NexT-Configuration"><span class="nav-number">3.</span> <span class="nav-text">NexT Configuration</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Choosing-Scheme"><span class="nav-number">3.1.</span> <span class="nav-text">Choosing Scheme</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Choosing-Language"><span class="nav-number">3.2.</span> <span class="nav-text">Choosing Language</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuring-Menu-Items"><span class="nav-number">3.3.</span> <span class="nav-text">Configuring Menu Items</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuring-Favicon"><span class="nav-number">3.4.</span> <span class="nav-text">Configuring Favicon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuring-Avatar"><span class="nav-number">3.5.</span> <span class="nav-text">Configuring Avatar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuring-Author"><span class="nav-number">3.6.</span> <span class="nav-text">Configuring Author</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuring-Description"><span class="nav-number">3.7.</span> <span class="nav-text">Configuring Description</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/bc52c916.html" title="Performance API详解" target="_blank">Performance API详解</a>
+          </li>
+        
+          <li>
+            <a href="/archives/a896eef1.html" title="Lighthouse介绍" target="_blank">Lighthouse介绍</a>
+          </li>
+        
+          <li>
+            <a href="/archives/9c7d6d63.html" title="Nginx反向代理配置总结" target="_blank">Nginx反向代理配置总结</a>
+          </li>
+        
+          <li>
+            <a href="/archives/9d6997a4.html" title="ElasticSearch基本操作" target="_blank">ElasticSearch基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/archives/d5e02e8f.html" title="Vue nextTick的原理及用法" target="_blank">Vue nextTick的原理及用法</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">928k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">14:04</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id    : 19729,
+      el    : 'wpac-rating',
+      color : 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/docs/getting-started/',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/docs/getting-started/index.html";
+    this.page.identifier = "docs/getting-started/index.html";
+    this.page.title = "快速入门";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>
