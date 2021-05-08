@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="NexT用户文档 – 高级设置">
+<meta property="og:type" content="website">
+<meta property="og:title" content="高级设置">
+<meta property="og:url" content="https://tding.top/docs/advanced-settings.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="NexT用户文档 – 高级设置">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-13T08:55:25.320Z">
+<meta property="article:modified_time" content="2020-01-11T08:23:23.000Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="R">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="LeetCode">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tding.top/docs/advanced-settings.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false
+  };
+</script>
+
+  <title>高级设置 | 小丁的个人博客
+  </title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">115</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">64</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">176</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+
+      
+      
+
+      
+
+        
+        <ul id="sub-menu" class="sub-menu menu">
+          
+            
+          
+          
+            
+                
+  <li class="menu-item menu-item-getting-started">
+
+    <a href="/docs/getting-started/" rel="section"><i class="fa fa-fw fa-flag"></i>快速入门</a>
+
+  </li>
+
+
+          
+              
+  <li class="menu-item menu-item-advanced-settings">
+
+    <a href="/docs/advanced-settings.html" rel="section"><i class="fa fa-fw fa-cogs"></i>高级设置</a>
+
+  </li>
+
+
+          
+        </ul>
+        
+
+        
+
+                
+                
+        
+      
+  
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h2 class="post-title" itemprop="name headline">高级设置
+</h2>
+
+<div class="post-meta">
+    <div class="post-description">NexT用户文档 – 高级设置</div>
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>除了正常的<a href="/docs/theme-settings/">主题设置</a>以及<a href="/docs/third-party-services/">第三方服务</a>，NexT还支持一些高级设置，这些设置使NexT更个性化。注意：如果这些设置错误，可能导致异常行为，所以最好在明白这些设置后再去更改它们。</p>
+<h3 id="第三方JS库"><a href="#第三方JS库" class="headerlink" title="第三方JS库"></a>第三方JS库</h3><p>此功能位于主题配置文件中的<code>vendors</code>部分下。用于告诉NexT内部库位于何处，在大多数情况下，您不应更改此设置。</p>
+<p>接下来的部分是每个库的配置，如果保留为空白，则NexT将使用内部版本，配置格式为<code>libname: CDN URL</code>。例如：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">anime:</span> <span class="string">//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js</span></span><br></pre></td></tr></table></figure>
+
+<p>CDN可以使静态资源（JavaScript第三方库）的加载速度更快。现在NexT包含以下第三方库：</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Original Link</th>
+<th>Internal Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Anime.js</td>
+<td><a href="https://animejs.com" target="_blank" rel="noopener external nofollow noreferrer">animejs.com</a></td>
+<td>3.1.0</td>
+</tr>
+<tr>
+<td>FontAwesome</td>
+<td><a href="http://fontawesome.io" target="_blank" rel="noopener external nofollow noreferrer">fontawesome.io</a></td>
+<td>4.7.0</td>
+</tr>
+<tr>
+<td>VelocityJS</td>
+<td><a href="http://velocityjs.org" target="_blank" rel="noopener external nofollow noreferrer">velocityjs.org</a></td>
+<td>1.2.1</td>
+</tr>
+<tr>
+<td>VelocityJS UI Pack</td>
+<td><a href="http://velocityjs.org/#uiPack" target="_blank" rel="noopener external nofollow noreferrer">velocityjs.org/#uiPack</a></td>
+<td>1.2.1</td>
+</tr>
+</tbody></table>
+<p>NexT使用<a href="https://www.jsdelivr.com/" target="_blank" rel="noopener external nofollow noreferrer">jsDelivr</a>作为默认的CDN服务提供商。因为它在世界各地都比较快，并且jsDelivr拥有中国政府颁发的有效ICP许可证，因此在国内可以很好地访问它。</p>
+<p>我们还提供其他可选CDN，包括著名的<a href="https://cdnjs.com/" target="_blank" rel="noopener external nofollow noreferrer">CDNJS</a>。注意：CDNJS在中国的某些地区已被屏蔽，请勿将其用作CDN。</p>
+<p>如果您想尝试未包含在可选列表中的其他CDN，最好使用相应的版本。<strong>内部版本</strong>是NexT测试和使用的版本。如果需要其他版本，则需要先对其进行测试。</p>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Script Vendors. Set a CDN address for the vendor you want to customize.</span></span><br><span class="line"><span class="comment"># Be aware that you would better use the same version as internal ones to avoid potential problems.</span></span><br><span class="line"><span class="comment"># Please use the https protocol of CDN files when you enable https on your site.</span></span><br><span class="line"><span class="attr">vendors:</span></span><br><span class="line">  <span class="comment"># Internal path prefix. Please do not edit it.</span></span><br><span class="line">  <span class="attr">_internal:</span> <span class="string">lib</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Internal version: 3.1.0</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># anime: //cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js</span></span><br><span class="line">  <span class="attr">anime:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Internal version: 4.7.0</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># fontawesome: //cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css</span></span><br><span class="line">  <span class="comment"># fontawesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css</span></span><br><span class="line">  <span class="attr">fontawesome:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># MathJax</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># mathjax: //cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML</span></span><br><span class="line">  <span class="comment"># mathjax: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML</span></span><br><span class="line">  <span class="comment"># mhchem: //cdn.jsdelivr.net/npm/mathjax-mhchem@3</span></span><br><span class="line">  <span class="comment"># mhchem: //cdnjs.cloudflare.com/ajax/libs/mathjax-mhchem/3.3.0</span></span><br><span class="line">  <span class="attr">mathjax:</span></span><br><span class="line">  <span class="attr">mhchem:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># KaTeX</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># katex: //cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css</span></span><br><span class="line">  <span class="comment"># katex: //cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css</span></span><br><span class="line">  <span class="comment"># copy_tex_js: //cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js</span></span><br><span class="line">  <span class="comment"># copy_tex_css: //cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css</span></span><br><span class="line">  <span class="attr">katex:</span></span><br><span class="line">  <span class="attr">copy_tex_js:</span></span><br><span class="line">  <span class="attr">copy_tex_css:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Internal version: 0.2.8</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># pjax: //cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js</span></span><br><span class="line">  <span class="attr">pjax:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># FancyBox</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># jquery: //cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js</span></span><br><span class="line">  <span class="comment"># fancybox: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js</span></span><br><span class="line">  <span class="comment"># fancybox_css: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css</span></span><br><span class="line">  <span class="attr">jquery:</span></span><br><span class="line">  <span class="attr">fancybox:</span></span><br><span class="line">  <span class="attr">fancybox_css:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Medium-zoom</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># mediumzoom: //cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js</span></span><br><span class="line">  <span class="attr">mediumzoom:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Lazyload</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># lazyload: //cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js</span></span><br><span class="line">  <span class="comment"># lazyload: //cdnjs.cloudflare.com/ajax/libs/lozad.js/1.9.0/lozad.min.js</span></span><br><span class="line">  <span class="attr">lazyload:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Pangu</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># pangu: //cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js</span></span><br><span class="line">  <span class="comment"># pangu: //cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js</span></span><br><span class="line">  <span class="attr">pangu:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Quicklink</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># quicklink: //cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js</span></span><br><span class="line">  <span class="attr">quicklink:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># DisqusJS</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># disqusjs_js: //cdn.jsdelivr.net/npm/disqusjs@1/dist/disqus.js</span></span><br><span class="line">  <span class="comment"># disqusjs_css: //cdn.jsdelivr.net/npm/disqusjs@1/dist/disqusjs.css</span></span><br><span class="line">  <span class="attr">disqusjs_js:</span></span><br><span class="line">  <span class="attr">disqusjs_css:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Valine</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># valine: //cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js</span></span><br><span class="line">  <span class="comment"># valine: //cdnjs.cloudflare.com/ajax/libs/valine/1.3.4/Valine.min.js</span></span><br><span class="line">  <span class="attr">valine:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Gitalk</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># gitalk_js: //cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js</span></span><br><span class="line">  <span class="comment"># gitalk_css: //cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css</span></span><br><span class="line">  <span class="attr">gitalk_js:</span></span><br><span class="line">  <span class="attr">gitalk_css:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Algolia Search</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># algolia_instant_js: //cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js</span></span><br><span class="line">  <span class="comment"># algolia_instant_css: //cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.css</span></span><br><span class="line">  <span class="attr">algolia_instant_js:</span></span><br><span class="line">  <span class="attr">algolia_instant_css:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># PDF</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># pdfobject: //cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js</span></span><br><span class="line">  <span class="comment"># pdfobject: //cdnjs.cloudflare.com/ajax/libs/pdfobject/2.1.1/pdfobject.min.js</span></span><br><span class="line">  <span class="attr">pdfobject:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Mermaid</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># mermaid: //cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js</span></span><br><span class="line">  <span class="comment"># mermaid: //cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js</span></span><br><span class="line">  <span class="attr">mermaid:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Internal version: 1.2.1</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># velocity: //cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js</span></span><br><span class="line">  <span class="comment"># velocity: //cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js</span></span><br><span class="line">  <span class="comment"># velocity_ui: //cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js</span></span><br><span class="line">  <span class="comment"># velocity_ui: //cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js</span></span><br><span class="line">  <span class="attr">velocity:</span></span><br><span class="line">  <span class="attr">velocity_ui:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Internal version: 1.0.2</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># pace: //cdn.jsdelivr.net/npm/pace-js@1/pace.min.js</span></span><br><span class="line">  <span class="comment"># pace: //cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js</span></span><br><span class="line">  <span class="comment"># pace_css: //cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css</span></span><br><span class="line">  <span class="comment"># pace_css: //cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css</span></span><br><span class="line">  <span class="attr">pace:</span></span><br><span class="line">  <span class="attr">pace_css:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Internal version: 1.0.0</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># three: //cdn.jsdelivr.net/gh/theme-next/theme-next-three@1/three.min.js</span></span><br><span class="line">  <span class="comment"># three_waves: //cdn.jsdelivr.net/gh/theme-next/theme-next-three@1/three-waves.min.js</span></span><br><span class="line">  <span class="comment"># canvas_lines: //cdn.jsdelivr.net/gh/theme-next/theme-next-three@1/canvas_lines.min.js</span></span><br><span class="line">  <span class="comment"># canvas_sphere: //cdn.jsdelivr.net/gh/theme-next/theme-next-three@1/canvas_sphere.min.js</span></span><br><span class="line">  <span class="attr">three:</span></span><br><span class="line">  <span class="attr">three_waves:</span></span><br><span class="line">  <span class="attr">canvas_lines:</span></span><br><span class="line">  <span class="attr">canvas_sphere:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Internal version: 1.0.0</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># canvas_nest: //cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js</span></span><br><span class="line">  <span class="comment"># canvas_nest_nomobile: //cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js</span></span><br><span class="line">  <span class="attr">canvas_nest:</span></span><br><span class="line">  <span class="attr">canvas_nest_nomobile:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Internal version: 1.0.0</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment"># canvas_ribbon: //cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js</span></span><br><span class="line">  <span class="attr">canvas_ribbon:</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="注入"><a href="#注入" class="headerlink" title="注入"></a>注入</h3><p>我们扩展了hexo过滤器并添加了<code>theme_inject</code>，因此用户可以将所需的自定义内容添加到任何注入点<code>injectpoint</code>。</p>
+<h4 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo.extend.filter.register(<span class="string">'theme_inject'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">injects</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>一个注入参数将被传递到函数中，因此我们可以用它在<code>injectPoint</code>后面添加自定义代码。</p>
+<ul>
+<li>注入视图：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The name of same `injectPoint` suggest be unique. If same, it will override low priority configurations.</span></span><br><span class="line"><span class="comment">// `locals` and `options` is the same as partial https://hexo.io/docs/helpers#partial.</span></span><br><span class="line"><span class="comment">// `order` defines the order of injection, which by default depends on the priority of injection.</span></span><br><span class="line">hexo.extend.filter.register(<span class="string">'theme_inject'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">injects</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// it will put code from this filePath into injectPoint.</span></span><br><span class="line">  injects.[injectPoint].file(name, filePath, [locals, options, order]);</span><br><span class="line">  <span class="comment">// it will put raw string as code into injectPoint.</span></span><br><span class="line">  injects.[injectPoint].raw(name, raw, [locals, options, order]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注入样式：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo.extend.filter.register(<span class="string">'theme_inject'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">injects</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// it will put styleFile into injectPoint.</span></span><br><span class="line">  injects.[injectPoint].push(styleFile);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>NexT提供了很多<code>injectPoint</code>，我们可以在<a href="https://github.com/theme-next/hexo-theme-next/blob/master/scripts/events/lib/injects-point.js" target="_blank" rel="noopener external nofollow noreferrer"><code>injects-point.js</code></a>查看：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  views: [<span class="string">'head'</span>, <span class="string">'header'</span>, <span class="string">'sidebar'</span>, <span class="string">'postMeta'</span>, <span class="string">'postBodyEnd'</span>, ..., <span class="string">'footer'</span>, <span class="string">'bodyEnd'</span>],</span><br><span class="line">  styles: [<span class="string">'variable'</span>, <span class="string">'mixin'</span>, <span class="string">'style'</span>]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>custom_file_path</code>也使用此API，详细见<a href="https://github.com/theme-next/hexo-theme-next/blob/master/scripts/filters/default-injects.js" target="_blank" rel="noopener external nofollow noreferrer">default-injects.js</a>。</p>
+<div class="note warning">
+            <p>注意路径，必须是绝对路径或相对路径<code>hexo_dir</code>。</p>
+          </div>
+
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>1、加载自定义脚本。我们可以把它们下载<code>bodyEnd</code>文件中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo.extend.filter.register(<span class="string">'theme_inject'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">injects</span>) </span>&#123;</span><br><span class="line">  injects.bodyEnd.raw(<span class="string">'load-custom-js'</span>, <span class="string">'&lt;script src="js-path-or-cdn.js"&gt;&lt;/script&gt;'</span>, &#123;&#125;, &#123;<span class="attr">cache</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>2、向侧边栏<code>sidebar</code>添加自定义文件<code>my-favourite-food.swig</code></p>
+<ul>
+<li>步骤1：在某个路径（比如<code>source/_data/</code>）中创建<code>my-favourite-food.swig</code>。您可以从<code>hexo</code>或<code>local</code>在过滤器中定义的变量：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for food in foods %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123;food&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>步骤2：添加过滤器以加载它：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo.extend.filter.register(<span class="string">'theme_inject'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">injects</span>) </span>&#123;</span><br><span class="line">  injects.sidebar.file(<span class="string">'my-favourite-food'</span>, <span class="string">'source/_data/my-favourite-food.swig'</span>, &#123;</span><br><span class="line">    foods: [<span class="string">'apple'</span>, <span class="string">'orange'</span>]</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>3、我们可将<code>big-header.styl</code>注入到NexT</p>
+<p>首先创建文件<code>source/_data/big-header.styl</code>：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">h1</span> &#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">2rem</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后将其添加到过滤器中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo.extend.filter.register(<span class="string">'theme_inject'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">injects</span>) </span>&#123;</span><br><span class="line">  injects.style.push(<span class="string">'source/_data/big-header.styl'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h4><p>NexT还支持hexo的插件系统，这样我们可以轻松扩展功能而无需修改核心模块的源代码。我们可以从 <a href="https://hexo.io/docs/plugins.html#Plugin" target="_blank" rel="noopener external nofollow noreferrer">https://hexo.io/docs/plugins.html#Plugin</a> 了解如何创建插件。</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第三方JS库"><span class="nav-number">1.</span> <span class="nav-text">第三方JS库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注入"><span class="nav-number">2.</span> <span class="nav-text">注入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概要"><span class="nav-number">2.1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">2.2.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插件"><span class="nav-number">2.3.</span> <span class="nav-text">插件</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">115</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/bc52c916.html" title="Performance API详解" target="_blank">Performance API详解</a>
+          </li>
+        
+          <li>
+            <a href="/archives/a896eef1.html" title="Lighthouse介绍" target="_blank">Lighthouse介绍</a>
+          </li>
+        
+          <li>
+            <a href="/archives/9c7d6d63.html" title="Nginx反向代理配置总结" target="_blank">Nginx反向代理配置总结</a>
+          </li>
+        
+          <li>
+            <a href="/archives/432ba08.html" title="ES如何快速检索-倒排索引" target="_blank">ES如何快速检索-倒排索引</a>
+          </li>
+        
+          <li>
+            <a href="/archives/9d6997a4.html" title="ElasticSearch基本操作" target="_blank">ElasticSearch基本操作</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">969k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">14:41</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/docs/advanced-settings.html',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/docs/advanced-settings.html";
+    this.page.identifier = "docs/advanced-settings.html";
+    this.page.title = "高级设置";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>

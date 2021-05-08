@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="层次聚类(Hierarchical Clustering)是聚类算法的一种，通过计算不同类别数据点间的相似度来创建一棵有层次的嵌套聚类树。在聚类树中，不同类别的原始数据点是树的最低层，树的顶层是一个聚类的根节点。创建聚类树有自下而上合并和自上而下分裂两种方法，本篇文章介绍合并方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="层次聚类介绍">
+<meta property="og:url" content="https://tding.top/archives/31ee8a52.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="层次聚类(Hierarchical Clustering)是聚类算法的一种，通过计算不同类别数据点间的相似度来创建一棵有层次的嵌套聚类树。在聚类树中，不同类别的原始数据点是树的最低层，树的顶层是一个聚类的根节点。创建聚类树有自下而上合并和自上而下分裂两种方法，本篇文章介绍合并方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tding.top/archives/31ee8a52/1.png">
+<meta property="og:image" content="https://tding.top/archives/31ee8a52/4.png">
+<meta property="og:image" content="https://tding.top/archives/31ee8a52/6.png">
+<meta property="og:image" content="https://tding.top/archives/31ee8a52/8.png">
+<meta property="og:image" content="https://tding.top/archives/31ee8a52/9.png">
+<meta property="og:image" content="https://tding.top/archives/31ee8a52/11.png">
+<meta property="og:image" content="https://tding.top/archives/31ee8a52/12.png">
+<meta property="og:image" content="https://tding.top/archives/31ee8a52/13.png">
+<meta property="og:image" content="https://tding.top/archives/31ee8a52/14.png">
+<meta property="article:published_time" content="2019-10-10T07:00:00.000Z">
+<meta property="article:modified_time" content="2019-10-10T14:31:28.000Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="聚类">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tding.top/archives/31ee8a52/1.png">
+
+<link rel="canonical" href="https://tding.top/archives/31ee8a52.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>层次聚类介绍 | 小丁的个人博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">115</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">64</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">176</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tding.top/archives/31ee8a52.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="小丁">
+      <meta itemprop="description" content="酒，越喝越暖，水会越喝越寒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小丁的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          层次聚类介绍
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-10 15:00:00" itemprop="dateCreated datePublished" datetime="2019-10-10T15:00:00+08:00">2019-10-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">聚类</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/31ee8a52.html" class="post-meta-item leancloud_visitors" data-flag-title="层次聚类介绍" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/archives/31ee8a52.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="archives/31ee8a52.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/31ee8a52.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/31ee8a52.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>层次聚类(Hierarchical Clustering)是聚类算法的一种，通过计算不同类别数据点间的相似度来创建一棵有层次的嵌套聚类树。在聚类树中，不同类别的原始数据点是树的最低层，树的顶层是一个聚类的根节点。创建聚类树有自下而上合并和自上而下分裂两种方法，本篇文章介绍合并方法。</p>
+<a id="more"></a>
+
+<img src="/archives/31ee8a52/1.png" class="" title="图1">
+
+<h2 id="层次聚类的合并算法"><a href="#层次聚类的合并算法" class="headerlink" title="层次聚类的合并算法"></a>层次聚类的合并算法</h2><p>层次聚类的合并算法通过计算两类数据点间的相似性，对所有数据点中最为相似的两个数据点进行组合，并反复迭代这一过程。简单的说层次聚类的合并算法是通过计算每一个类别的数据点与所有数据点之间的距离来确定它们之间的相似性，距离越小，相似度越高。并将距离最近的两个数据点或类别进行组合，生成聚类树。</p>
+<h2 id="欧几里德距离矩阵"><a href="#欧几里德距离矩阵" class="headerlink" title="欧几里德距离矩阵"></a>欧几里德距离矩阵</h2><p>层次聚类使用欧式距离来计算不同类别数据点间的距离（相似度）。我们在前面的几篇文章中都曾经介绍过欧氏距离的计算方法，本篇文章将通过创建一个欧式距离矩阵来计算和对比不同类别数据点间的距离，并对距离值最小的数据点进行组合。以下是欧式距离的计算公式。</p>
+<p>$$<br>D=\sqrt{\left(x_{1}-y_{1}\right)^{2}+\left(x_{2}-y_{2}\right)^{2}}<br>$$</p>
+<p>以下为示例数据，我们通过欧氏距离计算下面A到G的欧式距离矩阵，并通过合并的方法将相似度最高的数据点进行组合，并创建聚类树。</p>
+<table>
+<thead>
+<tr>
+<th>数据点</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>16.9</td>
+</tr>
+<tr>
+<td>B</td>
+<td>38.5</td>
+</tr>
+<tr>
+<td>C</td>
+<td>39.5</td>
+</tr>
+<tr>
+<td>D</td>
+<td>80.8</td>
+</tr>
+<tr>
+<td>E</td>
+<td>82</td>
+</tr>
+<tr>
+<td>F</td>
+<td>34.6</td>
+</tr>
+<tr>
+<td>G</td>
+<td>116.1</td>
+</tr>
+</tbody></table>
+<p>创建欧式距离矩阵的方法很简单，将每个类别的数据点分别与A-G中的每个数据点计算距离值，其中A—&gt;B表示数据点A到数据点B的距离，B—&gt;A则代表数据点B到数据点A的距离。这两个距离值是相同的，因此欧式距离矩阵呈对角线对称（绿色部分和蓝色部分）。其中对角线的0值是数据点与自己的距离值。我们将所有数据点间的距离结果进行对比，选择其中距离最近的两个数据点进行组合，并迭代这一过程。下图显示了欧式矩阵的逻辑和计算方法。</p>
+<img src="/archives/31ee8a52/4.png" class="" title="图4">
+
+<h2 id="数据点之间的距离"><a href="#数据点之间的距离" class="headerlink" title="数据点之间的距离"></a>数据点之间的距离</h2><p>对于示例中的数据点，我们通过计算获得了下面的欧式距离矩阵。其中数据点B到数据点C的距离在所有的距离值中最小，为1.00。以下为数据点间距离值的计算公式。</p>
+<p>$$<br>D=\sqrt{(B-C)^{2}}=\sqrt{(38.5-39.5)^{2}}<br>$$</p>
+<p>经过计算数据点B和数据点C与其他数据点相比有最高的相似度。因此，我们将数据点B和数据点C进行组合。并再次计算其他数据点间的距离。</p>
+<img src="/archives/31ee8a52/6.png" class="" title="图6">
+
+<h2 id="数据点与组合数据点间的距离"><a href="#数据点与组合数据点间的距离" class="headerlink" title="数据点与组合数据点间的距离"></a>数据点与组合数据点间的距离</h2><p>将数据点B与数据点C进行组合后，重新计算各类别数据点间的距离矩阵。数据点间的距离计算方式与之前的方法一样。这里需要说明的是组合数据点(B,C)与其他数据点间的计算方法。当我们计算(B,C)到A的距离时，需要分别计算B到A和C到A的距离均值。</p>
+<p>$$<br>D=\frac{\sqrt{(B-A)^{2}}+\sqrt{(C-A)^{2}}}{2}=\frac{21.6+22.6}{2}<br>$$</p>
+<p>经过计算数据点D到数据点E的距离在所有的距离值中最小，为1.20。这表示在当前的所有数据点中（包含组合数据点），D和E的相似度最高。因此我们将数据点D和数据点E进行组合。并再次计算其他数据点间的距离。</p>
+<img src="/archives/31ee8a52/8.png" class="" title="图8">
+
+<p>后面的工作就是不断的重复计算数据点与数据点，数据点与组合数据点间的距离。这个步骤应该由程序来完成。这里由于数据量较小，我们手工计算并列出每一步的距离计算和数据点组合的结果。</p>
+<p>这一步中，数据点A和数据点F的距离值在所有距离值中最小，因此我们将A和F进行组合，生成组合数据点（A,F）。</p>
+<img src="/archives/31ee8a52/9.png" class="" title="图9">
+
+<p>到此为止除了数据点G以外，其他的数据点都已经根据距离值（相似度）进行了组合。聚类树的最底层已经完成。下面我们将继续计算组合数据点间的距离，并对相似度最高的组合数据点进行合并。</p>
+<h2 id="两个组合数据点间的距离"><a href="#两个组合数据点间的距离" class="headerlink" title="两个组合数据点间的距离"></a>两个组合数据点间的距离</h2><p>计算两个组合数据点间距离的方法有三种，分别为Single Linkage，Complete Linkage和Average Linkage。在开始计算之前，我们先来介绍下这三种计算方法以及各自的优缺点。</p>
+<h3 id="Single-Linkage"><a href="#Single-Linkage" class="headerlink" title="Single Linkage"></a>Single Linkage</h3><p>Single Linkage的计算方法是将两个组合数据点中距离最近的两个数据点间的距离作为这两个组合数据点的距离。这种方法容易受到极端值的影响。两个很相似的组合数据点可能由于其中的某个极端的数据点距离较近而组合在一起。</p>
+<h3 id="Complete-Linkage"><a href="#Complete-Linkage" class="headerlink" title="Complete Linkage"></a>Complete Linkage</h3><p>Complete Linkage的计算方法与Single Linkage相反，将两个组合数据点中距离最远的两个数据点间的距离作为这两个组合数据点的距离。Complete Linkage的问题也与Single Linkage相反，两个不相似的组合数据点可能由于其中的极端值距离较远而无法组合在一起。</p>
+<h3 id="Average-Linkage"><a href="#Average-Linkage" class="headerlink" title="Average Linkage"></a>Average Linkage</h3><p>Average Linkage的计算方法是计算两个组合数据点中的每个数据点与其他所有数据点的距离。将所有距离的均值作为两个组合数据点间的距离。这种方法计算量比较大，但结果比前两种方法更合理。</p>
+<p>我们使用Average Linkage计算组合数据点间的距离。下面是计算组合数据点(A,F)到(B,C)的距离，这里分别计算了(A,F)和(B,C)两两间距离的均值。</p>
+<p>$$<br>D=\frac{\sqrt{(A-B)^{2}}+\sqrt{(A-C)^{2}}+\sqrt{(F-B)^{2}}+\sqrt{(F-C)^{2}}}{4}<br>$$</p>
+<p>通过计算及对比不同组合数据点间间的距离。(A,F)到(B,C)的距离在所有组合数据点间最小，为13.25。说明(A,F)到(B,C)相似度最高。因此，将(A,F)到(B,C)组合为(A,F,B,C)。</p>
+<img src="/archives/31ee8a52/11.png" class="" title="图11">
+
+<p>使用与之前相同的方法计算出组合数据点(D,E)和G的距离在目前所有组合数据点中最小。为34.70。将(D,E)和G组合为(D,E,G)。</p>
+<img src="/archives/31ee8a52/12.png" class="" title="图12">
+
+<p>最终，通过计算和合并，我们获得了两个组合数据点(A,F,B,C)和(D,E,G)。这也是聚类树的最顶层的两个数据点。下面，我们按之前的计算步骤来构建聚类树。</p>
+<img src="/archives/31ee8a52/13.png" class="" title="图13">
+
+<h2 id="层次聚类树状图"><a href="#层次聚类树状图" class="headerlink" title="层次聚类树状图"></a>层次聚类树状图</h2><p>将前面的每一步的计算结果以树状图的形式展现出来就是层次聚类树。最底层是原始A到G的7个数据点。依照7个数据点间的相似度组合为聚类树的第二层(A,F),(B,C),(D,E)和G。以此类推生成完整的层次聚类树状图。以下为简单的示意图。</p>
+<img src="/archives/31ee8a52/14.png" class="" title="图14">
+
+<blockquote>
+<p>本文转载于：<a href="http://bluewhale.cc/2016-04-19/hierarchical-clustering.html#ixzz58ZXsykA1" target="_blank" rel="noopener external nofollow noreferrer">层次聚类算法的原理及实现Hierarchical Clustering</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\3e3c6c6a.html" rel="bookmark">KMeans聚类算法介绍</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\97bf4f4.html" rel="bookmark">机器学习笔记汇总</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\1059015.html" rel="bookmark">决策树介绍</a></div>
+    </li>
+  </ul>
+<div>
+    
+        <div class="end-slogan" style="text-align:center;font-size:22px;letter-spacing:10px;user-select:none;color:#bbb;"><br/>----------- 本文结束啦<i class="fa fa-star"></i>感谢您阅读 -----------<br/><br/></div>
+    
+</div> 
+        <div class="reward-container">
+  <div>赞赏一杯咖啡</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="小丁 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="小丁 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小丁
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tding.top/archives/31ee8a52.html" title="层次聚类介绍">https://tding.top/archives/31ee8a52.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/atom.xml">
+                <span class="icon">
+                  <i class="fa fa-rss"></i>
+                </span>
+
+                <span class="label">RSS</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+              <a href="/tags/%E8%81%9A%E7%B1%BB/" rel="tag"><i class="fa fa-tag"></i> 聚类</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/3e3c6c6a.html" rel="prev" title="KMeans聚类算法介绍">
+      <i class="fa fa-chevron-left"></i> KMeans聚类算法介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/fae43975.html" rel="next" title="线性回归介绍和Python实现">
+      线性回归介绍和Python实现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#层次聚类的合并算法"><span class="nav-number">1.</span> <span class="nav-text">层次聚类的合并算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#欧几里德距离矩阵"><span class="nav-number">2.</span> <span class="nav-text">欧几里德距离矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据点之间的距离"><span class="nav-number">3.</span> <span class="nav-text">数据点之间的距离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据点与组合数据点间的距离"><span class="nav-number">4.</span> <span class="nav-text">数据点与组合数据点间的距离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两个组合数据点间的距离"><span class="nav-number">5.</span> <span class="nav-text">两个组合数据点间的距离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Single-Linkage"><span class="nav-number">5.1.</span> <span class="nav-text">Single Linkage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Complete-Linkage"><span class="nav-number">5.2.</span> <span class="nav-text">Complete Linkage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Average-Linkage"><span class="nav-number">5.3.</span> <span class="nav-text">Average Linkage</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#层次聚类树状图"><span class="nav-number">6.</span> <span class="nav-text">层次聚类树状图</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">115</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/bc52c916.html" title="Performance API详解" target="_blank">Performance API详解</a>
+          </li>
+        
+          <li>
+            <a href="/archives/a896eef1.html" title="Lighthouse介绍" target="_blank">Lighthouse介绍</a>
+          </li>
+        
+          <li>
+            <a href="/archives/9c7d6d63.html" title="Nginx反向代理配置总结" target="_blank">Nginx反向代理配置总结</a>
+          </li>
+        
+          <li>
+            <a href="/archives/432ba08.html" title="ES如何快速检索-倒排索引" target="_blank">ES如何快速检索-倒排索引</a>
+          </li>
+        
+          <li>
+            <a href="/archives/9d6997a4.html" title="ElasticSearch基本操作" target="_blank">ElasticSearch基本操作</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">969k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">14:41</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/archives/31ee8a52.html',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/archives/31ee8a52.html";
+    this.page.identifier = "archives/31ee8a52.html";
+    this.page.title = "层次聚类介绍";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>
