@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>小丁的个人博客</title>
+  <icon>https://tding.top/icon.png</icon>
+  <subtitle>世间所有的相遇，都是久别重逢</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://tding.top/"/>
+  <updated>2021-07-10T08:08:44.128Z</updated>
+  <id>https://tding.top/</id>
+  
+  <author>
+    <name>小丁</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>杭州滨融府摇号人群分析</title>
+    <link href="https://tding.top/archives/f283bd0e.html"/>
+    <id>https://tding.top/archives/f283bd0e.html</id>
+    <published>2021-07-10T07:30:00.000Z</published>
+    <updated>2021-07-10T08:08:44.128Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;杭州滨融府（开发商：滨江、融创）本次开盘的是2幢、3幢、4幢，总共房源155套，其中包括保障无房家庭的16套以及人才无房家庭的23套。&lt;strong&gt;户型为139平、168平，均价54000，起步750w左右&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;冻资要求：首套250万、二套500万、全款800万&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;登记人数究竟有多少已经不得而知了，最后审核通过的报名家庭：9821户，其中2326户是无房家庭，558户是人才无房家庭。&lt;strong&gt;摇号中签率：总体1.58%（其中人才5.79%、无房1.74%、有房1.19%）&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;为什么这样一个起步750w总价的楼盘会有那么多人报名，&lt;strong&gt;一方面是因为项目周边的次新二手房（滨江锦绣之城、融创宜和园、天阳武林邸、融信公馆ARC、首开杭州金茂府）挂牌价基本没有低于8w的了，相比于项目5w4的限价倒挂非常明显；另一方面，老城西大量改善家庭首选的就是临近的申花板块；同时，本项目的开发商也是大家认可的品牌开发商滨江和融创&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;下面我们大概看一下参与摇号的人群分布。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数据分析" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+      <category term="实战" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E5%AE%9E%E6%88%98/"/>
+    
+    
+      <category term="数据可视化" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+      <category term="数据分析" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+      <category term="新房摇号" scheme="https://tding.top/tags/%E6%96%B0%E6%88%BF%E6%91%87%E5%8F%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DevOps&amp;CICD</title>
+    <link href="https://tding.top/archives/3a8cd398.html"/>
+    <id>https://tding.top/archives/3a8cd398.html</id>
+    <published>2021-06-11T15:40:00.000Z</published>
+    <updated>2021-06-12T14:26:49.843Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;DevOps、CI/CD&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="DevOps" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/DevOps/"/>
+    
+    
+      <category term="DevOps" scheme="https://tding.top/tags/DevOps/"/>
+    
+      <category term="CI/CD" scheme="https://tding.top/tags/CI-CD/"/>
+    
+      <category term="k8s" scheme="https://tding.top/tags/k8s/"/>
+    
+      <category term="Docker" scheme="https://tding.top/tags/Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hive基本操作</title>
+    <link href="https://tding.top/archives/795fd7d2.html"/>
+    <id>https://tding.top/archives/795fd7d2.html</id>
+    <published>2021-06-11T15:30:10.000Z</published>
+    <updated>2021-06-12T14:16:38.173Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Hive是一个可以使用多种计算引擎以及兼容多种数据存储格式的分布式OLAP客户端。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="Hive" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/Hive/"/>
+    
+    
+      <category term="Hive" scheme="https://tding.top/tags/Hive/"/>
+    
+      <category term="Hadoop" scheme="https://tding.top/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kettle定时执行数据库表增量同步</title>
+    <link href="https://tding.top/archives/d745dad8.html"/>
+    <id>https://tding.top/archives/d745dad8.html</id>
+    <published>2021-05-14T12:40:13.000Z</published>
+    <updated>2021-05-17T14:23:09.246Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要记录通过kettle实现定时执行数据库表增量同步。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数据库" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="Kettle" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Kettle/"/>
+    
+    
+      <category term="数据库" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="数据迁移" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/"/>
+    
+      <category term="Kettle" scheme="https://tding.top/tags/Kettle/"/>
+    
+      <category term="增量同步" scheme="https://tding.top/tags/%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kettle插入更新组件详解</title>
+    <link href="https://tding.top/archives/a3b9e995.html"/>
+    <id>https://tding.top/archives/a3b9e995.html</id>
+    <published>2021-05-14T12:30:03.000Z</published>
+    <updated>2021-05-14T12:42:55.771Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文介绍的是输出菜单下的插入/更新组件。&lt;/p&gt;
+&lt;p&gt;实现功能：自动对比用户设置的对比字段，若目标表不存在该字段，则新插入该条记录。若存在，则更新。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数据库" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="Kettle" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Kettle/"/>
+    
+    
+      <category term="数据库" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="数据迁移" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/"/>
+    
+      <category term="Kettle" scheme="https://tding.top/tags/Kettle/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Performance API详解</title>
+    <link href="https://tding.top/archives/bc52c916.html"/>
+    <id>https://tding.top/archives/bc52c916.html</id>
+    <published>2021-04-30T12:20:00.000Z</published>
+    <updated>2021-05-01T14:27:26.395Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Performance 接口可以获取到当前页面中与性能相关的信息。它是 High Resolution Time API 的一部分，同时也融合了 Performance Timeline API、Navigation Timing API、 User Timing API 和 Resource Timing API。&lt;/p&gt;
+&lt;p&gt;本文主要记录Performance API的几个属性、方法，以及页面加载慢问题的排查分析。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能监控" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能监控" scheme="https://tding.top/tags/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="Performance API" scheme="https://tding.top/tags/Performance-API/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Lighthouse介绍</title>
+    <link href="https://tding.top/archives/a896eef1.html"/>
+    <id>https://tding.top/archives/a896eef1.html</id>
+    <published>2021-04-30T12:10:00.000Z</published>
+    <updated>2021-05-01T14:27:26.392Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Lighthouse 是谷歌开源的一款 Web 前端性能测试工具，用于改进网络应用的质量，适用于网页版和移动端。能生成一个包括页面性能、PWA（Progressive Web apps，渐进式 Web 应用）、可访问性（无障碍）、最佳实践、SEO 的报告清单提供参考，看看可以采取哪些措施来改进您的应用。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能监控" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能监控" scheme="https://tding.top/tags/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="Lighthouse" scheme="https://tding.top/tags/Lighthouse/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx反向代理配置总结</title>
+    <link href="https://tding.top/archives/9c7d6d63.html"/>
+    <id>https://tding.top/archives/9c7d6d63.html</id>
+    <published>2021-04-01T14:00:00.000Z</published>
+    <updated>2021-05-03T14:47:00.120Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在前后端分离项目中，可以通过前端配置Nginx来解决跨域问题。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;前端页面&lt;code&gt;mysite.com&lt;/code&gt;，后台接口是在&lt;code&gt;myserver.com&lt;/code&gt;域下的&lt;code&gt;myserver.com/querytags&lt;/code&gt;接口，当在页面里直接请求，浏览器会报跨域的错误。为了绕开浏览器的跨域安全限制，现在需要将请求的域名改成&lt;code&gt;mysite.com&lt;/code&gt;，同时约定一个URL规则来表明代理请求的身份，然后Nginx通过匹配该规则，将请求代理回原来的域。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;本文总结一下Nginx反向代理匹配规则。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Nginx" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/Nginx/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Nginx" scheme="https://tding.top/tags/Nginx/"/>
+    
+      <category term="反向代理" scheme="https://tding.top/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ES如何快速检索-倒排索引</title>
+    <link href="https://tding.top/archives/432ba08.html"/>
+    <id>https://tding.top/archives/432ba08.html</id>
+    <published>2021-01-23T15:40:00.000Z</published>
+    <updated>2021-05-08T15:11:40.189Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要介绍ElasticSearch的倒排索引结构。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;倒排索引（Inverted Index）也叫反向索引，有反向索引必有正向索引。通俗地来讲，正向索引是通过key找value，反向索引则是通过value找key。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="ES" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/ES/"/>
+    
+    
+      <category term="ElasticSearch" scheme="https://tding.top/tags/ElasticSearch/"/>
+    
+      <category term="ES" scheme="https://tding.top/tags/ES/"/>
+    
+      <category term="后端" scheme="https://tding.top/tags/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="倒排索引" scheme="https://tding.top/tags/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ElasticSearch基本操作</title>
+    <link href="https://tding.top/archives/9d6997a4.html"/>
+    <id>https://tding.top/archives/9d6997a4.html</id>
+    <published>2021-01-23T14:40:00.000Z</published>
+    <updated>2021-06-06T14:13:35.928Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Elasticsearch是一个&lt;strong&gt;分布式的免费开源搜索和分析引擎&lt;/strong&gt;，适用于包括文本、数字、地理空间、结构化和非结构化数据等在内的所有类型的数据。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="ES" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/ES/"/>
+    
+    
+      <category term="ElasticSearch" scheme="https://tding.top/tags/ElasticSearch/"/>
+    
+      <category term="ES" scheme="https://tding.top/tags/ES/"/>
+    
+      <category term="后端" scheme="https://tding.top/tags/%E5%90%8E%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue数据与视图更新</title>
+    <link href="https://tding.top/archives/8fbcf5cf.html"/>
+    <id>https://tding.top/archives/8fbcf5cf.html</id>
+    <published>2021-01-17T15:30:00.000Z</published>
+    <updated>2021-05-30T08:05:30.075Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;code&gt;vue&lt;/code&gt; 数据 &lt;code&gt;data&lt;/code&gt; 更新了，但是视图没有更新，其中缘由在于对 &lt;code&gt;vue&lt;/code&gt; 的响应式原理的理解偏差。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/Vue/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/tags/Vue/"/>
+    
+      <category term="响应式" scheme="https://tding.top/tags/%E5%93%8D%E5%BA%94%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue nextTick的原理及用法</title>
+    <link href="https://tding.top/archives/d5e02e8f.html"/>
+    <id>https://tding.top/archives/d5e02e8f.html</id>
+    <published>2021-01-17T14:30:00.000Z</published>
+    <updated>2021-05-30T07:12:07.370Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Vue官方文档nextTick用法说明：在下次DOM更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/Vue/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/tags/Vue/"/>
+    
+      <category term="webpack" scheme="https://tding.top/tags/webpack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue的style标签块中使用变量动态修改CSS的方法</title>
+    <link href="https://tding.top/archives/d16caff8.html"/>
+    <id>https://tding.top/archives/d16caff8.html</id>
+    <published>2021-01-10T14:30:00.000Z</published>
+    <updated>2021-05-03T14:47:00.125Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我想要根据不同的事件去修改页面的样式，也就是修改CSS某些属性。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/Vue/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/tags/Vue/"/>
+    
+      <category term="CSS" scheme="https://tding.top/tags/CSS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SQL模糊匹配中%、_的处理</title>
+    <link href="https://tding.top/archives/52a16f5c.html"/>
+    <id>https://tding.top/archives/52a16f5c.html</id>
+    <published>2020-11-16T15:37:03.000Z</published>
+    <updated>2021-06-12T14:16:38.175Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在使用LIKE关键字进行模糊查询时，&lt;code&gt;%&lt;/code&gt;、&lt;code&gt;_&lt;/code&gt;和&lt;code&gt;[]&lt;/code&gt;单独出现时，会被认为是通配符。为了在字符数据类型的列中查询是否存在百分号&lt;code&gt;%&lt;/code&gt;、下划线&lt;code&gt;_&lt;/code&gt;或者方括号&lt;code&gt;[]&lt;/code&gt;字符，就需要有一种方法告诉DBMS，将LIKE判式中的这些字符看作是实际值，而不是通配符。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数据库" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="MySQL" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/"/>
+    
+    
+      <category term="数据库" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="MySQL" scheme="https://tding.top/tags/MySQL/"/>
+    
+      <category term="模糊匹配" scheme="https://tding.top/tags/%E6%A8%A1%E7%B3%8A%E5%8C%B9%E9%85%8D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Element UI笔记</title>
+    <link href="https://tding.top/archives/2d039718.html"/>
+    <id>https://tding.top/archives/2d039718.html</id>
+    <published>2020-10-30T14:30:00.000Z</published>
+    <updated>2021-05-09T13:30:14.685Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要记录使用Element UI组件中碰到的问题。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;树形控件el-tree自定义节点内容，删除节点不更新DOM的问题&lt;/li&gt;
+&lt;li&gt;上传控件el-upload单文件上传覆盖已有文件方法&lt;/li&gt;
+&lt;li&gt;多选框控件el-checkbox传id值，同时页面显示中文标签的方法&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/Vue/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/tags/Vue/"/>
+    
+      <category term="Element UI" scheme="https://tding.top/tags/Element-UI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue-Cli目录结构详解</title>
+    <link href="https://tding.top/archives/70cd9ad9.html"/>
+    <id>https://tding.top/archives/70cd9ad9.html</id>
+    <published>2020-10-20T14:30:00.000Z</published>
+    <updated>2021-05-03T14:47:00.123Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;vue-cli脚手架工具就是为我们搭建了开发所需要的环境，为我们省去了很多精力。有必要对这个环境进行熟悉，本文主要介绍项目的目录结构。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/Vue/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/tags/Vue/"/>
+    
+      <category term="webpack" scheme="https://tding.top/tags/webpack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Boot接收请求参数问题记录</title>
+    <link href="https://tding.top/archives/15f02acf.html"/>
+    <id>https://tding.top/archives/15f02acf.html</id>
+    <published>2020-09-11T15:00:10.000Z</published>
+    <updated>2021-05-30T08:05:30.073Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要记录Spring Boot接收前端请求参数转为实体类过程中碰到的一些问题。&lt;/p&gt;
+&lt;p&gt;我们在客户端传递了JSON数据，Spring Boot就会自动调用Jackson框架，把JSON字符串数据转为实体类。首先先简要介绍下Jackson框架。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="Java" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/Java/"/>
+    
+    
+      <category term="Java" scheme="https://tding.top/tags/Java/"/>
+    
+      <category term="Spring Boot" scheme="https://tding.top/tags/Spring-Boot/"/>
+    
+      <category term="Jackson" scheme="https://tding.top/tags/Jackson/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Maven报错记录</title>
+    <link href="https://tding.top/archives/a53ef59c.html"/>
+    <id>https://tding.top/archives/a53ef59c.html</id>
+    <published>2020-09-03T14:20:00.000Z</published>
+    <updated>2021-06-01T14:45:49.660Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文是使用Maven时的报错记录以及原因分析。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="Maven" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/Maven/"/>
+    
+    
+      <category term="Java" scheme="https://tding.top/tags/Java/"/>
+    
+      <category term="Maven" scheme="https://tding.top/tags/Maven/"/>
+    
+      <category term="依赖管理" scheme="https://tding.top/tags/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>BigDecimal介绍</title>
+    <link href="https://tding.top/archives/a44c2f28.html"/>
+    <id>https://tding.top/archives/a44c2f28.html</id>
+    <published>2020-08-01T15:00:00.000Z</published>
+    <updated>2021-05-09T13:30:14.683Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Double存在几个问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算时容易出现不精确的问题  &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(&lt;span class=&quot;number&quot;&gt;12.3&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;45.6&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 57.900000000000006&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(&lt;span class=&quot;number&quot;&gt;1.14&lt;/span&gt; / &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 0.011399999999999999&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/li&gt;
+&lt;li&gt;判断是否相等时，如果位数超过了16位，会出现问题：  &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 16位，不相等&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;double&lt;/span&gt; a = &lt;span class=&quot;number&quot;&gt;1.1234567890123451&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;double&lt;/span&gt; b = &lt;span class=&quot;number&quot;&gt;1.1234567890123452&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(a == b); &lt;span class=&quot;comment&quot;&gt;// false&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 17位，相等&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;double&lt;/span&gt; a = &lt;span class=&quot;number&quot;&gt;1.12345678901234561&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;double&lt;/span&gt; b = &lt;span class=&quot;number&quot;&gt;1.12345678901234567&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(a == b); &lt;span class=&quot;comment&quot;&gt;// true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;因此，在电商与金融等对数据的敏感程度较高（精度要求较高）的场景下一般使用BigDecimal。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="Java" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/Java/"/>
+    
+    
+      <category term="Java" scheme="https://tding.top/tags/Java/"/>
+    
+      <category term="BigDecimal" scheme="https://tding.top/tags/BigDecimal/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Maven入门笔记</title>
+    <link href="https://tding.top/archives/4736a5f5.html"/>
+    <id>https://tding.top/archives/4736a5f5.html</id>
+    <published>2020-07-30T15:00:00.000Z</published>
+    <updated>2021-06-01T14:21:03.636Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Maven 翻译为”专家”、”内行”，是 Apache 下的一个纯 Java 开发的开源项目。基于项目对象模型（缩写：POM）概念，Maven利用一个中央信息片断能管理一个项目的构建、报告和文档等步骤。&lt;/p&gt;
+&lt;p&gt;Maven 是一个项目管理工具，可以对 Java 项目进行构建、依赖管理。&lt;/p&gt;
+&lt;p&gt;假如使用传统的项目构建方式，可能会有这样的困惑：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;开发中，为了保证编译通过，我们会到处去寻找jar包，当编译通过了，运行的时候，却发现&lt;code&gt;ClassNotFoundException&lt;/code&gt;，难道还差jar包？再去找找吧。&lt;/li&gt;
+&lt;li&gt;每个Java项目的目录结构都没有一个统一的标准，配置文件到处都是，单元测试代码到底应该放在那里也没有一个权威的规范。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;因此，我们就要用到Maven这个项目管理工具，Maven主要做了两件事：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;统一开发规范与工具&lt;/li&gt;
+&lt;li&gt;统一管理jar包&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="Maven" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/Maven/"/>
+    
+    
+      <category term="Java" scheme="https://tding.top/tags/Java/"/>
+    
+      <category term="Maven" scheme="https://tding.top/tags/Maven/"/>
+    
+      <category term="依赖管理" scheme="https://tding.top/tags/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+</feed>
