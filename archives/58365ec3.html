@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="我用Python实现了冒泡排序、选择排序、插入排序、归并排序、快速排序。然后简单讲了讲快速排序的优化，我们可以通过小数组采用插入排序来减少递归的开销；对于有一定顺序的数组，我采用三数取中来提高性能；对于包含大量重复数的数组，我用了三路快速排序来提高性能。 最后，我把这些排序算法应用在随机数组、升序数组、降序数组、包含大量重复数的数组上，比较了一下它们的耗时。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法的Python实现以及时间复杂度分析">
+<meta property="og:url" content="https://tding.top/archives/58365ec3.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="我用Python实现了冒泡排序、选择排序、插入排序、归并排序、快速排序。然后简单讲了讲快速排序的优化，我们可以通过小数组采用插入排序来减少递归的开销；对于有一定顺序的数组，我采用三数取中来提高性能；对于包含大量重复数的数组，我用了三路快速排序来提高性能。 最后，我把这些排序算法应用在随机数组、升序数组、降序数组、包含大量重复数的数组上，比较了一下它们的耗时。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tding.top/archives/58365ec3/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-1.png">
+<meta property="og:image" content="https://tding.top/archives/58365ec3/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-%E4%B8%89%E8%B7%AF%E5%BF%AB%E6%8E%92.jpg">
+<meta property="article:published_time" content="2019-10-30T12:40:00.000Z">
+<meta property="article:modified_time" content="2019-11-01T16:28:33.000Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="排序算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tding.top/archives/58365ec3/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-1.png">
+
+<link rel="canonical" href="https://tding.top/archives/58365ec3.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>排序算法的Python实现以及时间复杂度分析 | 小丁的个人博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">169</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">78</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">219</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tding.top/archives/58365ec3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="小丁">
+      <meta itemprop="description" content="酒，越喝越暖，水会越喝越寒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小丁的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          排序算法的Python实现以及时间复杂度分析
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-30 20:40:00" itemprop="dateCreated datePublished" datetime="2019-10-30T20:40:00+08:00">2019-10-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机基础</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/58365ec3.html" class="post-meta-item leancloud_visitors" data-flag-title="排序算法的Python实现以及时间复杂度分析" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/archives/58365ec3.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="archives/58365ec3.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/58365ec3.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/58365ec3.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我用Python实现了冒泡排序、选择排序、插入排序、归并排序、快速排序。然后简单讲了讲快速排序的优化，我们可以通过<strong>小数组采用插入排序</strong>来减少递归的开销；对于有一定顺序的数组，我采用<strong>三数取中</strong>来提高性能；对于包含大量重复数的数组，我用了<strong>三路快速排序</strong>来提高性能。</p>
+<p>最后，我把这些排序算法应用在随机数组、升序数组、降序数组、包含大量重复数的数组上，比较了一下它们的耗时。</p>
+<a id="more"></a>
+
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>冒泡排序的大体思想就是通过与相邻元素的比较和交换来把小的数交换到最前面。这个过程类似于水泡向上升一样，因此而得名。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exchange</span><span class="params">(a,i,j)</span>:</span></span><br><span class="line">    temp = a[i]</span><br><span class="line">    a[i] = a[j]</span><br><span class="line">    a[j] = temp</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">BubbleSort</span><span class="params">(nums)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)<span class="number">-1</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(nums)-i<span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">if</span> nums[j] &gt; nums[j+<span class="number">1</span>]:</span><br><span class="line">                exchange(nums,j,j+<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时间复杂度O(n^2)</li>
+</ul>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>首先，找到数组中最小的那个元素，然后将它和数组的第一个元素交换位置（如果第一个元素就是最小元素那么它就和自己交换）。然后在剩下的元素中找到最小的元素，将它与数组的第二个元素交换位置。如此往复，直到将整个数组排序。这种方法叫做选择排序，因为它在<strong>不断地选择剩余元素之中的最小者</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exchange</span><span class="params">(a,i,j)</span>:</span></span><br><span class="line">    temp = a[i]</span><br><span class="line">    a[i] = a[j]</span><br><span class="line">    a[j] = temp</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">SelectSort</span><span class="params">(nums)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">        minIndex = i</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i,len(nums)):</span><br><span class="line">            <span class="keyword">if</span> nums[j] &lt; nums[minIndex]:</span><br><span class="line">                minIndex = j</span><br><span class="line">        exchange(nums,i,minIndex)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时间复杂度O(n^2)</li>
+</ul>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>通常人们整理桥牌的方法是一张一张的来，将每一张牌插入到其他已经有序的牌中的适当位置。在计算机的实现中，为了给要插入的元素腾出空间，我们需要将其余所有元素在插入之前都向右移动一位。这种算法叫做插入排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exchange</span><span class="params">(a,i,j)</span>:</span></span><br><span class="line">    temp = a[i]</span><br><span class="line">    a[i] = a[j]</span><br><span class="line">    a[j] = temp</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">InsertSort</span><span class="params">(nums)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)<span class="number">-1</span>):</span><br><span class="line">        j = i + <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> i &gt;= <span class="number">0</span> <span class="keyword">and</span> nums[i] &gt; nums[j]:</span><br><span class="line">            exchange(nums,i,j)</span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line">            i -= <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时间复杂度O(n^2)</li>
+</ul>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>归并排序体现的是一种分治思想（Divide and conquer），下面是其排序的步骤：</p>
+<ol>
+<li>将数组一分为二（Divide array into two halves）</li>
+<li>对每部分进行递归式地排序（Recursively sort each half）</li>
+<li>合并两个部分（Merge two halves）</li>
+</ol>
+<h3 id="merge-函数"><a href="#merge-函数" class="headerlink" title="merge()函数"></a>merge()函数</h3><p>具体步骤如下：</p>
+<ol>
+<li>给出原数组a[]，该数组的low到mid，mid+1到high的子数组是各自有序的。</li>
+<li>将数组复制到辅助数组（auxiliary array）中，两部分数组的首元素分别以i和j为下标，给原数组首元素以k为下标。</li>
+<li>比较i下标和j下标的元素，将较小值赋到k下标位置的元素内，然后对k和赋值的下标进行递增。</li>
+<li>重复上述过程，直到比较完全部元素。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge</span><span class="params">(a,aux,low,mid,high)</span>:</span></span><br><span class="line">    i = low</span><br><span class="line">    j = mid+<span class="number">1</span></span><br><span class="line">    k = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(low,high+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> i &gt; mid:</span><br><span class="line">            a[k] = aux[j]</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> j &gt; high:</span><br><span class="line">            a[k] = aux[i]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> aux[i] &gt; aux[j]:</span><br><span class="line">                a[k] = aux[j]</span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                a[k] = aux[i]</span><br><span class="line">                i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="sort-函数"><a href="#sort-函数" class="headerlink" title="sort()函数"></a>sort()函数</h3><p>我们要对数组<code>a[low..high]</code>进行排序，先将它分为<code>a[low..mid]</code>和<code>a[mid+1..high]</code>两部分，分别<strong>递归调用</strong>将它们单独排序，最后将有序的子数组归并为最终的排序结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sort</span><span class="params">(a,aux,low,high)</span>:</span></span><br><span class="line">    <span class="comment"># 退出条件</span></span><br><span class="line">    <span class="keyword">if</span> low &gt;= high:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    mid = (low + high) // <span class="number">2</span></span><br><span class="line">    sort(a,aux,low,mid)</span><br><span class="line">    sort(a,aux,mid+<span class="number">1</span>,high)</span><br><span class="line">    merge(a,aux,low,mid,high)</span><br></pre></td></tr></table></figure>
+
+<h3 id="MergeSort-函数"><a href="#MergeSort-函数" class="headerlink" title="MergeSort()函数"></a>MergeSort()函数</h3><p>为了保证归并排序函数MergeSort()输入只有未排序的数组，这里调用前面的辅助函数sort()：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">MergeSort</span><span class="params">(nums)</span>:</span></span><br><span class="line">    aux = nums.copy()</span><br><span class="line">    low = <span class="number">0</span></span><br><span class="line">    high = len(nums)<span class="number">-1</span></span><br><span class="line">    sort(nums,aux,low,high)</span><br><span class="line">    <span class="keyword">return</span> nums</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时间复杂度：O(nlogn)</li>
+</ul>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>快速排序是一种<strong>分治</strong>的排序算法。它将一个数组分成两个子数组，将两部分独立地排序。</p>
+<blockquote>
+<p>分治策略指的是：将原问题分解为若干个规模更小但结构与原问题相似的子问题。递归地解这些子问题，然后将这些子问题的解组合为原问题的解。</p>
+</blockquote>
+<p>下面是一个示例：</p>
+<img src="/archives/58365ec3/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-1.png" class="" title="快速排序-1">
+
+<blockquote>
+<p>来源：<a href="https://www.cnblogs.com/sfencs-hcy/p/10602598.html" target="_blank" rel="noopener external nofollow noreferrer">快速排序python实现</a></p>
+</blockquote>
+<h3 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h3><p>下面的代码短小利于理解，但是空间复杂度大，使用了三个列表解析式，而且每次选取进行比较时需要遍历整个序列。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">QuickSort</span><span class="params">(a)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(a) &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        pivot = a[<span class="number">0</span>]</span><br><span class="line">        less_than_pivot = [x <span class="keyword">for</span> x <span class="keyword">in</span> a <span class="keyword">if</span> x &lt; pivot]</span><br><span class="line">        more_than_pivot = [x <span class="keyword">for</span> x <span class="keyword">in</span> a <span class="keyword">if</span> x &gt; pivot]</span><br><span class="line">        pivot_list = [x <span class="keyword">for</span> x <span class="keyword">in</span> a <span class="keyword">if</span> x == pivot]</span><br><span class="line">        <span class="keyword">return</span> QuickSort(less_than_pivot) + pivot_list + QuickSort(more_than_pivot)</span><br></pre></td></tr></table></figure>
+
+<h3 id="原地排序实现"><a href="#原地排序实现" class="headerlink" title="原地排序实现"></a>原地排序实现</h3><ol>
+<li>切分——partition()</li>
+</ol>
+<p>切分方法：先随意地取<code>a[low]</code>作为切分元素（即那个将会被排定的元素），然后我们从数组的左端开始向右扫描直到找到一个大于等于它的元素，再从数组的右端开始向左扫描直到找到一个小于等于它的元素。这两个元素是没有排定的，因此我们交换它们的位置。如此继续，当两个指针相遇时，我们只需要将切分元素<code>a[low]</code>和左子元素最右侧的元素<code>a[j]</code>交换然后返回j即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partition</span><span class="params">(a,low,high)</span>:</span></span><br><span class="line">    i = low       <span class="comment"># 循环内i=i+1</span></span><br><span class="line">    j = high + <span class="number">1</span>  <span class="comment"># 循环内j=j-1</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 如果a[i]比基准数小,则后移一位直到有大于等于基准数的数出现</span></span><br><span class="line">        i += <span class="number">1</span>   <span class="comment"># 保证i每次循环都变化，不会陷入死循环（所有数都相等时这种情况）</span></span><br><span class="line">        <span class="keyword">while</span> a[i] &lt; a[low] <span class="keyword">and</span> i &lt; high:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="comment"># 如果a[j]比基准数大,则前移一位直到有小于等于基准数的数出现</span></span><br><span class="line">        j -= <span class="number">1</span>   <span class="comment"># 保证j每次循环都变化，不会陷入死循环（所有数都相等时这种情况）</span></span><br><span class="line">        <span class="keyword">while</span> a[j] &gt; a[low] <span class="keyword">and</span> j &gt; low:</span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 如果两个指针交叉，说明已经排序完了</span></span><br><span class="line">        <span class="keyword">if</span> i &gt;= j:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        </span><br><span class="line">        exchange(a,i,j)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 指针相遇后，j所在的元素小于low，进行互换</span></span><br><span class="line">    exchange(a,low,j)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> j</span><br></pre></td></tr></table></figure>
+
+<p>这里有个细节需要注意下，这个代码相比我最初的代码改变了：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">def partition(a,low,high):</span><br><span class="line"><span class="deletion">-   i = low + 1</span></span><br><span class="line"><span class="addition">+   i = low       # 循环内i=i+1</span></span><br><span class="line"><span class="deletion">-   j = high</span></span><br><span class="line"><span class="addition">+   j = high + 1  # 循环内j=j-1</span></span><br><span class="line">    while True:</span><br><span class="line">        # 如果a[i]比基准数小,则后移一位直到有大于等于基准数的数出现</span><br><span class="line"><span class="addition">+       i += 1   # 保证i每次循环都变化，不会陷入死循环（所有数都相等时这种情况）</span></span><br><span class="line">        while a[i] &lt; a[low] and i &lt; high:</span><br><span class="line">            i += 1</span><br><span class="line">        # 如果a[j]比基准数大,则前移一位直到有小于等于基准数的数出现</span><br><span class="line"><span class="addition">+       j -= 1   # 保证j每次循环都变化，不会陷入死循环（所有数都相等时这种情况）</span></span><br><span class="line">        while a[j] &gt; a[low] and j &gt; low:</span><br><span class="line">            j -= 1</span><br><span class="line"></span><br><span class="line">        # 如果两个指针交叉，说明已经排序完了</span><br><span class="line">        if i &gt;= j:</span><br><span class="line">            break</span><br><span class="line">        </span><br><span class="line">        exchange(a,i,j)</span><br><span class="line">    </span><br><span class="line">    # 指针相遇后，j所在的元素小于low，进行互换</span><br><span class="line">    exchange(a,low,j)</span><br><span class="line">    </span><br><span class="line">    return j</span><br></pre></td></tr></table></figure>
+
+<p>如果没有这些代码，当碰到<code>[2,2,2]</code>这样的情况时，i和j一直不会改变，永远无法满足<code>if i &gt;= j</code>，然后函数就一直在<code>while True</code>里边死循环。</p>
+<ol start="2">
+<li>sort()函数</li>
+</ol>
+<p>快速排序递归地将子数组<code>a[low..high]</code>排序，先用<code>partition()</code>方法将<code>a[j]</code>放到一个合适位置，然后再用递归调用将其他位置的元素排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sort</span><span class="params">(a,low,high)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> low &gt;= high:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    j = partition(a,low,high)</span><br><span class="line">    sort(a,low,j<span class="number">-1</span>)</span><br><span class="line">    sort(a,j+<span class="number">1</span>,high)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>QuickSort()函数</li>
+</ol>
+<p>为了保证快速排序函数QuickSort()输入只有未排序的数组，这里调用前面的辅助函数sort()：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">QuickSort</span><span class="params">(nums)</span>:</span></span><br><span class="line">    low = <span class="number">0</span></span><br><span class="line">    high = len(nums)<span class="number">-1</span></span><br><span class="line">    sort(nums,low,high)</span><br><span class="line">    <span class="keyword">return</span> nums</span><br></pre></td></tr></table></figure>
+
+<h3 id="快速排序的时间复杂度"><a href="#快速排序的时间复杂度" class="headerlink" title="快速排序的时间复杂度"></a>快速排序的时间复杂度</h3><ul>
+<li>最优情况：每一次的基准值都正好为序列的中位数，时间复杂度为nlogn</li>
+<li>最坏情况：<strong>每一次的基准值都恰好是序列的最大值或最小值，时间复杂度为n^2</strong>。有意思的是如果每次选第一个数做基准值，但每次这个数又是最小值，那么序列本身就是有序的，但时间复杂度也是最高的</li>
+</ul>
+<p>因此，要想优化时间复杂度，<strong>关键在于基准值的选择</strong>。</p>
+<h3 id="快速排序的优化"><a href="#快速排序的优化" class="headerlink" title="快速排序的优化"></a>快速排序的优化</h3><ol>
+<li>优化小数组效率</li>
+</ol>
+<p><strong>对于规模很小的情况，快速排序的优势并不明显（可能没有优势），而递归型的算法还会带来额外的开销</strong>。于是对于这类情况可以选择非递归型的算法来替代。</p>
+<p>那就有两个问题：多小的数组算小数组？替换的算法是什么？</p>
+<p>通常这个阈值设定为10，替换的算法一般是插入排序。</p>
+<p>下面是Python实现，这里只需要在sort()函数中加一个数组大小判断即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CUTOFF = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sort</span><span class="params">(a,low,high)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> low &gt;= high:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 当数组大小小于CUTOFF时，调用插入排序</span></span><br><span class="line">    <span class="keyword">if</span> high - low &lt;= CUTOFF - <span class="number">1</span>:</span><br><span class="line">        InsertSort(a[low:high+<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    j = partition(a,low,high)</span><br><span class="line">    sort(a,low,j<span class="number">-1</span>)</span><br><span class="line">    sort(a,j+<span class="number">1</span>,high)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>合理选择pivot</li>
+</ol>
+<p>前面也讨论过，直接选择分区的第一个或最后一个元素做 pivot 是不合适的。对于已经排好序，或者接近排好序的情况，会进入最差情况，时间复杂度退化到n^2。</p>
+<p>pivot选取的理想情况是：让分区中比 pivot 小的元素数量和比 pivot 大的元素数量差不多。较常用的做法是三数取中（ median of three ），即从第一项、最后一项、中间一项中取中位数作为 pivot。当然这并不能完全避免最差情况的发生。所以很多时候会采取更小心、更严谨的 pivot 选择方案（对于大数组特别重要）。比如先把大数组平均切分成左中右三个部分，每个部分用三数取中得到一个中位数，再从得到的三个中位数中找出中位数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">CUTOFF = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_median</span><span class="params">(nums,low,high)</span>:</span></span><br><span class="line">    <span class="comment"># 计算数组中间的元素的下标</span></span><br><span class="line">    mid = (low + high) // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 目标: arr[mid] &lt;= arr[high] </span></span><br><span class="line">    <span class="keyword">if</span> nums[mid] &gt; nums[high]:</span><br><span class="line">        exchange(nums,mid,high)</span><br><span class="line">    <span class="comment"># 目标: arr[low] &lt;= arr[high]</span></span><br><span class="line">    <span class="keyword">if</span> nums[low] &gt; nums[high]:</span><br><span class="line">        exchange(nums,low,high)</span><br><span class="line">    <span class="comment"># 目标: arr[low] &gt;= arr[mid]</span></span><br><span class="line">    <span class="keyword">if</span> nums[low] &lt; nums[mid]:</span><br><span class="line">        exchange(nums,low,mid)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 此时，arr[mid] &lt;= arr[low] &lt;= arr[high]，low的位置上保存这三个位置中间的值</span></span><br><span class="line">    <span class="keyword">return</span> nums[low]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sort</span><span class="params">(a,low,high)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> low &gt;= high:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 当数组大小小于CUTOFF时，调用插入排序</span></span><br><span class="line">    <span class="keyword">if</span> high - low &lt;= CUTOFF - <span class="number">1</span>:</span><br><span class="line">        InsertSort(a[low:high+<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 三数取中(median of three)，low的位置上保存这三个位置中间的值</span></span><br><span class="line">    _ = get_median(a,low,high)</span><br><span class="line"></span><br><span class="line">    j = partition(a,low,high)</span><br><span class="line">    sort(a,low,j<span class="number">-1</span>)</span><br><span class="line">    sort(a,j+<span class="number">1</span>,high)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>处理重复元素问题</li>
+</ol>
+<p>当一个数组里的元素全部一样大（或者存在大量相同元素）会令快速排序进入最差情况，因为不管怎么选 pivot，都会使分区结果一边很大一边很小。</p>
+<p>为了解决这个问题，我们需要修改分区过程，思路跟上面说的两路分区（基本的快排）类似，只是现在我们需要小于 pivot、等于 pivot、大于 pivot 三个分区。</p>
+<p>举个例子，待分割序列：<code>6 4 6 7 1 6 7 6 8 6</code>，其中<code>pivot=6</code>：</p>
+<ul>
+<li>未对与key元素相等处理的划分结果：<code>1 4 6 6 7 6 7 6 8 6</code><ul>
+<li>下次的两个子序列为：<code>1 4 6</code> 和 <code>7 6 7 6 8 6</code></li>
+</ul>
+</li>
+<li>对与key元素相等处理的划分结果：<code>1 4 6 6 6 6 6 7 8 7</code><ul>
+<li>下次的两个子序列为：<code>1 4</code> 和 <code>7 8 7</code></li>
+</ul>
+</li>
+</ul>
+<p>经过对比，我们可以看出，<strong>在一次划分后，把与key相等的元素聚在一起，能减少迭代次数，效率会提高不少</strong>。</p>
+<p>具体过程：</p>
+<p>如下图，我们可以设置四个游标，左端p、i，右端j、q。i、j的作用跟之前两路划分时候的左右游标相同，就是从两端向中间遍历序列，并将遍历到的元素与pivot比较，如果等于pivot，则移到两端（i对应的元素移到左端，j对应的元素移到右端。移动的方式就是拿此元素和a或d对应的元素进行交换，所以p和q的作用就是记录等于pivot的元素移动过后的边界），反之，如果大于或小于pivot，还按照之前两路划分的方式进行移动。这样一来，中间部分就和两路划分相同，两头是等于pivot的部分，我们只需要将这两部分移动到中间即可。</p>
+<img src="/archives/58365ec3/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-%E4%B8%89%E8%B7%AF%E5%BF%AB%E6%8E%92.jpg" class="" title="三路快排">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partition</span><span class="params">(a,low,high)</span>:</span></span><br><span class="line">    p = low + <span class="number">1</span></span><br><span class="line">    i = low + <span class="number">1</span></span><br><span class="line">    j = high</span><br><span class="line">    q = high</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 如果a[i]比基准数小,则后移一位直到有大于等于基准数的数出现</span></span><br><span class="line">        <span class="keyword">while</span> a[i] &lt;= a[low] <span class="keyword">and</span> i &lt; high:</span><br><span class="line">            <span class="comment"># 与pivot相等的元素将其交换到p所在的位置</span></span><br><span class="line">            <span class="keyword">if</span> a[i] == a[low]:</span><br><span class="line">                exchange(a,p,i)</span><br><span class="line">                p += <span class="number">1</span></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="comment"># 如果a[j]比基准数大,则前移一位直到有小于等于基准数的数出现</span></span><br><span class="line">        <span class="keyword">while</span> a[j] &gt;= a[low] <span class="keyword">and</span> j &gt; low:</span><br><span class="line">            <span class="comment"># 与pivot相等的元素将其交换到q所在的位置</span></span><br><span class="line">            <span class="keyword">if</span> a[j] == a[low]:</span><br><span class="line">                exchange(a,j,q)</span><br><span class="line">                q -= <span class="number">1</span></span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 如果两个指针交叉，说明已经排序完了</span></span><br><span class="line">        <span class="keyword">if</span> i &gt;= j:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        </span><br><span class="line">        exchange(a,i,j)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 因为工作指针i指向的是当前需要处理元素的下一个元素，故而需要退回到当前元素的实际位置，然后将等于pivot元素交换到序列中间</span></span><br><span class="line">    i -= <span class="number">1</span></span><br><span class="line">    p -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> p &gt;= low:</span><br><span class="line">        exchange(a, i, p)</span><br><span class="line">        i -= <span class="number">1</span></span><br><span class="line">        p -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 因为工作指针j指向的是当前需要处理元素的上一个元素，故而需要退回到当前元素的实际位置，然后将等于pivot元素交换到序列中间</span></span><br><span class="line">    j += <span class="number">1</span></span><br><span class="line">    q += <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> q &lt;= high:</span><br><span class="line">        exchange(a, q, j)</span><br><span class="line">        j += <span class="number">1</span></span><br><span class="line">        q += <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> i,j</span><br></pre></td></tr></table></figure>
+
+<p>下面是sort()函数，这里我只写了修改的部分：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sort</span><span class="params">(a,low,high)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    i,j = partition(a,low,high)</span><br><span class="line">    sort(a,low,i)</span><br><span class="line">    sort(a,j,high)</span><br></pre></td></tr></table></figure>
+
+<h3 id="整体代码实现"><a href="#整体代码实现" class="headerlink" title="整体代码实现"></a>整体代码实现</h3><p>下面是经过优化的快速排序代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line">CUTOFF = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exchange</span><span class="params">(a,i,j)</span>:</span></span><br><span class="line">    temp = a[i]</span><br><span class="line">    a[i] = a[j]</span><br><span class="line">    a[j] = temp</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">InsertSort</span><span class="params">(nums)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)<span class="number">-1</span>):</span><br><span class="line">        j = i + <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> i &gt;= <span class="number">0</span> <span class="keyword">and</span> nums[i] &gt; nums[j]:</span><br><span class="line">            exchange(nums,i,j)</span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line">            i -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partition</span><span class="params">(a,low,high)</span>:</span></span><br><span class="line">    p = low + <span class="number">1</span></span><br><span class="line">    i = low + <span class="number">1</span></span><br><span class="line">    j = high</span><br><span class="line">    q = high</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 如果a[i]比基准数小,则后移一位直到有大于等于基准数的数出现</span></span><br><span class="line">        <span class="keyword">while</span> a[i] &lt;= a[low] <span class="keyword">and</span> i &lt; high:</span><br><span class="line">            <span class="comment"># 与pivot相等的元素将其交换到p所在的位置</span></span><br><span class="line">            <span class="keyword">if</span> a[i] == a[low]:</span><br><span class="line">                exchange(a,p,i)</span><br><span class="line">                p += <span class="number">1</span></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="comment"># 如果a[j]比基准数大,则前移一位直到有小于等于基准数的数出现</span></span><br><span class="line">        <span class="keyword">while</span> a[j] &gt;= a[low] <span class="keyword">and</span> j &gt; low:</span><br><span class="line">            <span class="comment"># 与pivot相等的元素将其交换到q所在的位置</span></span><br><span class="line">            <span class="keyword">if</span> a[j] == a[low]:</span><br><span class="line">                exchange(a,j,q)</span><br><span class="line">                q -= <span class="number">1</span></span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 如果两个指针交叉，说明已经排序完了</span></span><br><span class="line">        <span class="keyword">if</span> i &gt;= j:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        </span><br><span class="line">        exchange(a,i,j)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 因为工作指针i指向的是当前需要处理元素的下一个元素，故而需要退回到当前元素的实际位置，然后将等于pivot元素交换到序列中间</span></span><br><span class="line">    i -= <span class="number">1</span></span><br><span class="line">    p -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> p &gt;= low:</span><br><span class="line">        exchange(a, i, p)</span><br><span class="line">        i -= <span class="number">1</span></span><br><span class="line">        p -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 因为工作指针j指向的是当前需要处理元素的上一个元素，故而需要退回到当前元素的实际位置，然后将等于pivot元素交换到序列中间</span></span><br><span class="line">    j += <span class="number">1</span></span><br><span class="line">    q += <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> q &lt;= high:</span><br><span class="line">        exchange(a, q, j)</span><br><span class="line">        j += <span class="number">1</span></span><br><span class="line">        q += <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> i,j</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_median</span><span class="params">(nums,low,high)</span>:</span></span><br><span class="line">    <span class="comment"># 计算数组中间的元素的下标</span></span><br><span class="line">    mid = (low + high) // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 目标: arr[mid] &lt;= arr[high] </span></span><br><span class="line">    <span class="keyword">if</span> nums[mid] &gt; nums[high]:</span><br><span class="line">        exchange(nums,mid,high)</span><br><span class="line">    <span class="comment"># 目标: arr[low] &lt;= arr[high]</span></span><br><span class="line">    <span class="keyword">if</span> nums[low] &gt; nums[high]:</span><br><span class="line">        exchange(nums,low,high)</span><br><span class="line">    <span class="comment"># 目标: arr[low] &gt;= arr[mid]</span></span><br><span class="line">    <span class="keyword">if</span> nums[low] &lt; nums[mid]:</span><br><span class="line">        exchange(nums,low,mid)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 此时，arr[mid] &lt;= arr[low] &lt;= arr[high]，low的位置上保存这三个位置中间的值</span></span><br><span class="line">    <span class="keyword">return</span> nums[low]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sort</span><span class="params">(a,low,high)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> low &gt;= high:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 当数组大小小于CUTOFF时，调用插入排序</span></span><br><span class="line">    <span class="keyword">if</span> high - low &lt;= CUTOFF - <span class="number">1</span>:</span><br><span class="line">        InsertSort(a[low:high+<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 三数取中(median of three)，low的位置上保存这三个位置中间的值</span></span><br><span class="line">    _ = get_median(a,low,high)</span><br><span class="line"></span><br><span class="line">    i,j = partition(a,low,high)</span><br><span class="line">    sort(a,low,i)</span><br><span class="line">    sort(a,j,high)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">QuickSort3Ways</span><span class="params">(nums)</span>:</span></span><br><span class="line">    low = <span class="number">0</span></span><br><span class="line">    high = len(nums)<span class="number">-1</span></span><br><span class="line">    sort(nums,low,high)</span><br><span class="line">    <span class="keyword">return</span> nums</span><br><span class="line"></span><br><span class="line">nums = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">print(QuickSort(nums))</span><br></pre></td></tr></table></figure>
+
+<h2 id="快速排序和归并排序对比"><a href="#快速排序和归并排序对比" class="headerlink" title="快速排序和归并排序对比"></a>快速排序和归并排序对比</h2><p>快速排序和归并排序是互补的：</p>
+<ul>
+<li>归并排序：<ol>
+<li>将数组分成两个子数组分别排序，并将有序的子数组归并以将整个数组排序；</li>
+<li>递归调用发生在处理整个数组之前；</li>
+<li>一个数组被等分为两半。</li>
+</ol>
+</li>
+<li>快速排序：<ol>
+<li>当两个子数组都有序时，整个数组也就自然有序了；</li>
+<li>递归调用发生在处理整个数组之后；</li>
+<li>切分（partition）的位置取决于数组的内容。</li>
+</ol>
+</li>
+</ul>
+<h2 id="各大排序算法测试"><a href="#各大排序算法测试" class="headerlink" title="各大排序算法测试"></a>各大排序算法测试</h2><p>下面我们对各大排序算法在不同数据集上进行对比，看看它们的优劣。</p>
+<h3 id="计时函数"><a href="#计时函数" class="headerlink" title="计时函数"></a>计时函数</h3><p>不同数据集可以用同一个计时函数，具体如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计时函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count_time</span><span class="params">(a,sortname)</span>:</span></span><br><span class="line">    time_start = time.time()</span><br><span class="line">    <span class="keyword">if</span> sortname == <span class="string">'BubbleSort'</span>:</span><br><span class="line">        BubbleSort(a)</span><br><span class="line">    <span class="keyword">if</span> sortname == <span class="string">'SelectSort'</span>:</span><br><span class="line">        SelectSort(a)</span><br><span class="line">    <span class="keyword">if</span> sortname == <span class="string">'InsertSort'</span>:</span><br><span class="line">        InsertSort(a)</span><br><span class="line">    <span class="keyword">if</span> sortname == <span class="string">'MergeSort'</span>:</span><br><span class="line">        MergeSort(a)</span><br><span class="line">    <span class="keyword">if</span> sortname == <span class="string">'QuickSort'</span>:</span><br><span class="line">        QuickSort(a)</span><br><span class="line">    <span class="keyword">if</span> sortname == <span class="string">'QuickSort3Ways'</span>:</span><br><span class="line">        QuickSort3Ways(a)</span><br><span class="line">    time_end = time.time()</span><br><span class="line">    <span class="keyword">return</span> (time_end - time_start)</span><br></pre></td></tr></table></figure>
+
+<h3 id="随机数据集"><a href="#随机数据集" class="headerlink" title="随机数据集"></a>随机数据集</h3><p>随机数据生成器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">timeRandomInput</span><span class="params">(sortname,length,numberOfArrays)</span>:</span></span><br><span class="line">    totalTime = <span class="number">0</span></span><br><span class="line">    <span class="comment">#测试数组数</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(numberOfArrays):</span><br><span class="line">        <span class="comment">#数组大小</span></span><br><span class="line">        a = []</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(length):</span><br><span class="line">            a.append(random.randint(<span class="number">1</span>, <span class="number">1000000</span>))  <span class="comment"># 测试数据范围</span></span><br><span class="line">        totalTime += count_time(a,sortname)</span><br><span class="line">    <span class="keyword">return</span> totalTime</span><br></pre></td></tr></table></figure>
+
+<p>这里我们生成一个长度为5000的数组，然后重复测试10次，最后计算各个排序算法用时：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">length = <span class="number">5000</span></span><br><span class="line">numberOfArrays = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"BubbleSort's total time:"</span>)</span><br><span class="line">print(timeRandomInput(<span class="string">'BubbleSort'</span>,length,numberOfArrays))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"SelectSort's total time:"</span>)</span><br><span class="line">print(timeRandomInput(<span class="string">'SelectSort'</span>,length,numberOfArrays))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"InsertSort's total time:"</span>)</span><br><span class="line">print(timeRandomInput(<span class="string">'InsertSort'</span>,length,numberOfArrays))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"MergeSort's total time:"</span>)</span><br><span class="line">print(timeRandomInput(<span class="string">'MergeSort'</span>,length,numberOfArrays))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"QuickSort's total time:"</span>)</span><br><span class="line">print(timeRandomInput(<span class="string">'QuickSort'</span>,length,numberOfArrays))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"QuickSort3Ways's total time:"</span>)</span><br><span class="line">print(timeRandomInput(<span class="string">'QuickSort3Ways'</span>,length,numberOfArrays))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">BubbleSort&#39;s total time:</span><br><span class="line">30.023681640625</span><br><span class="line">SelectSort&#39;s total time:</span><br><span class="line">11.03202223777771</span><br><span class="line">InsertSort&#39;s total time:</span><br><span class="line">24.185371160507202</span><br><span class="line">MergeSort&#39;s total time:</span><br><span class="line">0.1900651454925537</span><br><span class="line">QuickSort&#39;s total time:</span><br><span class="line">0.1554875373840332</span><br><span class="line">QuickSort3Ways&#39;s total time:</span><br><span class="line">0.19011521339416504</span><br></pre></td></tr></table></figure>
+
+<h3 id="降序数据集"><a href="#降序数据集" class="headerlink" title="降序数据集"></a>降序数据集</h3><p>这里我们看下这些排序算法在降序数据集下的表现，首先改变数据生成函数：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import random</span><br><span class="line"></span><br><span class="line">def timeRandomInput(sortname,length,numberOfArrays):</span><br><span class="line">    totalTime = 0</span><br><span class="line">    #测试数组数</span><br><span class="line">    for _ in range(numberOfArrays):</span><br><span class="line">        #数组大小</span><br><span class="line">        a = []</span><br><span class="line">        for _ in range(length):</span><br><span class="line">            a.append(random.randint(1, 1000000))  # 测试数据范围</span><br><span class="line"><span class="addition">+       a.sort(reverse = True)</span></span><br><span class="line">        totalTime += count_time(a,sortname)</span><br><span class="line">    return totalTime</span><br></pre></td></tr></table></figure>
+
+<p>这里如果生成一个长度为10000的数组，快速排序会出现<code>RecursionError: maximum recursion depth exceeded in comparison</code>错误。这个因为Python中默认的最大递归深度是989。解决方案：<strong>手动设置递归调用深度</strong>，具体代码如下：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import random</span><br><span class="line"><span class="addition">+import sys</span></span><br><span class="line"></span><br><span class="line"><span class="addition">+sys.setrecursionlimit(1000000)</span></span><br><span class="line"></span><br><span class="line">def timeRandomInput(sortname,length,numberOfArrays):</span><br><span class="line">    totalTime = 0</span><br><span class="line">    #测试数组数</span><br><span class="line">    for _ in range(numberOfArrays):</span><br><span class="line">        #数组大小</span><br><span class="line">        a = []</span><br><span class="line">        for _ in range(length):</span><br><span class="line">            a.append(random.randint(1, 1000000))  # 测试数据范围</span><br><span class="line">        a.sort(reverse = True)</span><br><span class="line">        totalTime += count_time(a,sortname)</span><br><span class="line">    return totalTime</span><br></pre></td></tr></table></figure>
+
+<p>数组大小改变为5000，重复10次，下面是测试结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">BubbleSort&#39;s total time:</span><br><span class="line">45.00776267051697</span><br><span class="line">SelectSort&#39;s total time:</span><br><span class="line">11.393858909606934</span><br><span class="line">InsertSort&#39;s total time:</span><br><span class="line">48.275355100631714</span><br><span class="line">MergeSort&#39;s total time:</span><br><span class="line">0.18087530136108398</span><br><span class="line">QuickSort&#39;s total time:</span><br><span class="line">14.895536661148071</span><br><span class="line">QuickSort3Ways&#39;s total time:</span><br><span class="line">0.10853052139282227</span><br></pre></td></tr></table></figure>
+
+<h3 id="升序数据集"><a href="#升序数据集" class="headerlink" title="升序数据集"></a>升序数据集</h3><p>这里我们看下这些排序算法在升序数据集下的表现，首先改变数据生成函数：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import random</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">sys.setrecursionlimit(1000000)</span><br><span class="line"></span><br><span class="line">def timeRandomInput(sortname,length,numberOfArrays):</span><br><span class="line">    totalTime = 0</span><br><span class="line">    #测试数组数</span><br><span class="line">    for _ in range(numberOfArrays):</span><br><span class="line">        #数组大小</span><br><span class="line">        a = []</span><br><span class="line">        for _ in range(length):</span><br><span class="line">            a.append(random.randint(1, 1000000))  # 测试数据范围</span><br><span class="line"><span class="addition">+       a.sort(reverse = False)</span></span><br><span class="line">        totalTime += count_time(a,sortname)</span><br><span class="line">    return totalTime</span><br></pre></td></tr></table></figure>
+
+<p>同样的，这里数组大小为5000，重复10次，下面是测试结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">BubbleSort&#39;s total time:</span><br><span class="line">14.935291051864624</span><br><span class="line">SelectSort&#39;s total time:</span><br><span class="line">11.371372699737549</span><br><span class="line">InsertSort&#39;s total time:</span><br><span class="line">0.008459329605102539</span><br><span class="line">MergeSort&#39;s total time:</span><br><span class="line">0.15901756286621094</span><br><span class="line">QuickSort&#39;s total time:</span><br><span class="line">16.011647939682007</span><br><span class="line">QuickSort3Ways&#39;s total time:</span><br><span class="line">0.10053849220275879</span><br></pre></td></tr></table></figure>
+
+<h3 id="含有大量重复数的数组"><a href="#含有大量重复数的数组" class="headerlink" title="含有大量重复数的数组"></a>含有大量重复数的数组</h3><p>这里我们看下这些排序算法在含有大量重复数的数据集下的表现，首先改变数据生成函数：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import random</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">sys.setrecursionlimit(1000000)</span><br><span class="line"></span><br><span class="line">def timeRandomInput(sortname,length,numberOfArrays):</span><br><span class="line">    totalTime = 0</span><br><span class="line">    #测试数组数</span><br><span class="line">    for _ in range(numberOfArrays):</span><br><span class="line">        #数组大小</span><br><span class="line">        a = []</span><br><span class="line">        for _ in range(length):</span><br><span class="line"><span class="deletion">-           a.append(random.randint(1, 1000000))  # 测试数据范围</span></span><br><span class="line"><span class="addition">+           a.append(random.randint(999990, 1000000))  # 测试数据范围            </span></span><br><span class="line">        totalTime += count_time(a,sortname)</span><br><span class="line">    return totalTime</span><br></pre></td></tr></table></figure>
+
+<p>同样的，这里数组大小为5000，重复10次，下面是测试结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">BubbleSort&#39;s total time:</span><br><span class="line">28.813392877578735</span><br><span class="line">SelectSort&#39;s total time:</span><br><span class="line">11.362754821777344</span><br><span class="line">InsertSort&#39;s total time:</span><br><span class="line">22.454782247543335</span><br><span class="line">MergeSort&#39;s total time:</span><br><span class="line">0.1563563346862793</span><br><span class="line">QuickSort&#39;s total time:</span><br><span class="line">0.15424251556396484</span><br><span class="line">QuickSort3Ways&#39;s total time:</span><br><span class="line">0.08862972259521484</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">BubbleSort</th>
+<th>SelectSort</th>
+<th>InsertSort</th>
+<th>MergeSort</th>
+<th>QuickSort</th>
+<th>QuickSort3Ways</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">随机数据集</td>
+<td align="center">30.023</td>
+<td>11.032</td>
+<td>24.185</td>
+<td>0.190</td>
+<td>0.155</td>
+<td>0.190</td>
+</tr>
+<tr>
+<td align="center">升序数据集</td>
+<td align="center">14.935</td>
+<td>11.371</td>
+<td><strong>0.008</strong></td>
+<td>0.159</td>
+<td><strong>16.011</strong></td>
+<td>0.100</td>
+</tr>
+<tr>
+<td align="center">降序数据集</td>
+<td align="center">45.007</td>
+<td>11.393</td>
+<td>48.275</td>
+<td>0.180</td>
+<td><strong>14.895</strong></td>
+<td>0.108</td>
+</tr>
+<tr>
+<td align="center">大量重复数的数据集</td>
+<td align="center">28.813</td>
+<td>11.362</td>
+<td>22.454</td>
+<td>0.156</td>
+<td>0.154</td>
+<td><strong>0.088</strong></td>
+</tr>
+</tbody></table>
+<p>经过优化后的三路快速排序在升序、降序、包含大量重复数的情况下表现均非常优异。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://juejin.im/post/5aa94ca6518825558252120c" target="_blank" rel="noopener external nofollow noreferrer">快速排序算法的优化思路总结</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/41859350" target="_blank" rel="noopener external nofollow noreferrer">快速排序C++及Python实现及优化</a></li>
+<li><a href="https://www.cnblogs.com/zhoug2020/p/6780604.html" target="_blank" rel="noopener external nofollow noreferrer">快速排序 三平均划分</a></li>
+<li><a href="https://www.cnblogs.com/vipchenwei/p/7460293.html" target="_blank" rel="noopener external nofollow noreferrer">快速排序一步一步优化</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+<div>
+    
+        <div class="end-slogan" style="text-align:center;font-size:22px;letter-spacing:10px;user-select:none;color:#bbb;"><br/>----------- 本文结束啦<i class="fa fa-star"></i>感谢您阅读 -----------<br/><br/></div>
+    
+</div> 
+        <div class="reward-container">
+  <div>赞赏一杯咖啡</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="小丁 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="小丁 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小丁
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tding.top/archives/58365ec3.html" title="排序算法的Python实现以及时间复杂度分析">https://tding.top/archives/58365ec3.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/atom.xml">
+                <span class="icon">
+                  <i class="fa fa-rss"></i>
+                </span>
+
+                <span class="label">RSS</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+              <a href="/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 排序算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/fd45d7a5.html" rel="prev" title="pip安装缓存文件清理">
+      <i class="fa fa-chevron-left"></i> pip安装缓存文件清理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/14dedde.html" rel="next" title="VNC基本命令笔记">
+      VNC基本命令笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序"><span class="nav-number">2.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序"><span class="nav-number">4.</span> <span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#merge-函数"><span class="nav-number">4.1.</span> <span class="nav-text">merge()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-函数"><span class="nav-number">4.2.</span> <span class="nav-text">sort()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MergeSort-函数"><span class="nav-number">4.3.</span> <span class="nav-text">MergeSort()函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序"><span class="nav-number">5.</span> <span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单实现"><span class="nav-number">5.1.</span> <span class="nav-text">简单实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原地排序实现"><span class="nav-number">5.2.</span> <span class="nav-text">原地排序实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序的时间复杂度"><span class="nav-number">5.3.</span> <span class="nav-text">快速排序的时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序的优化"><span class="nav-number">5.4.</span> <span class="nav-text">快速排序的优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整体代码实现"><span class="nav-number">5.5.</span> <span class="nav-text">整体代码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序和归并排序对比"><span class="nav-number">6.</span> <span class="nav-text">快速排序和归并排序对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各大排序算法测试"><span class="nav-number">7.</span> <span class="nav-text">各大排序算法测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计时函数"><span class="nav-number">7.1.</span> <span class="nav-text">计时函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机数据集"><span class="nav-number">7.2.</span> <span class="nav-text">随机数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#降序数据集"><span class="nav-number">7.3.</span> <span class="nav-text">降序数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#升序数据集"><span class="nav-number">7.4.</span> <span class="nav-text">升序数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#含有大量重复数的数组"><span class="nav-number">7.5.</span> <span class="nav-text">含有大量重复数的数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">7.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">169</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/16d6af96.html" title="微前端qiankun应用间通讯" target="_blank">微前端qiankun应用间通讯</a>
+          </li>
+        
+          <li>
+            <a href="/archives/1e14800d.html" title="Spring Cloud Gateway解决前端请求跨域问题" target="_blank">Spring Cloud Gateway解决前端请求跨域问题</a>
+          </li>
+        
+          <li>
+            <a href="/archives/6a6c4aad.html" title="Vue项目优化-代码压缩" target="_blank">Vue项目优化-代码压缩</a>
+          </li>
+        
+          <li>
+            <a href="/archives/de5e2b62.html" title="前端页面性能优化" target="_blank">前端页面性能优化</a>
+          </li>
+        
+          <li>
+            <a href="/archives/7e9fe7a8.html" title="Vue吸顶效果实现" target="_blank">Vue吸顶效果实现</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">16:53</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/archives/58365ec3.html',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/archives/58365ec3.html";
+    this.page.identifier = "archives/58365ec3.html";
+    this.page.title = "排序算法的Python实现以及时间复杂度分析";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>

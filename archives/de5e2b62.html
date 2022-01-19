@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Totoroanimationcharacter-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Totoroanimationcharacter-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Totoroanimationcharacter-16.png">
+  <link rel="mask-icon" href="/images/Totoroanimationcharacter.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="smrzctX4--4QKjd_jAPttPxWy06c4SLQo2v1sHBA5rE">
+  <meta name="msvalidate.01" content="72019D3672DF2E28BB07FE56B439CB80">
+  <meta name="baidu-site-verification" content="bfzCl5Q4EF">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tding.top","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前端Vue工程的性能优化笔记。 前端性能优化的目的是为了让用户访问网站的时候可以非常快的加载出来，常见的优化方法：减小资源大小、CDN加速、浏览器缓存。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端页面性能优化">
+<meta property="og:url" content="https://tding.top/archives/de5e2b62.html">
+<meta property="og:site_name" content="小丁的个人博客">
+<meta property="og:description" content="前端Vue工程的性能优化笔记。 前端性能优化的目的是为了让用户访问网站的时候可以非常快的加载出来，常见的优化方法：减小资源大小、CDN加速、浏览器缓存。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-01T15:29:08.000Z">
+<meta property="article:modified_time" content="2022-01-10T14:43:54.785Z">
+<meta property="article:author" content="小丁">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="性能优化">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tding.top/archives/de5e2b62.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>前端页面性能优化 | 小丁的个人博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142510809-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-142510809-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小丁的个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小丁的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">世间所有的相遇，都是久别重逢</h1>
+      
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>热榜</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">169</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">78</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">219</span></a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-film"></i>观影</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-fw fa-book"></i>阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-gallery">
+
+    <a href="/gallery/" rel="section"><i class="fa fa-fw fa-photo"></i>画廊</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-fw fa-rocket"></i>实用工具</a>
+
+  </li>
+        
+            
+  <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-fw fa-book"></i>NexT中文文档</a>
+
+  </li>
+
+
+      
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/dta0502" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tding.top/archives/de5e2b62.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="小丁">
+      <meta itemprop="description" content="酒，越喝越暖，水会越喝越寒">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小丁的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          前端页面性能优化
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-01 23:29:08" itemprop="dateCreated datePublished" datetime="2021-11-01T23:29:08+08:00">2021-11-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">性能优化</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/archives/de5e2b62.html" class="post-meta-item leancloud_visitors" data-flag-title="前端页面性能优化" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/archives/de5e2b62.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="archives/de5e2b62.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/archives/de5e2b62.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/archives/de5e2b62.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>前端Vue工程的性能优化笔记。</p>
+<p>前端性能优化的目的是为了让用户访问网站的时候可以非常快的加载出来，常见的优化方法：减小资源大小、CDN加速、浏览器缓存。</p>
+<a id="more"></a>
+
+<h2 id="Vue页面优化"><a href="#Vue页面优化" class="headerlink" title="Vue页面优化"></a>Vue页面优化</h2><h3 id="v-for优化"><a href="#v-for优化" class="headerlink" title="v-for优化"></a>v-for优化</h3><h4 id="不在同一级使用v-for、v-if"><a href="#不在同一级使用v-for、v-if" class="headerlink" title="不在同一级使用v-for、v-if"></a>不在同一级使用v-for、v-if</h4><p>当v-if与v-for一起使用时，v-for具有比v-if更高的优先级，<strong>这意味着v-if将分别重复运行于每个v-for循环中</strong>。</p>
+<p>要避免出现这种情况，则在外层嵌套template，在这一层进行v-if判断，然后在内部进行v-for循环，如果条件出现在循环内部，可通过计算属性提前过滤掉那些不需要显示的项。</p>
+<p>示例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Vue事件处理<span class="tag">&lt;/<span class="name">title</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"demo"</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>v-for和v-if谁的优先级高？应该如何正确使用避免性能问题？<span class="tag">&lt;/<span class="name">h1</span>&gt;</span> </span><br><span class="line">        <span class="comment">&lt;!-- &lt;p v-for="child in children" v-if="isFolder"&gt;&#123;&#123;child.title&#125;&#125;&lt;/p&gt; --&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-if</span>=<span class="string">"isFolder"</span>&gt;</span> </span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-for</span>=<span class="string">"child in children"</span>&gt;</span>&#123;&#123;child.title&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;/<span class="name">template</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../../dist/vue.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span> </span><br><span class="line"><span class="actionscript">        <span class="comment">// 创建实例 </span></span></span><br><span class="line"><span class="actionscript">        <span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123; </span></span><br><span class="line"><span class="actionscript">            el: <span class="string">'#demo'</span>, </span></span><br><span class="line">            data() &#123; </span><br><span class="line"><span class="actionscript">                <span class="keyword">return</span> &#123; </span></span><br><span class="line">                    children: [ </span><br><span class="line"><span class="actionscript">                        &#123;title:<span class="string">'foo'</span>&#125;, </span></span><br><span class="line"><span class="actionscript">                        &#123;title:<span class="string">'bar'</span>&#125;, </span></span><br><span class="line">                    ] </span><br><span class="line">                &#125; </span><br><span class="line">            &#125;, </span><br><span class="line">            computed: &#123; </span><br><span class="line">                isFolder() &#123; </span><br><span class="line"><span class="actionscript">                    <span class="keyword">return</span> <span class="keyword">this</span>.children &amp;&amp; <span class="keyword">this</span>.children.length &gt; <span class="number">0</span>                  </span></span><br><span class="line">                &#125; </span><br><span class="line">            &#125;, </span><br><span class="line">        &#125;); </span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(app.$options.render); </span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>两者同级时，渲染函数如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">anonymous</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">with</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> _c(<span class="string">'div'</span>, &#123; <span class="attr">attrs</span>: &#123; <span class="string">"id"</span>: <span class="string">"demo"</span> &#125; &#125;, [_c(<span class="string">'h1'</span>, [_v(<span class="string">"v-for和v-if谁的优先 级高？应该如何正确使用避免性能问题？"</span>)]), _v(<span class="string">" "</span>),</span><br><span class="line">        _l((children), <span class="function"><span class="keyword">function</span> (<span class="params">child</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (isFolder) ? _c(<span class="string">'p'</span>,</span><br><span class="line">                [_v(_s(child.title))]) : _e()</span><br><span class="line">        &#125;)], <span class="number">2</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>两者不同级时，渲染函数如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">anonymous</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">with</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> _c(<span class="string">'div'</span>, &#123; <span class="attr">attrs</span>: &#123; <span class="string">"id"</span>: <span class="string">"demo"</span> &#125; &#125;, [_c(<span class="string">'h1'</span>, [_v(<span class="string">"v-for和v-if谁的优先 级高？应该如何正确使用避免性能问题？"</span>)]), _v(<span class="string">" "</span>),</span><br><span class="line">        (isFolder) ? _l((children), <span class="function"><span class="keyword">function</span> (<span class="params">child</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> _c(<span class="string">'p'</span>,</span><br><span class="line">                [_v(_s(child.title))])</span><br><span class="line">        &#125;) : _e()], <span class="number">2</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="v-for的key值"><a href="#v-for的key值" class="headerlink" title="v-for的key值"></a>v-for的key值</h3><ul>
+<li><a href="https://tding.top/archives/28aaa65b.html">Vue 的 v-for 为什么要加 key</a></li>
+</ul>
+<p><strong>注意：不建议使用index作为key值</strong>。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">         下标</span><br><span class="line">1. 前天   0</span><br><span class="line">2. 昨天   1</span><br><span class="line">3. 今天   2</span><br><span class="line">4. 明天   3</span><br></pre></td></tr></table></figure>
+
+<p>假设我们删除了List中下标为1的数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">         下标</span><br><span class="line">1. 前天   0</span><br><span class="line">2. 今天   1</span><br><span class="line">3. 明天   2</span><br></pre></td></tr></table></figure>
+
+<p>我们可以发现，除了第一个数据以外，其余数据的下标均发生了变化。以前的数据和重新渲染后的数据随着key值的变化从而没法建立关联关系，这就失去了key值存在的意义。</p>
+<h3 id="长列表性能优化"><a href="#长列表性能优化" class="headerlink" title="长列表性能优化"></a>长列表性能优化</h3><p>当你把一个普通的JavaScript对象传给Vue实例的data选项，Vue将遍历此对象所有的属性，并使用<code>Object.defineProperty</code>把这些属性全部转为<code>getter/setter</code>，这些<code>getter/setter</code>对用户来说是不可见的，但是在内部它们让Vue追踪依赖，在属性被访问和修改时通知变化。</p>
+<p>然而有些时候我们的组件就是<strong>纯粹的数据展示，不会有任何改变</strong>，我们就不需要Vue来劫持我们的数据，在大量数据展示的情况下，这能够很明显的减少组件初始化的时间，那如何禁止Vue劫持我们的数据呢？可以通过<code>Object.freeze</code>方法来冻结一个对象，一旦被冻结的对象就再也不能被修改了。</p>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data: <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">    users: &#123;&#125;</span><br><span class="line">  &#125;),</span><br><span class="line">  <span class="keyword">async</span> created() &#123;</span><br><span class="line">    <span class="keyword">const</span> users = <span class="keyword">await</span> axios.get(<span class="string">"/api/users"</span>);</span><br><span class="line">    <span class="keyword">this</span>.users = <span class="built_in">Object</span>.freeze(users);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>Object.freeze()</code>可以冻结一个对象。<strong>一个被冻结的对象再也不能被修改；不能向这个对象添加新的属性，不能删除已有属性，不能修改该对象已有属性的可枚举性、可配置性、可写性，以及不能修改已有属性的值</strong>。此外，冻结一个对象后该对象的原型也不能被修改。</p>
+</blockquote>
+<h2 id="Webpack打包相关优化"><a href="#Webpack打包相关优化" class="headerlink" title="Webpack打包相关优化"></a>Webpack打包相关优化</h2><p>我们可以对webpack打包过程进行优化，从而去减小资源大小，主要方法：</p>
+<ul>
+<li>压缩资源：<ul>
+<li>compression-webpack-plugin进行gzip压缩</li>
+<li>terser-webpack-plugin打包时去除<code>console.log</code>以及<code>debugger</code></li>
+</ul>
+</li>
+<li>按需打包：<ul>
+<li>lodash按需引入</li>
+<li>moment按需打包</li>
+</ul>
+</li>
+<li>按需加载：<ul>
+<li>组件路由懒加载</li>
+</ul>
+</li>
+<li>代码分割：分割各个模块代码，提取相同部分代码，从而减少重复代码<ul>
+<li>splitChunks进行代码分割</li>
+</ul>
+</li>
+</ul>
+<p>在进行优化之前，首先通过webpack-bundle-analyzer插件去直观的看一下项目中各个模块的大小。</p>
+<h3 id="webpack-bundle-analyzer打包文件分析"><a href="#webpack-bundle-analyzer打包文件分析" class="headerlink" title="webpack-bundle-analyzer打包文件分析"></a>webpack-bundle-analyzer打包文件分析</h3><p>通过使用<code>webpack-bundle-analyzer</code>可以让我们非常直观的看到项目中各模块的大小，方便后续进行优化。</p>
+<p>依赖安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack-bundle-analyzer –save-dev</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>vue.config.js</code>中添加配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> BundleAnalyzerPlugin = <span class="built_in">require</span>(<span class="string">'webpack-bundle-analyzer'</span>).BundleAnalyzerPlugin</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  configureWebpack: <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    config.plugins.push(</span><br><span class="line">      <span class="keyword">new</span> BundleAnalyzerPlugin()</span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里使用默认配置（<code>new BundleAnalyzerPlugin()</code>）。</p>
+<p>然后每次运行时，系统默认浏览器打开<code>http://127.0.0.1:8888/</code>，展示项目的分析结果。</p>
+<p>可选的配置选项：</p>
+<ul>
+<li><code>analyzerMode:&#39;server&#39;</code>，可以是server，static或disabled。在server模式下，分析器将启动HTTP服务器来显示软件包报告。在“静态”模式下，会生成带有报告的单个HTML文件。在disabled模式下，你可以使用这个插件来将generateStatsFile设置为true来生成Webpack Stats JSON文件。</li>
+<li><code>analyzerHost: &#39;127.0.0.1&#39;</code>, 将在“服务器”模式下使用的端口启动HTTP服务器。</li>
+<li><code>analyzerPort: 8888</code>, 端口号。</li>
+<li><code>reportFilename: &#39;report.html&#39;</code>, 路径捆绑，将在static模式下生成的报告文件。相对于捆绑输出目录。</li>
+<li><code>defaultSizes: &#39;parsed&#39;</code>，默认显示在报告中的模块大小匹配方式。应该是stat，parsed或者gzip中的一个。</li>
+<li><code>openAnalyzer: true</code>：在默认浏览器中自动打开报告。</li>
+<li><code>generateStatsFile:false</code>: 如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成。</li>
+<li><code>statsFilename: &#39;stats.json&#39;</code>, 相对于捆绑输出目录。</li>
+<li><code>statsOptions: null</code>，<code>stats.toJson()</code>方法的选项。例如，您可以使用<code>source:false</code>选项排除统计文件中模块的来源。在这里查看更多选项：<a href="https://github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21</a></li>
+<li><code>logLevel: &#39;info&#39;</code>，日志级别，可以是info, warn, error, silent。</li>
+<li><code>excludeAssets:null</code>，用于排除分析一些文件。</li>
+</ul>
+<p>默认配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> BundleAnalyzerPlugin(&#123;</span><br><span class="line">  analyzerMode: <span class="string">'server'</span>,</span><br><span class="line">  analyzerHost: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">  analyzerPort: <span class="number">8888</span>, </span><br><span class="line">  reportFilename: <span class="string">'report.html'</span>,</span><br><span class="line">  defaultSizes: <span class="string">'parsed'</span>,</span><br><span class="line">  openAnalyzer: <span class="literal">true</span>,</span><br><span class="line">  generateStatsFile: <span class="literal">false</span>, </span><br><span class="line">  statsFilename: <span class="string">'stats.json'</span>,</span><br><span class="line">  statsOptions: <span class="literal">null</span>,</span><br><span class="line">  logLevel: <span class="string">'info'</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="depcheck依赖分析"><a href="#depcheck依赖分析" class="headerlink" title="depcheck依赖分析"></a>depcheck依赖分析</h3><p>随着项目工程逐步变大，引入的依赖也越来越多，其中有不少其实已经不再用到了，完全可以删除来减小依赖，这里可以用depcheck工具去检测是否不再使用。</p>
+<p>依赖安装，全局安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g depcheck</span><br></pre></td></tr></table></figure>
+
+<p>然后在项目工程的目录下执行命令depcheck，下面是检测结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Unused dependencies</span><br><span class="line">* amfe-flexible</span><br><span class="line">* core-js</span><br><span class="line">* file-saver</span><br><span class="line">* less-loader</span><br><span class="line">* postcss</span><br><span class="line">* vue-axios</span><br><span class="line">* vue-datepicker</span><br><span class="line">* vue-notification</span><br><span class="line">* vuejs-datepicker</span><br><span class="line">Unused devDependencies</span><br><span class="line">* @vue&#x2F;cli-plugin-babel</span><br><span class="line">* @vue&#x2F;cli-plugin-eslint</span><br><span class="line">* @vue&#x2F;cli-plugin-unit-mocha</span><br><span class="line">* @vue&#x2F;test-utils</span><br><span class="line">* babel-eslint</span><br><span class="line">* chai</span><br><span class="line">* postcss-pxtorem</span><br><span class="line">* sass</span><br><span class="line">* sass-loader</span><br><span class="line">Missing dependencies</span><br><span class="line">* moment: .\vue.config.js</span><br><span class="line">* terser-webpack-plugin: .\vue.config.js</span><br><span class="line">* video.js: .\src\main.js</span><br><span class="line">* q: .\src\router\index.js</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li>Unused dependencies：表示没有使用的依赖包</li>
+<li>Unused devDependencies：表示没有使用的开发环境依赖包</li>
+<li>Missing dependencies：表示使用到了但是没有在<code>package.json</code>文件中声明的依赖包</li>
+</ul>
+<p>然后我们就可以根据检测结果进行无用依赖的删除。</p>
+<h4 id="注意事项-存在误判"><a href="#注意事项-存在误判" class="headerlink" title="注意事项-存在误判"></a>注意事项-存在误判</h4><p><strong>这里depcheck依赖分析仅仅作为一个参考，存在部分误判的情况。</strong></p>
+<ol>
+<li><p>其实<code>sass</code>、<code>sass-loader</code>是有用到的，在<code>&lt;style lang=&#39;sass&#39;&gt;</code>这里。</p>
+</li>
+<li><p>其中<code>less-loader</code>是用到的，不过这个仅仅在开发环境需要，因此：</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall less-loader --save</span><br></pre></td></tr></table></figure>
+
+<p>然后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install less-loader --save-dev</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>运行后报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> error  in .&#x2F;src&#x2F;views&#x2F;xxxxxx.vue?vue&amp;type&#x3D;style&amp;index&#x3D;0&amp;lang&#x3D;less&amp;</span><br><span class="line"></span><br><span class="line">Module build failed (from .&#x2F;node_modules&#x2F;less-loader&#x2F;dist&#x2F;cjs.js):</span><br><span class="line">TypeError: this.getOptions is not a function</span><br><span class="line">    at Object.lessLoader (xxxxxx\node_modules\less-loader\dist\index.js:19:24)</span><br></pre></td></tr></table></figure>
+
+<p>这是因为这个<code>less-loader</code>版本太高，移除后指定版本<code>6.1.3</code>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall less-loader --save-dev</span><br><span class="line">npm install less-loader@6.1.3 --save-dev</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="compression-webpack-plugin进行gzip压缩"><a href="#compression-webpack-plugin进行gzip压缩" class="headerlink" title="compression-webpack-plugin进行gzip压缩"></a>compression-webpack-plugin进行gzip压缩</h3><p>虽然Nginx可以将资源自动gzip压缩（开启gzip功能）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gzip on;              # 开启gzip</span><br><span class="line">gzip_min_length 2k;   # 超过2kb进行压缩</span><br><span class="line">gzip_disable msie6;   # ie6不适用gzip</span><br><span class="line">gzip_types text&#x2F;css application&#x2F;javascript text&#x2F;javascript image&#x2F;jpeg image&#x2F;png image&#x2F;gif;  # 需要处理的文件</span><br></pre></td></tr></table></figure>
+
+<p><strong>不过这样会使得每次请求时都要压缩一次，比较浪费资源</strong>。</p>
+<p>因此，我们可以通过<code>compression-webpack-plugin</code>插件，在打包时提前将资源gzip压缩好，保存在服务端。</p>
+<p>依赖安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install compression-webpack-plugin --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>注：不要安装最新版本，否则容易build失败，报错类似在<code>xx.js</code>中<code>** undefined</code>或者<code>TypeEror</code>之类的，一般都是版本问题。</p>
+<p>然后在<code>vue.config.js</code>中添加配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CompressionPlugin = <span class="built_in">require</span>(<span class="string">'compression-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  configureWebpack: <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    config.plugins.push(</span><br><span class="line">      <span class="keyword">new</span> CompressionPlugin(&#123;</span><br><span class="line">        test: <span class="regexp">/\.(js|css|html)?$/</span>,</span><br><span class="line">        filename: <span class="string">'[path][base].gz'</span>,</span><br><span class="line">        algorithm: <span class="string">'gzip'</span>,</span><br><span class="line">        minRatio: <span class="number">0.8</span>,</span><br><span class="line">        deleteOriginalAssets: <span class="literal">false</span></span><br><span class="line">      &#125;)</span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>minRatio：只有压缩率小于这个值的资源才会被处理</li>
+</ul>
+<p><code>npm run build</code>后，可以在<code>dist/js</code>目录下可以看gzip压缩前后的文件大小：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Mode           Length Name</span><br><span class="line">----           ------ ----</span><br><span class="line">-a----          53586 chunk-041bbe7c.1f705809.js</span><br><span class="line">-a----          12789 chunk-041bbe7c.1f705809.js.gz</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><strong>最后，别忘记在Nginx配置文件中开启<code>gzip_static</code></strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gzip_static  on;</span><br></pre></td></tr></table></figure>
+
+<p>注：这种模式下，gzip压缩文件都是提前准备好的，如果没有<code>.gz</code>格式的文件就会自动返回原文件。</p>
+<h3 id="terser-webpack-plugin打包时去除console-log以及debugger等"><a href="#terser-webpack-plugin打包时去除console-log以及debugger等" class="headerlink" title="terser-webpack-plugin打包时去除console.log以及debugger等"></a><code>terser-webpack-plugin</code>打包时去除<code>console.log</code>以及<code>debugger</code>等</h3><p>由于<code>uglifyjs-webpack-plugin</code>不识别ES6的语法，vue-cli3.0在打包过程中就使用了<code>terser-webpack-plugin</code>插件进行优化。</p>
+<p><strong>由于vue-cli工具中已经用到了<code>terser-webpack-plugin</code>，因此在vue-cli新建的项目中可以直接引入<code>terser-webpack-plugin</code>，无需安装。</strong></p>
+<p>在<code>vue.config.js</code>中添加配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> TerserPlugin = <span class="built_in">require</span>(<span class="string">"terser-webpack-plugin"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  configureWebpack: <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    config.plugins.push(</span><br><span class="line">      <span class="keyword">new</span> TerserPlugin(&#123;</span><br><span class="line">        terserOptions: &#123;</span><br><span class="line">          ecma: <span class="literal">undefined</span>,</span><br><span class="line">          warnings: <span class="literal">false</span>,</span><br><span class="line">          parse: &#123;&#125;,</span><br><span class="line">          compress: &#123;</span><br><span class="line">            drop_console: <span class="literal">true</span>,</span><br><span class="line">            drop_debugger: <span class="literal">true</span>,</span><br><span class="line">            pure_funcs: [<span class="string">'console.log'</span>], <span class="comment">// 移除console</span></span><br><span class="line">          &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;),</span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里去掉了<code>console.log</code>以及<code>debugger</code>。</p>
+<h3 id="lodash按需引入"><a href="#lodash按需引入" class="headerlink" title="lodash按需引入"></a>lodash按需引入</h3><p>完整引入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span></span><br></pre></td></tr></table></figure>
+
+<p>手动按需引入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> debounce <span class="keyword">from</span> <span class="string">"lodash/debounce"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>或者使用插件<code>babel-plugin-lodash</code>，然后在<code>babel.config.js</code>添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [<span class="string">"lodash"</span>],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后发现，只引入了 lodash 的几个方法，从数量上看还不到总量的零头，但是好像 lodash 的一大半都被打包进去了。比如，map一共用到121个模块。</p>
+<p>但是大多数人在使用时，并不会用到这些特殊的用法，却不得不为大量的冗余代码买单。因此，lodash就提供了<code>lodash-webpack-plugin</code>这个插件，可以使得打包的代码量减少99%。</p>
+<p>插件用法，在<code>vue.config.js</code>中添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> LodashModuleReplacementPlugin = <span class="built_in">require</span>(<span class="string">"lodash-webpack-plugin"</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  chainWebpack: <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    config.plugin(<span class="string">"loadshReplace"</span>).use(<span class="keyword">new</span> LodashModuleReplacementPlugin());</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="lodash-webpack-plugin问题"><a href="#lodash-webpack-plugin问题" class="headerlink" title="lodash-webpack-plugin问题"></a>lodash-webpack-plugin问题</h4><p>不过，引入<code>lodash-webpack-plugin</code>后，例如，map方法的其他各种奇奇怪怪的用法就失效了，只剩下最基本的类似Array map的用法。</p>
+<p>一个例子：clamp模块依赖toNumber进行参数处理（即支持传入字符串参数，并在内部先处理成数字）。<strong>但是使用Plugin后，Plugin会把toNumber替换成identity（即<code>a =&gt; a</code>），导致clamp不再支持字符串参数</strong>。如果传入的是字符串，返回的结果将发生变化。</p>
+<p>而且，<strong><code>lodash-webpack-plugin</code>会影响第三方模块的行为</strong>。如果第三方模块中也使用了 lodash 模块，而且用到了某些非常规用法，一旦使用了 Plugin 后，这个第三方模块使用的 lodash 的执行逻辑就可能发生变化。产生的后果可能是立即报错，也可能产生更严重的后果，即返回了和预期不一致的值，这个错误值在一系列流转之后，在另一个地方产生了 BUG。一旦出现了这种情况，因为这是一个第三方模块，问题的排查可能会非常困难。</p>
+<p>结论：不建议使用<code>lodash-webpack-plugin</code>。</p>
+<h3 id="Moment按需打包"><a href="#Moment按需打包" class="headerlink" title="Moment按需打包"></a>Moment按需打包</h3><p><strong><code>moment.js</code>占用空间大的原因在于，moment中包含了大量语言资源文件，但其实我们并不需要这些。</strong></p>
+<p>通过webpack自身的功能即可在打包时去掉这些用不到的语言包，在<code>vue.config.js</code>中添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  configureWebpack: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> plugins = [</span><br><span class="line">      <span class="comment">// 只保留中文语言资源</span></span><br><span class="line">      <span class="keyword">new</span> webpack.ContextReplacementPlugin(<span class="regexp">/moment[/\\]locale$/</span>, /zh-cn/),</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="组件路由懒加载"><a href="#组件路由懒加载" class="headerlink" title="组件路由懒加载"></a>组件路由懒加载</h3><p><strong>我们可以将不同路由对应的组件分割成不同的代码块，这样，当路由被访问的时候才加载对应组件</strong>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Foo = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./Foo.vue'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">  routes: [&#123; <span class="attr">path</span>: <span class="string">'/foo'</span>, <span class="attr">component</span>: Foo &#125;]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="splitChunks进行代码分割"><a href="#splitChunks进行代码分割" class="headerlink" title="splitChunks进行代码分割"></a>splitChunks进行代码分割</h3><h4 id="常见代码分割方式"><a href="#常见代码分割方式" class="headerlink" title="常见代码分割方式"></a>常见代码分割方式</h4><p>Webpack中有以下三种常见的代码分割方式:</p>
+<ul>
+<li>入口起点：使用 entry 配置手动地分离代码</li>
+<li>动态导入：通过模块的内联函数调用来分离代码</li>
+<li>防止重复：使用 splitChunks 去重和分离 chunk</li>
+</ul>
+<p>第一种方式，很简单，只需要在 entry 里配置多个入口即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">entry: &#123; <span class="attr">app</span>: <span class="string">"./index.js"</span>, <span class="attr">app1</span>: <span class="string">"./index1.js"</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二种方式，就是在代码中自动将使用<code>import()</code>加载的模块分离成独立的包：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">import</span>(<span class="string">"./a"</span>);</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+
+<p>第三种方式，是使用 splitChunks 插件，配置分离规则，然后 webpack 自动将满足规则的 chunk 分离。一切都是自动完成的。</p>
+<h4 id="splitChunks默认配置"><a href="#splitChunks默认配置" class="headerlink" title="splitChunks默认配置"></a>splitChunks默认配置</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">splitChunks: &#123;</span><br><span class="line">  <span class="comment">// 表示选择哪些 chunks 进行分割，可选值有：async，initial和all</span></span><br><span class="line">  chunks: <span class="string">"async"</span>,</span><br><span class="line">  <span class="comment">// 表示新分离出的chunk必须大于等于minSize，默认为30000，约30kb。</span></span><br><span class="line">  minSize: <span class="number">30000</span>,</span><br><span class="line">  <span class="comment">// 表示一个模块至少应被minChunks个chunk所包含才能分割。默认为1。</span></span><br><span class="line">  minChunks: <span class="number">1</span>,</span><br><span class="line">  <span class="comment">// 表示按需加载文件时，并行请求的最大数目。默认为5。</span></span><br><span class="line">  maxAsyncRequests: <span class="number">5</span>,</span><br><span class="line">  <span class="comment">// 表示加载入口文件时，并行请求的最大数目。默认为3。</span></span><br><span class="line">  maxInitialRequests: <span class="number">3</span>,</span><br><span class="line">  <span class="comment">// 表示拆分出的chunk的名称连接符。默认为~。如chunk~vendors.js</span></span><br><span class="line">  automaticNameDelimiter: <span class="string">'~'</span>,</span><br><span class="line">  <span class="comment">// 设置chunk的文件名。默认为true。当为true时，splitChunks基于chunk和cacheGroups的key自动命名。</span></span><br><span class="line">  name: <span class="literal">true</span>,</span><br><span class="line">  <span class="comment">// cacheGroups 下可以可以配置多个组，每个组根据test设置条件，符合test条件的模块，就分配到该组。模块可以被多个组引用，但最终会根据priority来决定打包到哪个组中。默认将所有来自node_modules目录的模块打包至vendors组，将两个以上的chunk所共享的模块打包至default组。</span></span><br><span class="line">  cacheGroups: &#123;</span><br><span class="line">    vendors: &#123;</span><br><span class="line">      test: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">      priority: <span class="number">-10</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// </span></span><br><span class="line">    <span class="keyword">default</span>: &#123;</span><br><span class="line">      minChunks: <span class="number">2</span>,</span><br><span class="line">      priority: <span class="number">-20</span>,</span><br><span class="line">      reuseExistingChunk: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="chunks"><a href="#chunks" class="headerlink" title="chunks"></a>chunks</h4><p>chunks用以告诉splitChunks的作用对象，其可选值有async、initial和all。默认值是async，也就是默认只选取异步加载的chunk进行代码拆分。</p>
+<p>示例：</p>
+<p>当<code>chunks: async</code>：</p>
+<p><code>index.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(<span class="string">"./a"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<p><code>a.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"vue"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<p>最后打包出来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.js    712 bytes</span><br><span class="line">2.js    234 kb</span><br><span class="line">app.js  8.46 kb</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>index.js</code>作为入口文件，属于入口起点手动配置分割代码的情况，因此会独立打包。(<code>app.js</code>)</li>
+<li><code>a.js</code>通过<code>import()</code>进行加载，属于动态导入的情况，因此会独立打出一个包。(<code>1.js</code>)</li>
+<li>vue来自<code>node_modules</code>目录，并且大于30kb；将其从<code>a.js</code>拆出后，与<code>a.js</code>并行加载，并行加载的请求数为2，未超过默认的5；vue拆分后，并行加载的入口文件并无增加，未超过默认的3。vue也符合splitChunks的拆分条件，单独打了一个包。(<code>2.js</code>)</li>
+</ul>
+<p><strong>当<code>chunks: initial</code>：splitChunks的作用范围变成了非异步加载的初始chunk</strong>，例如我们的<code>index.js</code>就是初始化的时候就存在的chunk。而vue模块是在异步加载的chunk <code>a.js</code>中引入的，所以并不会被分离出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.js    234 kb</span><br><span class="line">app.js  8.46 kb</span><br></pre></td></tr></table></figure>
+
+<p>如果这样修改下：</p>
+<p><code>index.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span>(<span class="string">'./a'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>a.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'a'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>最后打包出来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2.js    638 bytes</span><br><span class="line">app.js    9.52 kb</span><br><span class="line">index.html  294 bytes</span><br><span class="line">vendors~app.js  234 kb</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，vue在<code>index.js</code>直接被引入，而<code>index.js</code>是初始chunk，所以分离出来打到了<code>vendors~app.js</code>中。</p>
+<p><strong>当<code>chunks: all</code>：</strong></p>
+<p><code>index.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'vue-router'</span></span><br><span class="line"><span class="keyword">import</span>(<span class="string">"./a"</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>a.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"vue"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>最后打包出来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2.js    706 bytes</span><br><span class="line">3.js    234 kb</span><br><span class="line">app.js  9.55 kb</span><br><span class="line">index.html  294 bytes</span><br><span class="line">vendors~app.js  72.6 kb</span><br></pre></td></tr></table></figure>
+
+<p><strong>splitChunks的作用范围包括了初始chunk和异步chunk两种场景。</strong>因此<code>index.js</code>中的vue-router被分拆到了<code>vendors~app.js</code>中，而异步加载的chunk <code>a.js</code>中的vue被分拆到了<code>3.js</code>中。</p>
+<h4 id="cache-groups"><a href="#cache-groups" class="headerlink" title="cache groups"></a>cache groups</h4><p><strong>cacheGroups继承splitChunks里的所有属性的值</strong>，如chunks、minSize、minChunks、maxAsyncRequests、maxInitialRequests、automaticNameDelimiter、name，我们还可以在cacheGroups中重新赋值，覆盖splitChunks的值。另外，还有一些属性只能在cacheGroups中使用：test、priority、reuseExistingChunk。</p>
+<p>cacheGroups有两个默认的组，一个是vendors，所有来自<code>node_modules</code>目录的模块；一个default，包含了由两个以上的chunk所共享的模块。</p>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">chunks:<span class="string">'all'</span>,</span><br><span class="line">cacheGroups: &#123;</span><br><span class="line">  vendors: &#123;</span><br><span class="line">    test: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">    name: <span class="string">"customName"</span>,</span><br><span class="line">    priority: <span class="number">-10</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="采用的配置"><a href="#采用的配置" class="headerlink" title="采用的配置"></a>采用的配置</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  chainWebpack: <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    config.optimization.splitChunks(&#123;</span><br><span class="line">      chunks: <span class="string">'all'</span>,</span><br><span class="line">      cacheGroups: &#123;</span><br><span class="line">        <span class="comment">//公用模块抽离</span></span><br><span class="line">        common: &#123;</span><br><span class="line">          name: <span class="string">'chunk-common'</span>,</span><br><span class="line">          chunks: <span class="string">'initial'</span>,</span><br><span class="line">          minChunks: <span class="number">2</span>, <span class="comment">//抽离公共代码时，这个代码块最小被引用的次数</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">//第三方库抽离</span></span><br><span class="line">        vendors: &#123;</span><br><span class="line">          name: <span class="string">'chunk-vendors'</span>,</span><br><span class="line">          priority: <span class="number">1</span>, <span class="comment">//权重</span></span><br><span class="line">          test: <span class="regexp">/node_modules/</span>,</span><br><span class="line">          chunks: <span class="string">'initial'</span>,</span><br><span class="line">          minChunks: <span class="number">2</span>, <span class="comment">//在分割之前，这个代码块最小应该被引用的次数</span></span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="MiniCssExtractPlugin插件将CSS提取到单独的文件"><a href="#MiniCssExtractPlugin插件将CSS提取到单独的文件" class="headerlink" title="MiniCssExtractPlugin插件将CSS提取到单独的文件"></a>MiniCssExtractPlugin插件将CSS提取到单独的文件</h3><p>此插件为每个包含CSS的JS文件创建一个单独的CSS文件，并支持CSS和SourceMap的按需加载。</p>
+<p><strong>注意：这里说的每个包含CSS的JS文件，并不是说组件对应的JS文件，而是打包之后的JS文件</strong>。</p>
+<p>优点：</p>
+<ul>
+<li><strong>CSS请求并行</strong>，如果样式文件大小较大，这会做更快提前加载</li>
+<li>CSS单独缓存</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>需要额外的HTTP请求</li>
+</ul>
+<p>依赖安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev mini-css-extract-plugin</span><br></pre></td></tr></table></figure>
+
+<p><code>vue.config.js</code>添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> MiniCssExtractPlugin = <span class="built_in">require</span>(<span class="string">'mini-css-extract-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  chainWebpack: <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> miniCssExtractPlugin = <span class="keyword">new</span> MiniCssExtractPlugin(&#123;</span><br><span class="line">      filename: <span class="string">'assets/[name].[hash:8].css'</span>,</span><br><span class="line">      chunkFilename: <span class="string">'assets/[name].[hash:8].css'</span></span><br><span class="line">    &#125;)</span><br><span class="line">    config.plugin(<span class="string">'extract-css'</span>).use(miniCssExtractPlugin);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>filename：控制从打包后的<strong>入口JS文件</strong>中提取CSS样式生成的CSS文件的名称。</li>
+<li>chunkFilename：控制从打包后的<strong>非入口JS文件</strong>中提取CSS样式生成的CSS文件的名称。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.cnblogs.com/goloving/p/13993388.html" target="_blank" rel="noopener external nofollow noreferrer">浅析vue项目性能优化应该注意的点</a></li>
+<li><a href="https://juejin.cn/post/6966071095422091301" target="_blank" rel="noopener external nofollow noreferrer">vue须知（1）—— v-if和v-for哪个优先级更高？如果两个同时出现，应该怎么优化得到更好的性能？</a></li>
+<li><a href="https://blog.csdn.net/z591102/article/details/106682298" target="_blank" rel="noopener external nofollow noreferrer">为什么不建议使用 index 作为 key 值</a></li>
+<li><a href="https://www.cnblogs.com/goloving/p/13969685.html" target="_blank" rel="noopener external nofollow noreferrer">vue利用 object.freeze 提升列表渲染性能</a></li>
+<li><a href="https://newsn.net/say/webpack-bundle-analyzer.html" target="_blank" rel="noopener external nofollow noreferrer">webpack4系列教程，性能分析利器webpack-bundle-analyzer</a></li>
+<li><a href="https://blog.csdn.net/weixin_44197671/article/details/115404615" target="_blank" rel="noopener external nofollow noreferrer">vue-cli3 gzip和uglifyjs使用</a></li>
+<li><a href="https://blog.csdn.net/hututututututu/article/details/109715223" target="_blank" rel="noopener external nofollow noreferrer">terser-webpack-plugin替代uglifyjs-webpack-plugin</a></li>
+<li><a href="https://blog.csdn.net/weixin_44979432/article/details/118295943" target="_blank" rel="noopener external nofollow noreferrer">vue项目中webpack使用（terser-webpack-plugin）打包时候去掉console.log与debugger调试</a></li>
+<li><a href="https://www.cnblogs.com/qq735675958/p/14609903.html" target="_blank" rel="noopener external nofollow noreferrer">lodash 按需引入</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/349260482" target="_blank" rel="noopener external nofollow noreferrer">为什么你应该立即停止使用 lodash-webpack-plugin</a></li>
+<li><a href="https://juejin.cn/post/6844904103848443912" target="_blank" rel="noopener external nofollow noreferrer">如何使用 splitChunks 精细控制代码分割</a></li>
+<li><a href="https://juejin.cn/post/6850418117500715015" target="_blank" rel="noopener external nofollow noreferrer">『Webpack系列』—— MiniCssExtractPlugin插件用法详解</a></li>
+<li><a href="https://juejin.cn/post/6844903853410746382" target="_blank" rel="noopener external nofollow noreferrer">demo14 webpack mini-css-extract-plugin + SplitChunksPlugin 处理 css 和 scss</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">推荐文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\6a6c4aad.html" rel="bookmark">Vue项目优化-代码压缩</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\b8992763.html" rel="bookmark">单页面应用实现浏览器前进后退的方法</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\58886cc1.html" rel="bookmark">Vue中chunk-vendors.js文件过大问题</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\bc52c916.html" rel="bookmark">Performance API详解</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\archives\a896eef1.html" rel="bookmark">Lighthouse介绍</a></div>
+    </li>
+  </ul>
+<div>
+    
+        <div class="end-slogan" style="text-align:center;font-size:22px;letter-spacing:10px;user-select:none;color:#bbb;"><br/>----------- 本文结束啦<i class="fa fa-star"></i>感谢您阅读 -----------<br/><br/></div>
+    
+</div> 
+        <div class="reward-container">
+  <div>赞赏一杯咖啡</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    <i class="fa fa-qrcode fa-2x" style="line-height:35px;"></i>
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="小丁 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="小丁 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小丁
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tding.top/archives/de5e2b62.html" title="前端页面性能优化">https://tding.top/archives/de5e2b62.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+            <div class="social-item">
+              <a target="_blank" class="social-link" href="/atom.xml">
+                <span class="icon">
+                  <i class="fa fa-rss"></i>
+                </span>
+
+                <span class="label">RSS</span>
+              </a>
+            </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 前端</a>
+              <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 性能优化</a>
+              <a href="/tags/JS/" rel="tag"><i class="fa fa-tag"></i> JS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/archives/7e9fe7a8.html" rel="prev" title="Vue吸顶效果实现">
+      <i class="fa fa-chevron-left"></i> Vue吸顶效果实现
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/archives/6a6c4aad.html" rel="next" title="Vue项目优化-代码压缩">
+      Vue项目优化-代码压缩 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+      <div class="comment-button-group">
+          <a class="btn comment-button disqus">disqus</a>
+          <a class="btn comment-button valine">valine</a>
+      </div>
+        <div class="comment-position disqus">
+          
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+        </div>
+        <div class="comment-position valine">
+          <div class="comments" id="valine-comments"></div>
+        </div>
+      <script>
+        (function() {
+          let commentButton = document.querySelectorAll('.comment-button');
+            commentButton.forEach(element => {
+            let commentClass = element.classList[2];
+            element.addEventListener('click', () => {
+              commentButton.forEach(rmActive => rmActive.classList.remove('active'));
+              element.classList.add('active');
+              document.querySelectorAll('.comment-position').forEach(rmActive => rmActive.classList.remove('active'));
+              document.querySelector(`.comment-position.${commentClass}`).classList.add('active');
+              if (CONFIG.comments.storage) {
+                localStorage.setItem('comments_active', commentClass);
+              }
+            });
+          });
+          let activeClass = CONFIG.comments.activeClass;
+          if (CONFIG.comments.storage) {
+            activeClass = localStorage.getItem('comments_active') || activeClass;
+          }
+          if (activeClass) {
+            let activeButton = document.querySelector(`.comment-button.${activeClass}`);
+            if (activeButton) {
+              activeButton.click();
+            }
+          }
+        })();
+      </script>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue页面优化"><span class="nav-number">1.</span> <span class="nav-text">Vue页面优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-for优化"><span class="nav-number">1.1.</span> <span class="nav-text">v-for优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#不在同一级使用v-for、v-if"><span class="nav-number">1.1.1.</span> <span class="nav-text">不在同一级使用v-for、v-if</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-for的key值"><span class="nav-number">1.2.</span> <span class="nav-text">v-for的key值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#长列表性能优化"><span class="nav-number">1.3.</span> <span class="nav-text">长列表性能优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Webpack打包相关优化"><span class="nav-number">2.</span> <span class="nav-text">Webpack打包相关优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-bundle-analyzer打包文件分析"><span class="nav-number">2.1.</span> <span class="nav-text">webpack-bundle-analyzer打包文件分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#depcheck依赖分析"><span class="nav-number">2.2.</span> <span class="nav-text">depcheck依赖分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意事项-存在误判"><span class="nav-number">2.2.1.</span> <span class="nav-text">注意事项-存在误判</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compression-webpack-plugin进行gzip压缩"><span class="nav-number">2.3.</span> <span class="nav-text">compression-webpack-plugin进行gzip压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#terser-webpack-plugin打包时去除console-log以及debugger等"><span class="nav-number">2.4.</span> <span class="nav-text">terser-webpack-plugin打包时去除console.log以及debugger等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lodash按需引入"><span class="nav-number">2.5.</span> <span class="nav-text">lodash按需引入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lodash-webpack-plugin问题"><span class="nav-number">2.5.1.</span> <span class="nav-text">lodash-webpack-plugin问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Moment按需打包"><span class="nav-number">2.6.</span> <span class="nav-text">Moment按需打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件路由懒加载"><span class="nav-number">2.7.</span> <span class="nav-text">组件路由懒加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#splitChunks进行代码分割"><span class="nav-number">2.8.</span> <span class="nav-text">splitChunks进行代码分割</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常见代码分割方式"><span class="nav-number">2.8.1.</span> <span class="nav-text">常见代码分割方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#splitChunks默认配置"><span class="nav-number">2.8.2.</span> <span class="nav-text">splitChunks默认配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chunks"><span class="nav-number">2.8.3.</span> <span class="nav-text">chunks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cache-groups"><span class="nav-number">2.8.4.</span> <span class="nav-text">cache groups</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#采用的配置"><span class="nav-number">2.8.5.</span> <span class="nav-text">采用的配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MiniCssExtractPlugin插件将CSS提取到单独的文件"><span class="nav-number">2.9.</span> <span class="nav-text">MiniCssExtractPlugin插件将CSS提取到单独的文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小丁"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">小丁</p>
+  <div class="site-description" itemprop="description">酒，越喝越暖，水会越喝越寒</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">169</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dta0502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dta0502" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dta0502@126.com" title="E-Mail → mailto:dta0502@126.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i></a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/archives/16d6af96.html" title="微前端qiankun应用间通讯" target="_blank">微前端qiankun应用间通讯</a>
+          </li>
+        
+          <li>
+            <a href="/archives/1e14800d.html" title="Spring Cloud Gateway解决前端请求跨域问题" target="_blank">Spring Cloud Gateway解决前端请求跨域问题</a>
+          </li>
+        
+          <li>
+            <a href="/archives/6a6c4aad.html" title="Vue项目优化-代码压缩" target="_blank">Vue项目优化-代码压缩</a>
+          </li>
+        
+          <li>
+            <a href="/archives/de5e2b62.html" title="前端页面性能优化" target="_blank">前端页面性能优化</a>
+          </li>
+        
+          <li>
+            <a href="/archives/7e9fe7a8.html" title="Vue吸顶效果实现" target="_blank">Vue吸顶效果实现</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小丁</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">16:53</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Gemini</a> v7.7.2
+  </div><div class="translate-style">
+繁/简：<a id="translateLink" href="javascript:translatePage();" rel="external nofollow noreferrer">繁体
+</a>
+</div>
+<script type="text/javascript" src="/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "https://tding.top/";
+var msgToTraditionalChinese = "繁体";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri == 'https://tding.top/archives/de5e2b62.html',]
+      });
+      });
+  </script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+      <div class="moon-menu-item" onclick="back2bottom()">
+        <i class="fa fa-chevron-down"></i>
+      </div>
+    
+      <div class="moon-menu-item" onclick="back2top()">
+        <i class="fa fa-chevron-up"></i>
+      </div>
+    
+  </div>
+  <div class="moon-menu-button" onclick="moonMenuClick()">
+    <svg class="moon-menu-svg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+      <g class="moon-menu-points">
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy="-.8rem"></circle>
+        <circle class="moon-menu-point" r=".2rem"></circle>
+        <circle class="moon-menu-point" r=".2rem" cx="0" cy=".8rem"></circle>
+      </g>
+    </svg>
+    <div class="moon-menu-icon">
+    </div>
+    <div class="moon-menu-text">
+    </div>
+  </div>
+</div>
+
+<script>
+
+const moonMenuListener = function () {
+
+  //Get scroll percent
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  let percent = Math.round(scrollTop/(scrollHeight - offsetHeight)*100);
+  if (percent > 100) percent = 100;
+  
+  let menuText = document.querySelector('.moon-menu-text');
+  let menuPoints = document.querySelector('.moon-menu-points');
+  if (!percent){
+    percent = 0;
+    menuText.style.display = 'none';
+    menuPoints.style.display = 'block';
+  } else {
+    menuText.style.display = 'block';
+    menuPoints.style.display = 'none';
+    menuText.innerHTML = percent + '%';
+  }
+  
+  //Update strokeDasharray
+  let length = 196;
+  document.querySelector('.moon-menu-border').style.strokeDasharray = percent*length/100 + ' ' + length;
+
+}
+
+window.addEventListener('load' , () => {
+  moonMenuListener();
+});
+window.addEventListener('scroll' , moonMenuListener);
+
+const moonMenuClick = function () {
+  let items = document.querySelector('.moon-menu-items')
+  items.classList.toggle('active');
+  let points = document.querySelectorAll('.moon-menu-point');
+  let childItems = document.querySelectorAll('.moon-menu-item');
+  if (items.classList.contains('active')) {
+    points[0].setAttribute("cx","-.8rem");
+    points[0].setAttribute("cy","0");
+    points[2].setAttribute("cx",".8rem");
+    points[2].setAttribute("cy","0");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = -3 - 3*i + 'rem';
+      childItems[i].style.opacity = .9;
+    }
+  } else {
+    points[0].setAttribute("cx","0");
+    points[0].setAttribute("cy","-.8rem");
+    points[2].setAttribute("cx","0");
+    points[2].setAttribute("cy",".8rem");
+    for (let i=0; i<childItems.length; i++) {
+      childItems[i].style.top = '1rem';
+      childItems[i].style.opacity = 0;
+    }
+  }
+};
+
+const back2top = () => {
+  window.scroll({top: 0, behavior: 'smooth'});
+}
+
+const back2bottom = () => {
+  let offsetHeight =document.documentElement.offsetHeight;
+  let scrollHeight =document.documentElement.scrollHeight;
+  window.scroll({top: (scrollHeight - offsetHeight), behavior: 'smooth'});
+}
+
+</script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://tding01.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://tding.top/archives/de5e2b62.html";
+    this.page.identifier = "archives/de5e2b62.html";
+    this.page.title = "前端页面性能优化";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://tding01.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'Y3lMe8B29LX1pTTL22OWDXBr-MdYXbMMI',
+      appKey     : 'IODE6dTrgVtFS4Q40LAS2ush',
+      placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/fold_action.js"></script>
+
+</body>
+</html>

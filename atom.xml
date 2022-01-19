@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>小丁的个人博客</title>
+  <icon>https://tding.top/icon.png</icon>
+  <subtitle>世间所有的相遇，都是久别重逢</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://tding.top/"/>
+  <updated>2022-01-07T15:11:06.805Z</updated>
+  <id>https://tding.top/</id>
+  
+  <author>
+    <name>小丁</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>微前端qiankun应用间通讯</title>
+    <link href="https://tding.top/archives/16d6af96.html"/>
+    <id>https://tding.top/archives/16d6af96.html</id>
+    <published>2021-12-22T15:33:47.000Z</published>
+    <updated>2022-01-07T15:11:06.805Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;qiankun官方提供的Actions通信方式，适合业务划分清晰，比较简单的微前端应用，可以满足大部分的应用场景需求。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="微前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/%E5%BE%AE%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/tags/Vue/"/>
+    
+      <category term="微前端" scheme="https://tding.top/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="qiankun" scheme="https://tding.top/tags/qiankun/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Cloud Gateway解决前端请求跨域问题</title>
+    <link href="https://tding.top/archives/1e14800d.html"/>
+    <id>https://tding.top/archives/1e14800d.html</id>
+    <published>2021-12-11T15:08:13.000Z</published>
+    <updated>2021-12-16T14:38:56.212Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在前后端分离的项目中，一般都会碰到跨域问题，对于直接请求后端应用的情况，可以直接参考：&lt;a href=&quot;https://tding.top/archives/17a727e7.html&quot;&gt;Spring Boot 解决前端请求跨域问题&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;而随着微服务架构概念的提出，API网关成为了微服务架构的一个标配组件。所有的客户端都通过统一的网关接入微服务，在网关层处理所有非业务功能。&lt;/p&gt;
+&lt;p&gt;因此，需要在网关这边处理跨域问题。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="Java" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/Java/"/>
+    
+    
+      <category term="Java" scheme="https://tding.top/tags/Java/"/>
+    
+      <category term="跨域" scheme="https://tding.top/tags/%E8%B7%A8%E5%9F%9F/"/>
+    
+      <category term="CORS" scheme="https://tding.top/tags/CORS/"/>
+    
+      <category term="Spring Cloud Gateway" scheme="https://tding.top/tags/Spring-Cloud-Gateway/"/>
+    
+      <category term="网关" scheme="https://tding.top/tags/%E7%BD%91%E5%85%B3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue项目优化-代码压缩</title>
+    <link href="https://tding.top/archives/6a6c4aad.html"/>
+    <id>https://tding.top/archives/6a6c4aad.html</id>
+    <published>2021-11-01T15:38:08.000Z</published>
+    <updated>2021-11-08T14:45:36.707Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;网站应用的性能优化对于提高用户留存、转化率等都有积极影响。而减少传输大小是提高加载性能的一个常见方法。&lt;/p&gt;
+&lt;p&gt;本文介绍下Vue项目开启gzip压缩的方法。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能优化" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/tags/Vue/"/>
+    
+      <category term="性能优化" scheme="https://tding.top/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="代码压缩" scheme="https://tding.top/tags/%E4%BB%A3%E7%A0%81%E5%8E%8B%E7%BC%A9/"/>
+    
+      <category term="gzip" scheme="https://tding.top/tags/gzip/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端页面性能优化</title>
+    <link href="https://tding.top/archives/de5e2b62.html"/>
+    <id>https://tding.top/archives/de5e2b62.html</id>
+    <published>2021-11-01T15:29:08.000Z</published>
+    <updated>2022-01-10T14:43:54.785Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前端Vue工程的性能优化笔记。&lt;/p&gt;
+&lt;p&gt;前端性能优化的目的是为了让用户访问网站的时候可以非常快的加载出来，常见的优化方法：减小资源大小、CDN加速、浏览器缓存。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能优化" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能优化" scheme="https://tding.top/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="JS" scheme="https://tding.top/tags/JS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue吸顶效果实现</title>
+    <link href="https://tding.top/archives/7e9fe7a8.html"/>
+    <id>https://tding.top/archives/7e9fe7a8.html</id>
+    <published>2021-10-25T15:51:27.000Z</published>
+    <updated>2021-12-06T15:01:50.870Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Vue实现吸顶效果。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/Vue/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="CSS" scheme="https://tding.top/tags/CSS/"/>
+    
+      <category term="Vue" scheme="https://tding.top/tags/Vue/"/>
+    
+      <category term="吸顶" scheme="https://tding.top/tags/%E5%90%B8%E9%A1%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Boot解决前端请求跨域问题</title>
+    <link href="https://tding.top/archives/17a727e7.html"/>
+    <id>https://tding.top/archives/17a727e7.html</id>
+    <published>2021-09-11T15:00:10.000Z</published>
+    <updated>2021-11-08T14:45:36.703Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在前后端分离的项目中，一般都会碰到跨域问题，这里记录下解决方法。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="Java" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/Java/"/>
+    
+    
+      <category term="Java" scheme="https://tding.top/tags/Java/"/>
+    
+      <category term="Spring Boot" scheme="https://tding.top/tags/Spring-Boot/"/>
+    
+      <category term="跨域" scheme="https://tding.top/tags/%E8%B7%A8%E5%9F%9F/"/>
+    
+      <category term="CORS" scheme="https://tding.top/tags/CORS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Robot Framework测试笔记</title>
+    <link href="https://tding.top/archives/257120b0.html"/>
+    <id>https://tding.top/archives/257120b0.html</id>
+    <published>2021-08-30T15:30:00.000Z</published>
+    <updated>2021-11-08T14:45:36.700Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Robot Framework是一个开源的自动化框架。RIDE是使用wxPython库编写的Robot Framework的图形界面。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="自动化测试" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
+    
+    
+      <category term="Python" scheme="https://tding.top/tags/Python/"/>
+    
+      <category term="RF测试" scheme="https://tding.top/tags/RF%E6%B5%8B%E8%AF%95/"/>
+    
+      <category term="自动化测试" scheme="https://tding.top/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>杭州滨融府摇号人群分析</title>
+    <link href="https://tding.top/archives/f283bd0e.html"/>
+    <id>https://tding.top/archives/f283bd0e.html</id>
+    <published>2021-07-10T07:30:00.000Z</published>
+    <updated>2021-07-10T08:08:44.128Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;杭州滨融府（开发商：滨江、融创）本次开盘的是2幢、3幢、4幢，总共房源155套，其中包括保障无房家庭的16套以及人才无房家庭的23套。&lt;strong&gt;户型为139平、168平，均价54000，起步750w左右&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;冻资要求：首套250万、二套500万、全款800万&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;登记人数究竟有多少已经不得而知了，最后审核通过的报名家庭：9821户，其中2326户是无房家庭，558户是人才无房家庭。&lt;strong&gt;摇号中签率：总体1.58%（其中人才5.79%、无房1.74%、有房1.19%）&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;为什么这样一个起步750w总价的楼盘会有那么多人报名，&lt;strong&gt;一方面是因为项目周边的次新二手房（滨江锦绣之城、融创宜和园、天阳武林邸、融信公馆ARC、首开杭州金茂府）挂牌价基本没有低于8w的了，相比于项目5w4的限价倒挂非常明显；另一方面，老城西大量改善家庭首选的就是临近的申花板块；同时，本项目的开发商也是大家认可的品牌开发商滨江和融创&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;下面我们大概看一下参与摇号的人群分布。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数据分析" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+      <category term="实战" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/%E5%AE%9E%E6%88%98/"/>
+    
+    
+      <category term="数据可视化" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+      <category term="数据分析" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+      <category term="新房摇号" scheme="https://tding.top/tags/%E6%96%B0%E6%88%BF%E6%91%87%E5%8F%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MyBatis报错记录</title>
+    <link href="https://tding.top/archives/4a4be831.html"/>
+    <id>https://tding.top/archives/4a4be831.html</id>
+    <published>2021-06-30T15:12:15.000Z</published>
+    <updated>2021-11-08T14:45:36.698Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;记录一下工作中碰到的MyBatis报错。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="Mybatis" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/Mybatis/"/>
+    
+    
+      <category term="Java" scheme="https://tding.top/tags/Java/"/>
+    
+      <category term="数据库" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="Mybatis" scheme="https://tding.top/tags/Mybatis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DevOps&amp;CICD</title>
+    <link href="https://tding.top/archives/3a8cd398.html"/>
+    <id>https://tding.top/archives/3a8cd398.html</id>
+    <published>2021-06-11T15:40:00.000Z</published>
+    <updated>2021-06-12T14:26:49.843Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;DevOps、CI/CD&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="DevOps" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/DevOps/"/>
+    
+    
+      <category term="DevOps" scheme="https://tding.top/tags/DevOps/"/>
+    
+      <category term="CI/CD" scheme="https://tding.top/tags/CI-CD/"/>
+    
+      <category term="k8s" scheme="https://tding.top/tags/k8s/"/>
+    
+      <category term="Docker" scheme="https://tding.top/tags/Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hive基本操作</title>
+    <link href="https://tding.top/archives/795fd7d2.html"/>
+    <id>https://tding.top/archives/795fd7d2.html</id>
+    <published>2021-06-11T15:30:10.000Z</published>
+    <updated>2021-06-12T14:16:38.173Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Hive是一个可以使用多种计算引擎以及兼容多种数据存储格式的分布式OLAP客户端。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+      <category term="Hive" scheme="https://tding.top/categories/%E5%90%8E%E7%AB%AF/Hive/"/>
+    
+    
+      <category term="Hive" scheme="https://tding.top/tags/Hive/"/>
+    
+      <category term="Hadoop" scheme="https://tding.top/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kettle定时执行数据库表增量同步</title>
+    <link href="https://tding.top/archives/d745dad8.html"/>
+    <id>https://tding.top/archives/d745dad8.html</id>
+    <published>2021-05-14T12:40:13.000Z</published>
+    <updated>2021-05-17T14:23:09.246Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要记录通过kettle实现定时执行数据库表增量同步。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数据库" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="Kettle" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Kettle/"/>
+    
+    
+      <category term="数据库" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="数据迁移" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/"/>
+    
+      <category term="Kettle" scheme="https://tding.top/tags/Kettle/"/>
+    
+      <category term="增量同步" scheme="https://tding.top/tags/%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kettle插入更新组件详解</title>
+    <link href="https://tding.top/archives/a3b9e995.html"/>
+    <id>https://tding.top/archives/a3b9e995.html</id>
+    <published>2021-05-14T12:30:03.000Z</published>
+    <updated>2021-05-14T12:42:55.771Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文介绍的是输出菜单下的插入/更新组件。&lt;/p&gt;
+&lt;p&gt;实现功能：自动对比用户设置的对比字段，若目标表不存在该字段，则新插入该条记录。若存在，则更新。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数据库" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="Kettle" scheme="https://tding.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/Kettle/"/>
+    
+    
+      <category term="数据库" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="数据迁移" scheme="https://tding.top/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/"/>
+    
+      <category term="Kettle" scheme="https://tding.top/tags/Kettle/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Performance API详解</title>
+    <link href="https://tding.top/archives/bc52c916.html"/>
+    <id>https://tding.top/archives/bc52c916.html</id>
+    <published>2021-04-30T12:20:00.000Z</published>
+    <updated>2021-11-06T01:41:07.695Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Performance 接口可以获取到当前页面中与性能相关的信息。它是 High Resolution Time API 的一部分，同时也融合了 Performance Timeline API、Navigation Timing API、 User Timing API 和 Resource Timing API。&lt;/p&gt;
+&lt;p&gt;本文主要记录Performance API的几个属性、方法，以及页面加载慢问题的排查分析。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能优化" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能监控" scheme="https://tding.top/tags/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="Performance API" scheme="https://tding.top/tags/Performance-API/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Lighthouse介绍</title>
+    <link href="https://tding.top/archives/a896eef1.html"/>
+    <id>https://tding.top/archives/a896eef1.html</id>
+    <published>2021-04-30T12:10:00.000Z</published>
+    <updated>2021-11-06T01:41:19.972Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Lighthouse 是谷歌开源的一款 Web 前端性能测试工具，用于改进网络应用的质量，适用于网页版和移动端。能生成一个包括页面性能、PWA（Progressive Web apps，渐进式 Web 应用）、可访问性（无障碍）、最佳实践、SEO 的报告清单提供参考，看看可以采取哪些措施来改进您的应用。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能优化" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能监控" scheme="https://tding.top/tags/%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="Lighthouse" scheme="https://tding.top/tags/Lighthouse/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx反向代理配置总结</title>
+    <link href="https://tding.top/archives/9c7d6d63.html"/>
+    <id>https://tding.top/archives/9c7d6d63.html</id>
+    <published>2021-04-01T14:00:00.000Z</published>
+    <updated>2021-05-03T14:47:00.120Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在前后端分离项目中，可以通过前端配置Nginx来解决跨域问题。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;前端页面&lt;code&gt;mysite.com&lt;/code&gt;，后台接口是在&lt;code&gt;myserver.com&lt;/code&gt;域下的&lt;code&gt;myserver.com/querytags&lt;/code&gt;接口，当在页面里直接请求，浏览器会报跨域的错误。为了绕开浏览器的跨域安全限制，现在需要将请求的域名改成&lt;code&gt;mysite.com&lt;/code&gt;，同时约定一个URL规则来表明代理请求的身份，然后Nginx通过匹配该规则，将请求代理回原来的域。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;本文总结一下Nginx反向代理匹配规则。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Nginx" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/Nginx/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Nginx" scheme="https://tding.top/tags/Nginx/"/>
+    
+      <category term="反向代理" scheme="https://tding.top/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git Submodule学习</title>
+    <link href="https://tding.top/archives/ffd57292.html"/>
+    <id>https://tding.top/archives/ffd57292.html</id>
+    <published>2021-03-17T14:13:40.000Z</published>
+    <updated>2021-09-17T14:19:42.352Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;项目的版本库在某些情况下需要引用其他版本库中的文件，例如公司积累了一套常用的函数库，被多个项目调用，显然这个函数库的代码不能直接放到某个项目的代码中，而是要独立为一个代码库。&lt;/p&gt;
+&lt;p&gt;那么其他项目要调用公共函数库该如何处理呢？分别把公共函数库的文件拷贝到各自的项目中会造成冗余，丢弃了公共函数库的维护历史，这显然不是好的方法。&lt;/p&gt;
+&lt;p&gt;这种情况就可以使用Git Submodule。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="工具使用" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+      <category term="Git" scheme="https://tding.top/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/"/>
+    
+    
+      <category term="Git" scheme="https://tding.top/tags/Git/"/>
+    
+      <category term="submodule" scheme="https://tding.top/tags/submodule/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>单页面应用实现浏览器前进后退的方法</title>
+    <link href="https://tding.top/archives/b8992763.html"/>
+    <id>https://tding.top/archives/b8992763.html</id>
+    <published>2021-01-27T14:35:08.000Z</published>
+    <updated>2021-11-08T14:45:36.710Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Ajax可以在不需要页面的刷新动作时获取数据（页面的URL也会保持不变），但是问题时，这样也就无法通过浏览器进行前进与后退操作。&lt;/p&gt;
+&lt;p&gt;现在这个问题可以通过&lt;code&gt;history.pushState()&lt;/code&gt;方法以及&lt;code&gt;window.onpopstate&lt;/code&gt;事件监听去解决。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="JS" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/JS/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="JS" scheme="https://tding.top/tags/JS/"/>
+    
+      <category term="浏览器" scheme="https://tding.top/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
+    
+      <category term="页面监控" scheme="https://tding.top/tags/%E9%A1%B5%E9%9D%A2%E7%9B%91%E6%8E%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue中chunk-vendors.js文件过大问题</title>
+    <link href="https://tding.top/archives/58886cc1.html"/>
+    <id>https://tding.top/archives/58886cc1.html</id>
+    <published>2021-01-27T14:34:14.000Z</published>
+    <updated>2021-11-08T14:45:36.705Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在Vue前端项目开发中，发现每次都会有一个很大的&lt;code&gt;chunk-vendors.js&lt;/code&gt;文件要载入，这也使得页面加载时间变长。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/Vue/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="Vue" scheme="https://tding.top/tags/Vue/"/>
+    
+      <category term="性能优化" scheme="https://tding.top/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="webpack" scheme="https://tding.top/tags/webpack/"/>
+    
+      <category term="chunk-vendors.js" scheme="https://tding.top/tags/chunk-vendors-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端异常监控</title>
+    <link href="https://tding.top/archives/ff61036.html"/>
+    <id>https://tding.top/archives/ff61036.html</id>
+    <published>2021-01-27T14:29:08.000Z</published>
+    <updated>2021-11-06T01:28:54.304Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在前端项目中，由于JavaScript本身是一个弱类型语言，加上浏览器环境的复杂性，网络问题等等，很容易发生错误。做好网页错误监控，不断优化代码，提高代码健壮性是一项很重要的工作。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="性能优化" scheme="https://tding.top/categories/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="前端" scheme="https://tding.top/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="JS" scheme="https://tding.top/tags/JS/"/>
+    
+      <category term="异常监控" scheme="https://tding.top/tags/%E5%BC%82%E5%B8%B8%E7%9B%91%E6%8E%A7/"/>
+    
+  </entry>
+  
+</feed>
